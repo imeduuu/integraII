@@ -1,0 +1,11 @@
+/* Variables y colores personalizados */
+:root {
+  --color-primary: #2563eb;
+  --color-secondary: #1e293b;
+}
+.bg-primary {
+  background-color: var(--color-primary);
+}
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
