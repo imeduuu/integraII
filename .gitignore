@@ -1,0 +1,16 @@
+node_modules
+
+# Next.js build output
+.next/
+
+# Entorno
+.env
+.env.*
+
+# Prisma
+prisma/migrations/*/migration.sql
+prisma/migrations/migration_lock.toml
+
+# Otros
+*.log
+package-lock.json

@@ -1,9 +1,10 @@
 // Prisma schema for PostgreSQL
-// Puedes definir tus modelos aquí
+
 
 generator client {
   provider = "prisma-client-js"
 }
+
 
 datasource db {
   provider = "postgresql"
@@ -11,8 +12,173 @@ datasource db {
 }
 
 
-model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String
+
+// Enums
+
+// Tablas de catálogo
+model RolUsuario {
+  id        Int      @id @default(autoincrement())
+  nombre   String   @unique
+  usuarios Usuario[]
+}
+
+model EstadoAnimal {
+  id      Int      @id @default(autoincrement())
+  nombre  String   @unique
+  animales Animal[]
+}
+
+model Especie {
+  id      Int      @id @default(autoincrement())
+  nombre  String   @unique
+  animales Animal[]
+}
+
+model Raza {
+  id      Int      @id @default(autoincrement())
+  nombre  String   @unique
+  animales Animal[]
+}
+
+model Sexo {
+  id      Int      @id @default(autoincrement())
+  nombre  String   @unique
+  animales Animal[]
+}
+
+model EstadoReporte {
+  id       Int       @id @default(autoincrement())
+  nombre   String    @unique
+  reportes Reporte[]
+}
+
+model TipoReporte {
+  id       Int       @id @default(autoincrement())
+  nombre   String    @unique
+  reportes Reporte[]
+}
+
+model NivelZona {
+  id      Int      @id @default(autoincrement())
+  nombre  String   @unique
+  zonas   ZonaSanitaria[]
+}
+
+model TipoDonacion {
+  id        Int        @id @default(autoincrement())
+  nombre    String     @unique
+  donaciones Donacion[]
+}
+
+// Modelos principales
+model Usuario {
+  id           Int            @id @default(autoincrement())
+  nombres      String
+  apellidos    String
+  email        String         @unique
+  password     String
+  telefono     String?
+  rol          RolUsuario     @relation(fields: [rolId], references: [id])
+  rolId        Int
+  reportes     Reporte[]
+  donaciones   Donacion[]
+  voluntario   Voluntariado[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model Animal {
+  id             Int                @id @default(autoincrement())
+  nombre         String
+  especie        Especie            @relation(fields: [especieId], references: [id])
+  especieId      Int
+  raza           Raza?              @relation(fields: [razaId], references: [id])
+  razaId         Int?
+  sexo           Sexo?              @relation(fields: [sexoId], references: [id])
+  sexoId         Int?
+  edad           Int?
+  estado         EstadoAnimal        @relation(fields: [estadoId], references: [id])
+  estadoId       Int
+  ubicacion      String?
+  fotos          String[]
+  reportes       Reporte[]
+  historial      HistorialSanitario[]
+  zona           ZonaSanitaria?     @relation(fields: [zonaId], references: [id])
+  zonaId         Int?
+  alertas        Alerta[]
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+}
+
+model Reporte {
+  id          Int           @id @default(autoincrement())
+  tipo        TipoReporte   @relation(fields: [tipoId], references: [id])
+  tipoId      Int
+  descripcion String
+  ubicacion   String
+  latitud     Float
+  longitud    Float
+  estado      EstadoReporte @relation(fields: [estadoId], references: [id])
+  estadoId    Int
+  usuario     Usuario       @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
+  animal      Animal?       @relation(fields: [animalId], references: [id])
+  animalId    Int?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Alerta {
+  id          Int           @id @default(autoincrement())
+  mensaje     String
+  tipo        String
+  zona        ZonaSanitaria? @relation(fields: [zonaId], references: [id])
+  zonaId      Int?
+  animal      Animal?       @relation(fields: [animalId], references: [id])
+  animalId    Int?
+  createdAt   DateTime      @default(now())
+}
+
+model ZonaSanitaria {
+  id          Int           @id @default(autoincrement())
+  nombre      String
+  nivel       NivelZona     @relation(fields: [nivelId], references: [id])
+  nivelId     Int
+  descripcion String?
+  ubicacion   String
+  latitud     Float
+  longitud    Float
+  animales    Animal[]
+  alertas     Alerta[]
+  createdAt   DateTime      @default(now())
+}
+
+model Donacion {
+  id          Int           @id @default(autoincrement())
+  tipo        TipoDonacion  @relation(fields: [tipoId], references: [id])
+  tipoId      Int
+  monto       Float?
+  descripcion String?
+  usuario     Usuario       @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
+  fecha       DateTime      @default(now())
+}
+
+model Voluntariado {
+  id          Int           @id @default(autoincrement())
+  usuario     Usuario       @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
+  actividad   String
+  fecha       DateTime      @default(now())
+  estado      String
+}
+
+model HistorialSanitario {
+  id          Int           @id @default(autoincrement())
+  animal      Animal        @relation(fields: [animalId], references: [id])
+  animalId    Int
+  tipo        String        // vacuna, desparasitación, cirugía, etc.
+  fecha       DateTime
+  observacion String?
+  veterinario String?
 }

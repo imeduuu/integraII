@@ -1,0 +1,21 @@
+# Lista de dependencias principales para este proyecto Next.js
+# Instala todo con: npm install
+
+# Dependencias de producción
+next
+react
+react-dom
+axios
+
+# Dependencias de desarrollo
+@types/axios
+@types/react
+@types/react-dom
+@types/node
+typescript
+tailwindcss
+postcss
+autoprefixer
+@tailwindcss/postcss
+prisma
+@prisma/client
