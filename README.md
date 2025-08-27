@@ -1,92 +1,43 @@
-# Guía rápida para instalar este proyecto
+# Repositorio
 
-1. **Clona el repositorio:**
-	```bash
-	git clone https://github.com/imeduuu/integraII.git
-	cd control-sanitario-next
-	```
-2. **Instala las dependencias:**
-	```bash
-	npm install
-	```
-3. **Copia el archivo de entorno:**
-	```bash
-	# Edita el archivo .env con tus datos de base de datos
-	```
-4. **Genera el cliente Prisma y aplica migraciones:**
-	```bash
-	npx prisma generate
-	npx prisma migrate dev --name init
-	```
-5. **Inicia el servidor de desarrollo:**
-	```bash
-	npm run dev
-	```
+Puedes clonar el proyecto con el siguiente comando:
 
----
-# Control Sanitario Next
-
-Proyecto web desarrollado con Next.js, TypeScript, Tailwind CSS y Prisma ORM usando PostgreSQL como base de datos.
-
-## Requisitos previos
-
-- Node.js 18.x o superior
-- npm 9.x o superior
-- PostgreSQL 13 o superior (recomendado 15+)
-
-## Instalación y configuración
-
-### 1. Clona el repositorio
-```bash
+```powershell
 git clone https://github.com/imeduuu/integraII.git
-cd control-sanitario-next
 ```
 
- el archivo `.env.example` a `.env` y edita la variable `DATABASE_URL` con tus datos reales:
+# Instalación
 
-```
-DATABASE_URL="postgresql://postgres:tu_contraseña@localhost:5432/mi_basededatos"
-```
+1. Accede al directorio del proyecto:
+   ```powershell
+   cd integraII
+   ```
 
-### 4. Configura Prisma y ejecuta migraciones
-```bash
-npx prisma generate
-npx prisma migrate dev --name init
-```
-Esto creará las tablas necesarias en la base de datos.
+2. Instala Node.js:
+   - Descárgalo desde https://nodejs.org/ y sigue el instalador para tu sistema operativo.
+   - npm se instala automáticamente junto con Node.js.
 
-### 5. Inicia el servidor de desarrollo
-```bash
-npm run dev
-```
+3. Instala las dependencias del proyecto (incluye React, Prisma, Tailwind, TypeScript, etc.):
+   ```powershell
+   cd control-sanitario-next
+   npm install
+   ```
+   Esto instalará todas las librerías necesarias listadas en `package.json`.
 
-La app estará disponible en [http://localhost:3000](http://localhost:3000)
+4. Si necesitas instalar alguna herramienta globalmente, puedes usar:
+   ```powershell
+   npm install -g prisma
+   npm install -g typescript
+   npm install -g tailwindcss
+   ```
+   (Solo si el proyecto o tu flujo de trabajo lo requiere)
 
-## Tecnologías principales
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- Prisma ORM
-- PostgreSQL
-- Axios
+5. Inicia la aplicación:
+   ```powershell
+   npm run dev
+   ```
 
-## Estructura básica del proyecto
-- `/src/pages` — Páginas principales de la app
-- `/src/components` — Componentes reutilizables
-- `/src/services` — Servicios y lógica de acceso a datos (ejemplo: Prisma)
-- `/prisma` — Esquema y migraciones de la base de datos
+6. Abre tu navegador en [http://localhost:3000](http://localhost:3000)
 
-## Comandos útiles
-- `npm run dev` — Inicia el servidor de desarrollo
-- `npm run build` — Compila la app para producción
-- `npx prisma studio` — Abre el editor visual de la base de datos
-- `npx prisma migrate dev --name <nombre>` — Crea y aplica una nueva migración
-
-## Notas para el equipo
-- No subas el archivo `.env` al repositorio, usa `.env.example` como plantilla.
-- Si cambias el esquema de Prisma, ejecuta `npx prisma generate` y una nueva migración.
-- Para colaborar, cada integrante debe tener su propia base de datos local o compartir una base centralizada.
-
-## Contacto y soporte
-Para dudas técnicas, contacta al responsable del repositorio o abre un issue.
+# Notas
+- Dudas comunicarlas lo antes posible.
