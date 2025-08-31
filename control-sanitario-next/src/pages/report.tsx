@@ -5,6 +5,8 @@ import Footer from '../components/Footer';
 
 import { useState } from 'react';
 
+import styles from '../styles/report.module.css';
+
 const Report = () => {
   const [descripcion, setDescripcion] = useState('');
   const [ubicacion, setUbicacion] = useState('');
@@ -38,28 +40,55 @@ const Report = () => {
   return (
     <>
       <Navbar />
-      <main className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">Reportar Animal</h2>
-        <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
-          <div>
-            <label className="block">Descripción</label>
-            <input className="border p-2 w-full" value={descripcion} onChange={e => setDescripcion(e.target.value)} required />
-          </div>
-          <div>
-            <label className="block">Ubicación</label>
-            <input className="border p-2 w-full" value={ubicacion} onChange={e => setUbicacion(e.target.value)} required />
-          </div>
-          <div>
-            <label className="block">Latitud</label>
-            <input className="border p-2 w-full" value={latitud} onChange={e => setLatitud(e.target.value)} required type="number" step="any" />
-          </div>
-          <div>
-            <label className="block">Longitud</label>
-            <input className="border p-2 w-full" value={longitud} onChange={e => setLongitud(e.target.value)} required type="number" step="any" />
-          </div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Enviar reporte</button>
-        </form>
-        {mensaje && <p className="mt-4 font-bold">{mensaje}</p>}
+      <main>
+        <div className={styles.container}>
+          <h2 className={styles.title}>Reportar Animal</h2>
+          <h3 className={styles.subtitle}>Plataforma para la gestión y prevención sanitaria de animales en situación de calle</h3>
+          <p className={styles.text}>
+            Es una plataforma digital web diseñada para identificar, monitorear y gestionar casos de animales en situación de calle, con un enfoque en la prevención sanitaria y la colaboración comunitaria.<br /><br />
+            El sistema permite centralizar reportes ciudadanos, llevar un historial sanitario individual de cada animal, generar alertas tempranas y facilitar la coordinación entre vecinos, veterinarios y autoridades municipales, contribuyendo a mejorar la salud pública, el bienestar animal y la seguridad de la comunidad.
+          </p>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <label className={styles.label}>Descripción</label>
+            <textarea
+              className={styles.input}
+              value={descripcion}
+              onChange={e => setDescripcion(e.target.value)}
+              required
+              rows={3}
+              style={{resize: 'vertical'}}
+            />
+            <label className={styles.label}>Ubicación</label>
+            <textarea
+              className={styles.input}
+              value={ubicacion}
+              onChange={e => setUbicacion(e.target.value)}
+              required
+              rows={2}
+              style={{resize: 'vertical'}}
+            />
+            <label className={styles.label}>Latitud</label>
+            <textarea
+              className={styles.input}
+              value={latitud}
+              onChange={e => setLatitud(e.target.value)}
+              required
+              rows={1}
+              style={{resize: 'vertical'}}
+            />
+            <label className={styles.label}>Longitud</label>
+            <textarea
+              className={styles.input}
+              value={longitud}
+              onChange={e => setLongitud(e.target.value)}
+              required
+              rows={1}
+              style={{resize: 'vertical'}}
+            />
+            <button className={styles.btn} type="submit">Enviar reporte</button>
+          </form>
+          {mensaje && <p className={styles.message}>{mensaje}</p>}
+        </div>
       </main>
       <Footer />
     </>
