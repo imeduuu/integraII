@@ -35,7 +35,8 @@ git clone https://github.com/imeduuu/integraII.git
 5. Inicia la aplicación:
    ```powershell
    npm run dev
-   ```
+   ``
+para correr el programa es desde la ruta de control-sanitario-next
 
 6. Abre tu navegador en [http://localhost:3000](http://localhost:3000)
 
