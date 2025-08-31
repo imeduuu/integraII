@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import LoginModal from '../components/LoginModal';
 import InfoBox from '../components/InfoBox';
 import styles from '../styles/infoBox.module.css';
 
@@ -67,6 +68,7 @@ function validateEmail(email: string) {
 }
 
 const Home = () => {
+  const [showLogin, setShowLogin] = useState(false);
   const [modal, setModal] = useState<'login' | 'register' | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -176,7 +178,7 @@ const Home = () => {
                 ...buttonStyle,
                 width: 'clamp(140px, 40vw, 180px)'
               }}
-              onClick={() => handleOpen('login')}
+              onClick={() => setShowLogin(true)}
               onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.05)')}
               onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
             >
@@ -272,6 +274,7 @@ const Home = () => {
           <InfoBox title="Reportes enviados" value={15} link="/report" />
           <InfoBox title="Adopciones completadas" value={8} link="/donations" />
         </div>
+        {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       </main>
       <Footer />
       <style>
