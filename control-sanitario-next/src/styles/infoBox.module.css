@@ -1,0 +1,39 @@
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .infoGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.infoBox {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.infoBox:hover {
+  box-shadow: 0 4px 24px rgba(37,99,235,0.15);
+  background: #e0f2fe;
+}
+.infoIcon {
+  font-size: 2rem;
+  margin-right: 1rem;
+  color: #2563eb;
+}
+.infoValue {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.infoTitle {
+  font-size: 1rem;
+  color: #555;
+}

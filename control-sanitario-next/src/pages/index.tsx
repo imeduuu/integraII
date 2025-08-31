@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import InfoBox from '../components/InfoBox';
+import styles from '../styles/infoBox.module.css';
 
 const backgroundUrl = '/perrito.png';
 
@@ -239,6 +241,38 @@ const Home = () => {
           </form>
         </div>
       )}
+      <main style={{
+        padding: '2rem',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}>
+        <h1 style={{
+          fontSize: '2.5rem',
+          fontWeight: 800,
+          color: '#2563eb',
+          marginBottom: '1rem',
+          textAlign: 'center'
+        }}>
+          Bienvenido a la Plataforma de Control Sanitario
+        </h1>
+        <p style={{
+          fontSize: '1.125rem',
+          color: '#334155',
+          marginBottom: '2rem',
+          textAlign: 'center',
+          maxWidth: '800px'
+        }}>
+          Reporta animales en situación de calle, consulta focos sanitarios y participa en la comunidad.
+        </p>
+        <div className={styles.infoGrid}>
+          <InfoBox title="Animales registrados" value={42} link="/animals" />
+          <InfoBox title="Reportes enviados" value={15} link="/report" />
+          <InfoBox title="Adopciones completadas" value={8} link="/donations" />
+        </div>
+      </main>
       <Footer />
       <style>
         {`
