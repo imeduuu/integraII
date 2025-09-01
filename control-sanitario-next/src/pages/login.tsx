@@ -58,6 +58,11 @@ const Login = () => {
         <label style={labelStyle}>Contraseña</label>
         <input style={inputStyle} type="password" value={password} onChange={e => setPassword(e.target.value)} required />
         <button style={buttonStyle} type="submit">Entrar</button>
+        <div style={{ marginTop: 12 }}>
+          <a href="/forgot-password" style={{ color: '#2563eb', textDecoration: 'underline', fontSize: '0.95rem' }}>
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
         {mensaje && <p style={{ marginTop: 16, color: '#2563eb', fontWeight: 600 }}>{mensaje}</p>}
       </form>
       <Footer />
