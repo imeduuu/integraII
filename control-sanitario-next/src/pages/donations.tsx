@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import styles from '../styles/donations.module.css';
+
 
 const Donations = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    type: '',      // tipo de donación (alimento, ropa, etc.)
-    quantity: '',  // cantidad
+    type: '',
+    quantity: '',
     message: '',
   });
 
@@ -15,95 +17,98 @@ const Donations = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Donación registrada:', formData);
-    alert('¡Gracias por tu donación! (Prueba sin guardar en la base de datos)');
+    alert('¡Gracias por tu donación! (Solo prueba; no se guarda en BD)');
     setFormData({ name: '', email: '', type: '', quantity: '', message: '' });
   };
 
   return (
     <>
       <Navbar />
-      <main className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">Donaciones y Voluntariado</h2>
+      <main className={styles.wrapper}>
+        <section className={styles.card}>
+          <h2 className={styles.title}>Donaciones y Voluntariado</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
-          <div>
-            <label className="block font-medium">Nombre</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full border rounded p-2"
-            />
-          </div>
+          <form onSubmit={handleSubmit} className={styles.formGrid}>
+            <div className={styles.group}>
+              <label className={styles.label}>Nombre</label>
+              <input
+                className={styles.input}
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                placeholder="Tu nombre"
+              />
+            </div>
 
-          <div>
-            <label className="block font-medium">Correo electrónico</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border rounded p-2"
-            />
-          </div>
+            <div className={styles.group}>
+              <label className={styles.label}>Correo electrónico</label>
+              <input
+                className={styles.input}
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="tucorreo@ejemplo.com"
+              />
+              <span className={styles.helper}>Opcional, por si necesitamos contactarte.</span>
+            </div>
 
-          <div>
-            <label className="block font-medium">Tipo de donación</label>
-            <select
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              required
-              className="w-full border rounded p-2"
-            >
-              <option value="">Selecciona...</option>
-              <option value="alimento">Alimento</option>
-              <option value="medicinas">Medicinas</option>
-              <option value="ropa">Ropa</option>
-              <option value="otros">Otros</option>
-            </select>
-          </div>
+            <div className={styles.group}>
+              <label className={styles.label}>Tipo de donación</label>
+              <select
+                className={styles.select}
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Selecciona...</option>
+                <option value="alimento">Alimento</option>
+                <option value="medicinas">Medicinas</option>
+                <option value="ropa">Ropa</option>
+                <option value="otros">Otros</option>
+              </select>
+            </div>
 
-          <div>
-            <label className="block font-medium">Cantidad</label>
-            <input
-              type="text"
-              name="quantity"
-              value={formData.quantity}
-              onChange={handleChange}
-              required
-              className="w-full border rounded p-2"
-            />
-          </div>
+            <div className={styles.group}>
+              <label className={styles.label}>Cantidad</label>
+              <input
+                className={styles.input}
+                type="text"
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleChange}
+                required
+                placeholder="Ej: 5 cajas, 10 sacos"
+              />
+            </div>
 
-          <div>
-            <label className="block font-medium">Mensaje (opcional)</label>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full border rounded p-2"
-            />
-          </div>
+            <div className={styles.group}>
+              <label className={styles.label}>Mensaje (opcional)</label>
+              <textarea
+                className={styles.textarea}
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Detalles de la donación"
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
-            Registrar Donación
-          </button>
-        </form>
+            <div className={styles.actions}>
+              <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>
+                Registrar Donación
+              </button>
+            </div>
+          </form>
+        </section>
       </main>
       <Footer />
     </>
