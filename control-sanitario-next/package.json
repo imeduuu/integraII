@@ -1,37 +1,11 @@
 {
-  "dependencies": {
-    "@prisma/client": "^6.14.0",
-    "@types/axios": "^0.9.36",
-    "@types/react": "^19.1.11",
-    "@types/react-dom": "^19.1.7",
-    "axios": "^1.11.0",
-    "next": "^14.2.3",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
-  "name": "control-sanitario-next",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.12",
-    "@types/node": "24.3.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
-    "prisma": "^6.14.0",
-    "tailwindcss": "^4.1.12",
-    "typescript": "5.9.2"
+    "tailwindcss": "^4.1.12"
   },
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "react-leaflet": "^5.0.0"
+  }
 }
