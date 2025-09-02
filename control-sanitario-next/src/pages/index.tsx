@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Map from '../components/Map';
 import LoginModal from '../components/LoginModal';
 import InfoBox from '../components/InfoBox';
 import styles from '../styles/infoBox.module.css';
@@ -68,33 +69,10 @@ function validateEmail(email: string) {
 }
 
 const Home = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const [modal, setModal] = useState<'login' | 'register' | null>(null);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [mensaje, setMensaje] = useState('');
+  // ...existing code...
+  const [showMap, setShowMap] = useState(false);
 
-  const handleOpen = (type: 'login' | 'register') => {
-    setModal(type);
-    setEmail('');
-    setPassword('');
-    setMensaje('');
-  };
-
-  const handleClose = () => setModal(null);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateEmail(email)) {
-      setMensaje('Por favor ingresa un correo válido.');
-      return;
-    }
-    if (password.length < 6) {
-      setMensaje('La contraseña debe tener al menos 6 caracteres.');
-      return;
-    }
-    setMensaje(modal === 'login' ? 'Inicio de sesión simulado.' : 'Registro simulado.');
-  };
+  // Eliminados estados y funciones de login modal y registro
 
   return (
     <>
@@ -126,7 +104,6 @@ const Home = () => {
             backdropFilter: 'blur(10px)' // difuminado bonito estilo glass
           }}
         >
-
           <img
             src={backgroundUrl}
             alt="Salud y bienestar"
@@ -166,83 +143,12 @@ const Home = () => {
           }}>
             Gestiona tu salud y bienestar de forma sencilla y segura.
           </p>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: '18px',
-            flexWrap: 'wrap',
-            justifyContent: 'center'
-          }}>
-            <button
-              style={{
-                ...buttonStyle,
-                width: 'clamp(140px, 40vw, 180px)'
-              }}
-              onClick={() => setShowLogin(true)}
-              onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.05)')}
-              onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
-            >
-              Iniciar sesión
-            </button>
-            <button
-              style={{
-                ...buttonStyle,
-                width: 'clamp(140px, 40vw, 180px)',
-                background: 'linear-gradient(90deg,#60a5fa 60%,#2563eb 100%)'
-              }}
-              onClick={() => handleOpen('register')}
-              onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.05)')}
-              onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
-            >
-              Crear cuenta
-            </button>
-          </div>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '18px', marginBottom: '10px' }}>
+                <a href="/login" style={{ ...buttonStyle, textAlign: 'center', textDecoration: 'none', lineHeight: '2.5rem', width: 'clamp(140px, 40vw, 180px)' }}>Iniciar sesión</a>
+                <a href="/register" style={{ ...buttonStyle, background: 'linear-gradient(90deg,#60a5fa 60%,#2563eb 100%)', textAlign: 'center', textDecoration: 'none', lineHeight: '2.5rem', width: 'clamp(140px, 40vw, 180px)' }}>Crear cuenta</a>
+              </div>
         </div>
       </div>
-      {modal && (
-        <div style={modalStyle} onClick={handleClose}>
-          <form
-            style={formStyle}
-            onClick={e => e.stopPropagation()}
-            onSubmit={handleSubmit}
-          >
-            <h2 style={{
-              fontWeight: 700,
-              fontSize: '1.5rem',
-              marginBottom: 20,
-              color: '#2563eb'
-            }}>
-              {modal === 'login' ? 'Iniciar Sesión' : 'Crear Cuenta'}
-            </h2>
-            <label style={labelStyle}>Correo electrónico</label>
-            <input
-              style={inputStyle}
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              placeholder="ejemplo@correo.com"
-            />
-            <label style={labelStyle}>Contraseña</label>
-            <input
-              style={inputStyle}
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-              minLength={6}
-              placeholder="Mínimo 6 caracteres"
-            />
-            <button style={buttonStyle} type="submit">
-              {modal === 'login' ? 'Entrar' : 'Registrarse'}
-            </button>
-            {mensaje && <p style={{ marginTop: 16, color: '#2563eb', fontWeight: 600 }}>{mensaje}</p>}
-            <button style={secondaryButtonStyle} type="button" onClick={handleClose}>
-              Cancelar
-            </button>
-          </form>
-        </div>
-      )}
       <main style={{
         padding: '2rem',
         maxWidth: '1200px',
@@ -274,7 +180,20 @@ const Home = () => {
           <InfoBox title="Reportes enviados" value={15} link="/report" />
           <InfoBox title="Adopciones completadas" value={8} link="/donations" />
         </div>
-        {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+        <h2>Mapa de Temuco</h2>
+  <button
+  style={{
+    ...buttonStyle,
+    marginTop: '2rem',
+    width: 'clamp(140px, 40vw, 180px)',
+    background: 'linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)'
+  }}
+  onClick={() => setShowMap(!showMap)}
+>
+  {showMap ? 'Ocultar Mapa' : 'Mostrar Mapa'}
+</button>
+{showMap && <Map />}
+  {/* Eliminado LoginModal del index, ahora solo se usa la página /login */}
       </main>
       <Footer />
       <style>

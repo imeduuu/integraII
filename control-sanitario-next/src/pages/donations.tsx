@@ -3,13 +3,12 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import styles from '../styles/donations.module.css';
 
-
 const Donations = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    type: '',
-    quantity: '',
+  type: '',
+  quantity: '',
     message: '',
   });
 
@@ -17,13 +16,13 @@ const Donations = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+  setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Donación registrada:', formData);
-    alert('¡Gracias por tu donación! (Solo prueba; no se guarda en BD)');
+  alert('¡Gracias por tu donación! (Prueba sin guardar en la base de datos)');
     setFormData({ name: '', email: '', type: '', quantity: '', message: '' });
   };
 
@@ -33,7 +32,6 @@ const Donations = () => {
       <main className={styles.wrapper}>
         <section className={styles.card}>
           <h2 className={styles.title}>Donaciones y Voluntariado</h2>
-
           <form onSubmit={handleSubmit} className={styles.formGrid}>
             <div className={styles.group}>
               <label className={styles.label}>Nombre</label>
@@ -47,7 +45,6 @@ const Donations = () => {
                 placeholder="Tu nombre"
               />
             </div>
-
             <div className={styles.group}>
               <label className={styles.label}>Correo electrónico</label>
               <input
@@ -60,7 +57,6 @@ const Donations = () => {
               />
               <span className={styles.helper}>Opcional, por si necesitamos contactarte.</span>
             </div>
-
             <div className={styles.group}>
               <label className={styles.label}>Tipo de donación</label>
               <select
@@ -77,7 +73,6 @@ const Donations = () => {
                 <option value="otros">Otros</option>
               </select>
             </div>
-
             <div className={styles.group}>
               <label className={styles.label}>Cantidad</label>
               <input
@@ -90,7 +85,6 @@ const Donations = () => {
                 placeholder="Ej: 5 cajas, 10 sacos"
               />
             </div>
-
             <div className={styles.group}>
               <label className={styles.label}>Mensaje (opcional)</label>
               <textarea
@@ -101,7 +95,6 @@ const Donations = () => {
                 placeholder="Detalles de la donación"
               />
             </div>
-
             <div className={styles.actions}>
               <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>
                 Registrar Donación
