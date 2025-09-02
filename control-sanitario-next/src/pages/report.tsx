@@ -1,9 +1,11 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
+import Map from '../components/Map';
 
 import { useState } from 'react';
+
+import styles from '../styles/report.module.css';
 
 const Report = () => {
   const [descripcion, setDescripcion] = useState('');
@@ -11,6 +13,7 @@ const Report = () => {
   const [latitud, setLatitud] = useState('');
   const [longitud, setLongitud] = useState('');
   const [mensaje, setMensaje] = useState('');
+  const [showMap, setShowMap] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,32 +37,85 @@ const Report = () => {
       setMensaje('Error de conexión');
     }
   };
+  const buttonStyle: React.CSSProperties = {
+    width: '100%',
+    padding: '12px',
+    background: 'linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 700,
+    fontSize: '1.08rem',
+    cursor: 'pointer',
+    boxShadow: '0 2px 8px rgba(37,99,235,0.12)',
+    transition: 'transform 0.2s',
+  };
 
   return (
     <>
       <Navbar />
-      <main className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">Reportar Animal</h2>
-        <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
-          <div>
-            <label className="block">Descripción</label>
-            <input className="border p-2 w-full" value={descripcion} onChange={e => setDescripcion(e.target.value)} required />
-          </div>
-          <div>
-            <label className="block">Ubicación</label>
-            <input className="border p-2 w-full" value={ubicacion} onChange={e => setUbicacion(e.target.value)} required />
-          </div>
-          <div>
-            <label className="block">Latitud</label>
-            <input className="border p-2 w-full" value={latitud} onChange={e => setLatitud(e.target.value)} required type="number" step="any" />
-          </div>
-          <div>
-            <label className="block">Longitud</label>
-            <input className="border p-2 w-full" value={longitud} onChange={e => setLongitud(e.target.value)} required type="number" step="any" />
-          </div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Enviar reporte</button>
-        </form>
-        {mensaje && <p className="mt-4 font-bold">{mensaje}</p>}
+      <main>
+        <div className={styles.container}>
+          <h2 className={styles.title}>Reportar Animal</h2>
+          <h3 className={styles.subtitle}>Plataforma para la gestión y prevención sanitaria de animales en situación de calle</h3>
+          <p className={styles.text}>
+            Es una plataforma digital web diseñada para identificar, monitorear y gestionar casos de animales en situación de calle, con un enfoque en la prevención sanitaria y la colaboración comunitaria.<br /><br />
+            El sistema permite centralizar reportes ciudadanos, llevar un historial sanitario individual de cada animal, generar alertas tempranas y facilitar la coordinación entre vecinos, veterinarios y autoridades municipales, contribuyendo a mejorar la salud pública, el bienestar animal y la seguridad de la comunidad.
+          </p>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <label className={styles.label}>Descripción</label>
+            <textarea
+              className={styles.input}
+              value={descripcion}
+              onChange={e => setDescripcion(e.target.value)}
+              required
+              rows={3}
+              style={{resize: 'vertical'}}
+            />
+            <label className={styles.label}>Ubicación</label>
+            <textarea
+              className={styles.input}
+              value={ubicacion}
+              onChange={e => setUbicacion(e.target.value)}
+              required
+              rows={2}
+              style={{resize: 'vertical'}}
+            />
+            <label className={styles.label}>Latitud</label>
+            <textarea
+              className={styles.input}
+              value={latitud}
+              onChange={e => setLatitud(e.target.value)}
+              required
+              rows={1}
+              style={{resize: 'vertical'}}
+            />
+            <label className={styles.label}>Longitud</label>
+            <textarea
+              className={styles.input}
+              value={longitud}
+              onChange={e => setLongitud(e.target.value)}
+              required
+              rows={1}
+              style={{resize: 'vertical'}}
+            />
+            <h2>Mapa de Temuco</h2>
+            <button
+          style={{
+            ...buttonStyle,
+        marginTop: '2rem',
+        width: 'clamp(140px, 40vw, 180px)',
+        background: 'linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)'
+}}
+  onClick={() => setShowMap(!showMap)}
+>
+    {showMap ? 'Ocultar Mapa' : 'Mostrar Mapa'}
+    </button>
+  {showMap && <Map />}
+            <button className={styles.btn} type="submit">Enviar reporte</button>
+          </form>
+          {mensaje && <p className={styles.message}>{mensaje}</p>}
+        </div>
       </main>
       <Footer />
     </>
