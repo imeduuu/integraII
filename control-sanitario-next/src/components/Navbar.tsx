@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import styles from './navbar.module.css';
+import styles from '../styles/navbar.module.css';
 
 const Navbar = () => {
   const router = useRouter();
@@ -18,6 +18,7 @@ const Navbar = () => {
   <a href="/animals" className={getLinkClasses('/animals')}>Animales</a>
   <a href="/alerts" className={getLinkClasses('/alerts')}>Alertas</a>
   <a href="/donations" className={getLinkClasses('/donations')}>Donaciones</a>
+  <a href="/adopcion" className={getLinkClasses('/adopcion')}>Adopciones</a>
       </div>
     </nav>
   );

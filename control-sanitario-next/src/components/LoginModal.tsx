@@ -22,7 +22,7 @@ const LoginModal = ({ onClose }: { onClose: () => void }) => {
         <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>Contraseña</label>
         <input style={{ width: '100%', padding: '8px', marginBottom: '16px', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem' }} type="password" value={password} onChange={e => setPassword(e.target.value)} required />
         <button style={{ width: '100%', padding: '10px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 700, fontSize: '1rem', cursor: 'pointer' }} type="submit">Entrar</button>
-        <div style={{ marginTop: 12 }}>
+        <div style={{ marginTop: 12, textAlign: 'center' }}>
           <a href="/forgot-password" style={{ color: '#2563eb', textDecoration: 'underline', fontSize: '0.95rem' }}>
             ¿Olvidaste tu contraseña?
           </a>
