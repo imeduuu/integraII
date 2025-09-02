@@ -18,6 +18,7 @@ const Navbar = () => {
         <a href="/animals" className={getLinkClasses('/animals')}>Animales</a>
         <a href="/alerts" className={getLinkClasses('/alerts')}>Alertas</a>
         <a href="/donations" className={getLinkClasses('/donations')}>Donaciones</a>
+        <a href="/adopcion" className={getLinkClasses('/adopcion')}>Adopciones</a>
       </div>
     </nav>
   );
