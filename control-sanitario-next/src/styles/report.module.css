@@ -1,0 +1,85 @@
+/* report.module.css - Estilos locales para el reporte sanitario comunitario */
+
+.container {
+  background-color: #f5f9f6;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(60, 120, 80, 0.08);
+  max-width: 600px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.title {
+  color: #2d6a4f;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.subtitle {
+  color: #40916c;
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.text {
+  color: #333;
+  line-height: 1.6;
+  font-size: 1rem;
+  margin-bottom: 24px;
+  text-align: justify;
+}
+
+.form {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.input {
+  border: 1px solid #b7e4c7;
+  padding: 8px;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.btn {
+  background-color: #40916c;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 24px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(60, 120, 80, 0.08);
+  transition: background 0.2s;
+  margin-right: 8px;
+}
+
+.btn:hover {
+  background-color: #2d6a4f;
+}
+
+.message {
+  margin-top: 16px;
+  font-weight: bold;
+  color: #2d6a4f;
+  text-align: center;
+}
+
