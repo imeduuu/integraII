@@ -8,9 +8,33 @@ export async function getUsers() {
 }
 
 // Crear un usuario nuevo
-export async function createUser(email: string, nombres: string, apellidos: string, password: string, rolId: number, telefono?: string) {
+export async function createUser(
+  email: string,
+  nombre_usuario: string,
+  apellido_paterno: string,
+  apellido_materno: string,
+  password_hash: string,
+  id_rol: number,
+  activo: boolean,
+  telefono?: string,
+  sexo?: string,
+  fecha_nacimiento?: Date,
+  id_organizacion?: number
+) {
   return await prisma.usuario.create({
-    data: { email, nombres, apellidos, password, rolId, telefono },
+    data: {
+      email,
+      nombre_usuario,
+      apellido_paterno,
+      apellido_materno,
+      password_hash,
+      rol: { connect: { id_rol } },
+      activo,
+      telefono,
+      sexo,
+      fecha_nacimiento,
+      ...(id_organizacion !== undefined ? { organizacion: { connect: { id_organizacion } } } : {})
+    },
   });
 }
 
