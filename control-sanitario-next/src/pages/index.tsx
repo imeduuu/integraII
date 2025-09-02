@@ -1,49 +1,14 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import LoginModal from '../components/LoginModal';
 import InfoBox from '../components/InfoBox';
 import styles from '../styles/infoBox.module.css';
+import AuthModal from '../components/AuthModal';
 
 const backgroundUrl = '/perrito.png';
 
-const modalStyle: React.CSSProperties = {
-  position: 'fixed',
-  top: 0, left: 0, right: 0, bottom: 0,
-  background: 'rgba(0,0,0,0.3)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 1000
-};
-const formStyle: React.CSSProperties = {
-  maxWidth: '400px',
-  width: '90vw',
-  padding: '32px',
-  background: 'rgba(255,255,255,0.98)',
-  borderRadius: '18px',
-  boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
-  border: '1px solid #e0e7ef',
-  animation: 'fadeIn 0.4s'
-};
-const labelStyle: React.CSSProperties = {
-  display: 'block',
-  marginBottom: '8px',
-  fontWeight: 600,
-  color: '#2563eb'
-};
-const inputStyle: React.CSSProperties = {
-  width: '100%',
-  padding: '10px',
-  marginBottom: '18px',
-  borderRadius: '8px',
-  border: '1.5px solid #b6c2d6',
-  fontSize: '1.05rem',
-  background: '#f8fafc',
-  transition: 'border 0.2s'
-};
 const buttonStyle: React.CSSProperties = {
-  width: '100%',
+  width: 180,
   padding: '12px',
   background: 'linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)',
   color: '#fff',
@@ -55,50 +20,27 @@ const buttonStyle: React.CSSProperties = {
   boxShadow: '0 2px 8px rgba(37,99,235,0.12)',
   transition: 'transform 0.2s',
 };
-const secondaryButtonStyle: React.CSSProperties = {
+
+const outlineButtonStyle: React.CSSProperties = {
   ...buttonStyle,
-  background: '#e5e7eb',
+  background: '#fff',
   color: '#2563eb',
-  marginTop: 8,
-  boxShadow: 'none'
+  border: '2px solid #2563eb',
 };
 
-function validateEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
 const Home = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const [modal, setModal] = useState<'login' | 'register' | null>(null);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [mensaje, setMensaje] = useState('');
-
-  const handleOpen = (type: 'login' | 'register') => {
-    setModal(type);
-    setEmail('');
-    setPassword('');
-    setMensaje('');
-  };
-
-  const handleClose = () => setModal(null);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateEmail(email)) {
-      setMensaje('Por favor ingresa un correo válido.');
-      return;
-    }
-    if (password.length < 6) {
-      setMensaje('La contraseña debe tener al menos 6 caracteres.');
-      return;
-    }
-    setMensaje(modal === 'login' ? 'Inicio de sesión simulado.' : 'Registro simulado.');
-  };
+  const [authOpen, setAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
 
   return (
     <>
       <Navbar />
+      <AuthModal
+        open={authOpen}
+        onClose={() => setAuthOpen(false)}
+        mode={authMode}
+        setMode={setAuthMode}
+      />
       <div
         style={{
           minHeight: '75vh',
@@ -114,7 +56,7 @@ const Home = () => {
       >
         <div
           style={{
-            background: 'rgba(255,255,255,0.75)', // más transparente
+            background: 'rgba(255,255,255,0.75)',
             borderRadius: 24,
             boxShadow: '0 8px 32px rgba(37,99,235,0.10)',
             padding: '3vw 6vw',
@@ -123,10 +65,9 @@ const Home = () => {
             textAlign: 'center',
             border: '1px solid #e0e7ef',
             animation: 'fadeIn 0.7s',
-            backdropFilter: 'blur(10px)' // difuminado bonito estilo glass
+            backdropFilter: 'blur(10px)'
           }}
         >
-
           <img
             src={backgroundUrl}
             alt="Salud y bienestar"
@@ -166,83 +107,21 @@ const Home = () => {
           }}>
             Gestiona tu salud y bienestar de forma sencilla y segura.
           </p>
+          {/* SOLO UN BOTÓN REGÍSTRATE */}
           <div style={{
             display: 'flex',
-            flexDirection: 'row',
-            gap: '18px',
-            flexWrap: 'wrap',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            marginBottom: '10px'
           }}>
             <button
-              style={{
-                ...buttonStyle,
-                width: 'clamp(140px, 40vw, 180px)'
-              }}
-              onClick={() => setShowLogin(true)}
-              onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.05)')}
-              onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
+              style={buttonStyle}
+              onClick={() => { setAuthMode('register'); setAuthOpen(true); }}
             >
-              Iniciar sesión
-            </button>
-            <button
-              style={{
-                ...buttonStyle,
-                width: 'clamp(140px, 40vw, 180px)',
-                background: 'linear-gradient(90deg,#60a5fa 60%,#2563eb 100%)'
-              }}
-              onClick={() => handleOpen('register')}
-              onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.05)')}
-              onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
-            >
-              Crear cuenta
+              Regístrate
             </button>
           </div>
         </div>
       </div>
-      {modal && (
-        <div style={modalStyle} onClick={handleClose}>
-          <form
-            style={formStyle}
-            onClick={e => e.stopPropagation()}
-            onSubmit={handleSubmit}
-          >
-            <h2 style={{
-              fontWeight: 700,
-              fontSize: '1.5rem',
-              marginBottom: 20,
-              color: '#2563eb'
-            }}>
-              {modal === 'login' ? 'Iniciar Sesión' : 'Crear Cuenta'}
-            </h2>
-            <label style={labelStyle}>Correo electrónico</label>
-            <input
-              style={inputStyle}
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              placeholder="ejemplo@correo.com"
-            />
-            <label style={labelStyle}>Contraseña</label>
-            <input
-              style={inputStyle}
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-              minLength={6}
-              placeholder="Mínimo 6 caracteres"
-            />
-            <button style={buttonStyle} type="submit">
-              {modal === 'login' ? 'Entrar' : 'Registrarse'}
-            </button>
-            {mensaje && <p style={{ marginTop: 16, color: '#2563eb', fontWeight: 600 }}>{mensaje}</p>}
-            <button style={secondaryButtonStyle} type="button" onClick={handleClose}>
-              Cancelar
-            </button>
-          </form>
-        </div>
-      )}
       <main style={{
         padding: '2rem',
         maxWidth: '1200px',
@@ -274,7 +153,6 @@ const Home = () => {
           <InfoBox title="Reportes enviados" value={15} link="/report" />
           <InfoBox title="Adopciones completadas" value={8} link="/donations" />
         </div>
-        {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       </main>
       <Footer />
       <style>
