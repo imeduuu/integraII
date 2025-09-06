@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
+import Map from '../components/Map';
 
 import { useState } from 'react';
 
@@ -13,6 +13,7 @@ const Report = () => {
   const [latitud, setLatitud] = useState('');
   const [longitud, setLongitud] = useState('');
   const [mensaje, setMensaje] = useState('');
+  const [showMap, setShowMap] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,6 +36,19 @@ const Report = () => {
     } catch {
       setMensaje('Error de conexión');
     }
+  };
+  const buttonStyle: React.CSSProperties = {
+    width: '100%',
+    padding: '12px',
+    background: 'linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 700,
+    fontSize: '1.08rem',
+    cursor: 'pointer',
+    boxShadow: '0 2px 8px rgba(37,99,235,0.12)',
+    transition: 'transform 0.2s',
   };
 
   return (

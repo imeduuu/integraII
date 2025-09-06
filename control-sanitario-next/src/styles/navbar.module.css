@@ -1,12 +1,12 @@
 .navbar {
   background-color: hsl(212, 92%, 64%); /* Un negro muy oscuro */
-  color: #4d5ef3;
+  color: #43a2f0;
   padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ffffff; /* Separación sutil */
+  border-bottom: 1px solid #43a2f0; /* Separación sutil */
 }
 @media (min-width: 640px) {
   .navbar {
@@ -17,7 +17,7 @@
 .navbarTitle {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #fff; /* Título blanco */
+  color: #000000; /* Título blanco */
   letter-spacing: 0.05em;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .navLink {
-  color: #fff;
+  color: #000000;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   text-decoration: none; /* Quitamos el subrayado por defecto */
@@ -42,7 +42,7 @@
 }
 
 .navLinkActive {
-  background-color: #ffffff; /* Un gris oscuro para el enlace activo */
+  background-color: #43a2f0; /* Un gris oscuro para el enlace activo */
   font-weight: bold;
   position: relative;
   overflow: hidden;
@@ -57,5 +57,5 @@
   bottom: 0.25rem;
   width: 70%;
   height: 2px;
-  background-color: #fff;
+  background-color: #000000;
 }
