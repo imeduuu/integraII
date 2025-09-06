@@ -7,14 +7,35 @@ const LoginModal = ({ onClose }: { onClose: () => void }) => {
   const [password, setPassword] = useState('');
   const [mensaje, setMensaje] = useState('');
 
+  // Función de validación de email
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setMensaje(''); // Limpiamos mensajes anteriores
+
+    // 1. Validar email
+    if (!validateEmail(email)) {
+      setMensaje('Por favor, ingresa un correo electrónico válido.');
+      return;
+    }
+
+    // 2. Validar contraseña
+    if (password.length < 6) {
+      setMensaje('La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
+    // 3. Si todo es válido, continuar
     setMensaje('Login simulado (sin backend)');
+    console.log('Login exitoso con:', { email, password });
   };
 
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-      <form style={{ maxWidth: '400px', padding: '32px', background: '#f3f4f6', borderRadius: '12px', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', position: 'relative' }} onSubmit={handleSubmit}>
+      <form style={{ maxWidth: '400px', padding: '32px', background: '#f3f4f6', borderRadius: '12px', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', position: 'relative' }} onSubmit={handleSubmit} noValidate>
         <button type="button" onClick={onClose} style={{ position: 'absolute', top: 12, right: 12, background: 'none', border: 'none', fontSize: 22, cursor: 'pointer' }}>&times;</button>
         <h2 style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 20 }}>Iniciar Sesión</h2>
         <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>Correo electrónico</label>

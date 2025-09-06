@@ -8,6 +8,7 @@
     "next": "^14.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.62.0",
     "react-icons": "^5.5.0"
   },
   "name": "control-sanitario-next",

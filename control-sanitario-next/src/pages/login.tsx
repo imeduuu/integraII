@@ -62,7 +62,7 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <form style={formStyle} onSubmit={handleSubmit}>
+      <form style={formStyle} onSubmit={handleSubmit} noValidate>
         <h2 style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 20 }}>Iniciar Sesión</h2>
         <label style={labelStyle}>Correo electrónico</label>
         <input

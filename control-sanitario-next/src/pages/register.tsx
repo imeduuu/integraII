@@ -50,6 +50,13 @@ const Register = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
+    setMensaje(''); // Limpiar mensajes de error anteriores
+
+    // Validación secuencial y unificada
+    if (!nombre) {
+      setMensaje('El nombre es obligatorio.');
+      return;
+    }
     if (!validateEmail(email)) {
       setMensaje('Por favor ingresa un correo válido.');
       return;
@@ -62,13 +69,14 @@ const Register = () => {
       setMensaje('Las contraseñas no coinciden.');
       return;
     }
+    
     setMensaje('Registro simulado (sin backend)');
   };
 
   return (
     <>
       <Navbar />
-      <form style={formStyle} onSubmit={handleSubmit}>
+      <form style={formStyle} onSubmit={handleSubmit} noValidate>
         <h2 style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 20 }}>Crear Cuenta</h2>
         <label style={labelStyle}>Nombre</label>
         <input
