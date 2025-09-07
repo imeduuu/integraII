@@ -134,7 +134,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, mode, setMode }) =
             Iniciar sesión
           </button>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <label style={{ fontWeight: 600, display: 'block', marginBottom: 8 }}>Correo electrónico</label>
           <input
             style={inputStyle}
