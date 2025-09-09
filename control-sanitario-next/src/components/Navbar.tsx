@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/navbar.module.css';
+import { userMock } from '../context/userMock';
 
 const Navbar = () => {
   const router = useRouter();
@@ -9,16 +10,48 @@ const Navbar = () => {
     return `${styles.navLink} ${router.pathname === path ? styles.navLinkActive : ''}`;
   };
 
+  // Menú dinámico por rol
+  let links = [];
+  if (userMock.role === 'admin') {
+    links = [
+      { href: '/admin-home', label: 'Panel Admin' },
+      { href: '/admin-users', label: 'Usuarios' },
+      { href: '/admin-campaigns', label: 'Campañas' }
+    ];
+  } else if (userMock.role === 'user') {
+    links = [
+      { href: '/edit-profile', label: 'Perfil' },
+      { href: '/adopcion', label: 'Adopciones' },
+      { href: '/report', label: 'Reportar' },
+      { href: '/animals', label: 'Animales' },
+      { href: '/donations', label: 'Donaciones' }
+    ];
+  } else if (userMock.role === 'org') {
+    links = [
+      { href: '/org-campaigns', label: 'Campañas' },
+      { href: '/org-publish-adoption', label: 'Publicar Adopción' },
+      { href: '/org-stats', label: 'Estadísticas' }
+    ];
+  }
+
   return (
     <nav className={styles.navbar}>
       <span className={styles.navbarTitle}>Control Sanitario</span>
       <div className={styles.navbarLinks}>
-  <a href="/" className={getLinkClasses('/')}>Inicio</a>
-  <a href="/report" className={getLinkClasses('/report')}>Reportar</a>
-  <a href="/animals" className={getLinkClasses('/animals')}>Animales</a>
-  <a href="/alerts" className={getLinkClasses('/alerts')}>Alertas</a>
-  <a href="/donations" className={getLinkClasses('/donations')}>Donaciones</a>
-  <a href="/adopcion" className={getLinkClasses('/adopcion')}>Adopciones</a>
+        <a href="/" className={getLinkClasses('/')}>Inicio</a>
+        {links.map(link => (
+          <a key={link.href + link.label} href={link.href} className={getLinkClasses(link.href)}>
+            {link.label}
+          </a>
+        ))}
+      </div>
+      <div className={styles.profileSection}>
+        <img 
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=32&h=32" 
+          alt="Perfil" 
+          className={styles.profileImage}
+        />
+        <a href="/edit-profile" className={getLinkClasses('/edit-profile')}>Editar perfil</a>
       </div>
     </nav>
   );
