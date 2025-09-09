@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Map from '../components/Map';
-import LoginModal from '../components/LoginModal';
-import InfoBox from '../components/InfoBox';
+import UserMetricsCards from '../components/UserMetricsCards'; // Importamos el nuevo componente
 import styles from '../styles/infoBox.module.css';
 
 const backgroundUrl = '/perrito.png';
@@ -175,11 +174,7 @@ const Home = () => {
         }}>
           Reporta animales en situación de calle, consulta focos sanitarios y participa en la comunidad.
         </p>
-        <div className={styles.infoGrid}>
-          <InfoBox title="Animales registrados" value={42} link="/animals" />
-          <InfoBox title="Reportes enviados" value={15} link="/report" />
-          <InfoBox title="Adopciones completadas" value={8} link="/donations" />
-        </div>
+        <UserMetricsCards />
         <h2>Mapa de Temuco</h2>
   <button
   style={{
