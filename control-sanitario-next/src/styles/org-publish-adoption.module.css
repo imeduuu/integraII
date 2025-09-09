@@ -1,0 +1,39 @@
+/* Estilos para publicar adopción */
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.title {
+  color: #2563eb;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+.form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 2rem;
+}
+.label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.input, .textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+.button {
+  background: #2563eb;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+interface LoginFormInputs {
+  email: string;
+  password: string;
+}
 
 const formStyle: React.CSSProperties = {
   maxWidth: '400px',
@@ -23,6 +29,12 @@ const inputStyle: React.CSSProperties = {
   border: '1px solid #ccc',
   fontSize: '1rem'
 };
+const errorStyle: React.CSSProperties = {
+  color: '#e11d48',
+  fontSize: '13px',
+  marginTop: '-8px',
+  marginBottom: '16px',
+};
 const buttonStyle: React.CSSProperties = {
   width: '100%',
   padding: '10px',
@@ -35,60 +47,53 @@ const buttonStyle: React.CSSProperties = {
   cursor: 'pointer'
 };
 
-function validateEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [mensaje, setMensaje] = useState('');
-  const [touched, setTouched] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
+  const [mensaje, setMensaje] = React.useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setTouched(true);
-    if (!validateEmail(email)) {
-      setMensaje('Por favor ingresa un correo válido.');
-      return;
-    }
-    if (password.length < 6) {
-      setMensaje('La contraseña debe tener al menos 6 caracteres.');
-      return;
-    }
+  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
+    console.log('Datos del formulario:', data);
     setMensaje('Login simulado (sin backend)');
   };
 
   return (
     <>
       <Navbar />
-      <form style={formStyle} onSubmit={handleSubmit} noValidate>
+      <form style={formStyle} onSubmit={handleSubmit(onSubmit)} noValidate>
         <h2 style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 20 }}>Iniciar Sesión</h2>
+        
         <label style={labelStyle}>Correo electrónico</label>
         <input
           style={inputStyle}
           type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-          onBlur={() => setTouched(true)}
+          placeholder="correo@ejemplo.com"
+          {...register('email', {
+            required: 'El correo es obligatorio',
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: 'Por favor, ingresa un correo válido.'
+            }
+          })}
         />
-        {touched && !validateEmail(email) && (
-          <span style={{ color: '#e11d48', fontSize: 13 }}>Correo inválido</span>
-        )}
+        {errors.email && <span style={errorStyle}>{errors.email.message}</span>}
+
         <label style={labelStyle}>Contraseña</label>
         <input
           style={inputStyle}
           type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-          minLength={6}
+          placeholder="Mínimo 6 caracteres"
+          {...register('password', { 
+            required: 'La contraseña es obligatoria',
+            minLength: {
+              value: 6,
+              message: 'La contraseña debe tener al menos 6 caracteres.'
+            }
+          })}
         />
-        {touched && password.length > 0 && password.length < 6 && (
-          <span style={{ color: '#e11d48', fontSize: 13 }}>Mínimo 6 caracteres</span>
-        )}
+        {errors.password && <span style={errorStyle}>{errors.password.message}</span>}
+
         <button style={buttonStyle} type="submit">Entrar</button>
+        
         <div style={{ marginTop: 12 }}>
           <a href="/forgot-password" style={{ color: '#2563eb', textDecoration: 'underline', fontSize: '0.95rem' }}>
             ¿Olvidaste tu contraseña?
