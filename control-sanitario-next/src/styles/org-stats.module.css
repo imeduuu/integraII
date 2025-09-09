@@ -1,0 +1,29 @@
+/* Estilos para estadísticas de organización */
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.title {
+  color: #2563eb;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  text-align: center;
+}
+.statCard {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+}
+.statNumber {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2563eb;
+}
