@@ -5,6 +5,7 @@ import Map from '../components/Map';
 import LoginModal from '../components/LoginModal';
 import InfoBox from '../components/InfoBox';
 import styles from '../styles/infoBox.module.css';
+import '../styles/globals.css';
 
 const backgroundUrl = '/perrito.png';
 
