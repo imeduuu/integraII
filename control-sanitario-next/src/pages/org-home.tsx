@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../styles/org-home.module.css";
+import { campaigns } from "../services/mockCampaigns";
 
 const OrgHome = () => {
   return (
