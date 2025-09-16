@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import Button from "./ui/Button";
+import Input from "./ui/Input";
+import Modal from "./ui/Modal";
 
 // --- estilos base ---
 const footerStyle: React.CSSProperties = {
@@ -10,45 +13,6 @@ const footerStyle: React.CSSProperties = {
   marginTop: "3rem"
 };
 
-const buttonStyle: React.CSSProperties = {
-  padding: "10px 20px",
-  background: "linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)",
-  border: "none",
-  borderRadius: "8px",
-  color: "#fff",
-  fontWeight: 700,
-  cursor: "pointer",
-  transition: "transform 0.2s",
-  marginTop: "10px"
-};
-
-const modalStyle: React.CSSProperties = {
-  position: "fixed",
-  top: 0, left: 0, right: 0, bottom: 0,
-  background: "rgba(0,0,0,0.4)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  zIndex: 1000
-};
-
-const formStyle: React.CSSProperties = {
-  maxWidth: "400px",
-  width: "90vw",
-  padding: "32px",
-  background: "#fff",
-  borderRadius: "16px",
-  boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
-  animation: "fadeIn 0.4s"
-};
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "10px",
-  marginBottom: "14px",
-  borderRadius: "6px",
-  border: "1px solid #ccc"
-};
 
 const Footer: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
@@ -70,17 +34,7 @@ const Footer: React.FC = () => {
 
         {/* Botón Quiénes Somos */}
         <a href="/quienes-somos">
-          <button
-            style={buttonStyle}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.transform = "scale(1.05)")
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.transform = "scale(1)")
-            }
-          >
-            Quiénes Somos
-          </button>
+          <Button className="mt-2">Quiénes Somos</Button>
         </a>
 
         {/* Redes sociales */}
@@ -102,30 +56,16 @@ const Footer: React.FC = () => {
       </footer>
 
       {/* Modal Feedback */}
-      {showModal && (
-        <div style={modalStyle} onClick={() => setShowModal(false)}>
-          <form style={formStyle} onClick={(e) => e.stopPropagation()}>
-            <h2 style={{ marginBottom: "1rem", color: "#2563eb" }}>Envíanos tu Feedback</h2>
-            <input style={inputStyle} type="text" placeholder="Tu nombre" required />
-            <input style={inputStyle} type="email" placeholder="Tu correo" required />
-            <textarea
-              style={{ ...inputStyle, height: "100px" }}
-              placeholder="Escribe tu mensaje..."
-              required
-            />
-            <button style={buttonStyle} type="submit">
-              Enviar
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowModal(false)}
-              style={{ ...buttonStyle, background: "#e5e7eb", color: "#2563eb", marginTop: "8px" }}
-            >
-              Cancelar
-            </button>
-          </form>
-        </div>
-      )}
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <form className="flex flex-col gap-3" onClick={e => e.stopPropagation()}>
+          <h2 className="mb-2 text-blue-700 font-bold text-lg">Envíanos tu Feedback</h2>
+          <Input type="text" placeholder="Tu nombre" required />
+          <Input type="email" placeholder="Tu correo" required />
+          <textarea className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" style={{height: '100px'}} placeholder="Escribe tu mensaje..." required />
+          <Button type="submit">Enviar</Button>
+          <Button type="button" variant="secondary" className="mt-1" onClick={() => setShowModal(false)}>Cancelar</Button>
+        </form>
+      </Modal>
 
       <style>
         {`
