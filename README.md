@@ -42,3 +42,18 @@ para correr el programa es desde la ruta de control-sanitario-next
 
 # Notas
 - Dudas comunicarlas lo antes posible.
+
+## Base de Datos
+
+### Schema
+La base de datos utiliza **Prisma ORM** para manejar sus modelos.  
+Los principales son:
+- **User**: representa a los usuarios del sistema con sus credenciales y roles.
+- **Organization**: representa instituciones u organizaciones que administran los datos.
+- **Animal**: contiene la información de los animales registrados en el sistema.
+
+### Migraciones
+Para aplicar cambios en la estructura de la base de datos (por ejemplo, al modificar el schema de Prisma), se debe correr el siguiente comando:
+
+```bash
+npx prisma migrate dev
