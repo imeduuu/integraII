@@ -24,7 +24,8 @@ const Navbar = () => {
       { href: '/adopcion', label: 'Adopciones' },
       { href: '/report', label: 'Reportar' },
       { href: '/animals', label: 'Animales' },
-      { href: '/donations', label: 'Donaciones' }
+      { href: '/donations', label: 'Donaciones' },
+      { href: '/admin-orgs', label: 'orgs' }
     ];
   } else if (userMock.role === 'org') {
     links = [
