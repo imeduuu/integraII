@@ -33,6 +33,9 @@
     "start": "next start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
