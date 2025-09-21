@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { userMock } from "../../context/userMock";
 
 const mockOrgs = [
   { id: 1, name: "Simon", email: "hola123@gmail.com", address: "Av. Central 123", status: "Activa" },
@@ -25,6 +26,11 @@ const AdminOrgDetail = () => {
   const backgroundUrl = "/perrito.png";
 
   useEffect(() => {
+    // Si el usuario no es admin, redirigir a acceso denegado
+    if (userMock.role !== "admin") {
+      router.replace("/access-denied");
+      return;
+    }
     if (id) {
       const foundOrg = mockOrgs.find((o) => o.id === Number(id));
       if (foundOrg) {

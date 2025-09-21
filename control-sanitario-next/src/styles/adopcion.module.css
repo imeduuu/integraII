@@ -1,65 +1,90 @@
-/* adopcion.module.css - Estilos locales para la página de adopciones */
+/* adopcion.module.css - Estilos para el formulario de adopción similar a donaciones */
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 2rem;
-  justify-content: center;
-}
-
-@media (min-width: 640px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.wrapper {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
 .card {
-  background: #fff;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-  padding: 2rem;
-  width: 18rem;
+  background: #8fc9ff;
+  border: 1px solid #e5e7eb;
+  border-radius: 32px;
+  box-shadow: 0 12px 48px rgba(0,0,0,.15);
+  padding: 3.5rem 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  transition: box-shadow 0.2s;
-}
-.card:hover {
-  box-shadow: 0 8px 32px rgba(60,120,80,0.15);
+  align-items: stretch;
 }
 
-.img {
-  width: 7rem;
-  height: 7rem;
-  object-fit: cover;
-  border-radius: 50%;
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
   margin-bottom: 1rem;
-  border: 2px solid #e0e0e0;
+  letter-spacing: .2px;
 }
 
-.nombre {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  text-align: center;
+.formGrid {
+  display: grid;
+  gap: 1rem;
 }
 
-.info {
-  font-size: 1rem;
-  margin-bottom: 0.25rem;
-  text-align: center;
+.group {
+  display: grid;
+  gap: .4rem;
 }
 
-.info span {
-  font-weight: bold;
+.label {
+  font-weight: 600;
+  color: #111827;
+}
+
+.input, .select, .textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  background: #f9fafb;
+}
+
+.input:focus, .select:focus, .textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+  background: #fff;
+}
+
+.textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: .75rem;
+  margin-top: .5rem;
+}
+
+.btn {
+  border: 0;
+  border-radius: 9999px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btnPrimary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  background: #1d4ed8;
 }
