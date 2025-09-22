@@ -1,114 +1,109 @@
-import styles from "../styles/adopcion.module.css";
 
-import React from "react";
-import { useForm } from "react-hook-form";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-// Formulario de solicitud de adopción para usuarios
-// Este formulario puede ser accedido por cualquier usuario
+import React, { useState } from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import AnimalCard from '../components/AnimalCard';
+import styles from '../styles/adopcion.module.css';
+import AdoptionForm from '../components/AdoptionForm';
+import ConfirmationModal from '../components/ConfirmationModal';
 
-const ANIMALES = [
-  "Bella",
-  "Coco",
-  "Kira",
-  "Luna",
-  "Max",
-  "Milo",
-  "Nina",
-  "Rocky",
-  "Simba",
-  "Toby",
-  "Firulais",
-];
+const animales = [
+  {
+    nombre: 'Bella', estado: 'Disponible', ubicacion: 'Monterrey', edad: '3 años', imagen: 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=facearea&w=96&h=96',
+  },
+  {
+    nombre: 'Coco', estado: 'Disponible', ubicacion: 'Tijuana', edad: '4 años', imagen: 'https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=facearea&w=96&h=96',
+  },
+  {
+    nombre: 'Kira', estado: 'Disponible', ubicacion: 'Mérida', edad: '2 años', imagen: 'https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=facearea&w=96&h=96',
+  },
+  {
+    nombre: 'Luna', estado: 'Disponible', ubicacion: 'CDMX', edad: '2 años', imagen: 'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96',
+  },
+  {
+    nombre: 'Max', estado: 'En proceso', ubicacion: 'Guadalajara', edad: '1 año', imagen: 'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96',
+  },
+  {
+    nombre: 'Milo', estado: 'En proceso', ubicacion: 'Cancún', edad: '3 años', imagen: 'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96',
+  },
+  {
+    nombre: 'Nina', estado: 'Disponible', ubicacion: 'Querétaro', edad: '5 años', imagen: 'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96',
+  },
+  {
+    nombre: 'Rocky', estado: 'Disponible', ubicacion: 'Puebla', edad: '4 años', imagen: 'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96',
+  },
+  {
+    nombre: 'Simba', estado: 'En proceso', ubicacion: 'Toluca', edad: '2 años', imagen: 'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96',
+  },
+  {
+    nombre: 'Toby', estado: 'Disponible', ubicacion: 'León', edad: '1 año', imagen: 'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96',
+  },
+].sort((a, b) => a.nombre.localeCompare(b.nombre));
 
-type AdoptionRequestFormData = {
-  animal: string;
-  nombre: string;
-  email: string;
-  telefono: string;
-  mensaje: string;
-};
-
-const Adopcion = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<AdoptionRequestFormData>();
-
-  const onSubmit = (data: AdoptionRequestFormData) => {
-    // Aquí iría la lógica para enviar la solicitud
-    alert(`¡Solicitud de adopción enviada para ${data.animal}! Nos pondremos en contacto contigo.`);
+export default function Adopcion() {
+  const [selectedAnimal, setSelectedAnimal] = useState<any | null>(null);
+  const [formData, setFormData] = useState<any | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  
+  const handleAdoptClick = (animal: any) => {
+    setSelectedAnimal(animal);
   };
 
+  const handleFormSubmit = (data: any) => {
+    setFormData(data);
+    setShowModal(true); // abrir modal al enviar formulario
+  };
+
+  const handleConfirm = () => {
+    console.log("Solicitud enviada:", { animal: selectedAnimal, ...formData });
+    setShowModal(false);
+    setSelectedAnimal(null);
+    setFormData(null);
+  };
+  
   return (
     <>
       <Navbar />
-      <main className="min-h-screen flex items-center justify-center" style={{background: '#eaf4ff'}}>
-        <div className={styles.card}>
-    <h2 className={styles.title}>Solicitud de Adopción</h2>
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.formGrid}>
-      <div className={styles.group}>
-        <label className={styles.label}>Animal que quieres adoptar</label>
-        <select
-          className={styles.select}
-          {...register("animal", { required: "Selecciona un animal" })}
-        >
-          <option value="">Selecciona un animal</option>
-          {ANIMALES.map((a) => (
-            <option key={a} value={a}>{a}</option>
+      <main className="min-h-screen bg-gray-50 py-8">
+        <h1 className="text-3xl font-bold text-center mb-8">Animales en Adopción</h1>
+
+        {!selectedAnimal ? (
+        <div className={styles.grid}>
+          {animales.map((animal, idx) => (
+            <div className={styles.card} key={idx}>
+              <img src={animal.imagen} alt={animal.nombre} className={styles.img} />
+              <div className={styles.nombre}>{animal.nombre}</div>
+              <div className={styles.info}><span>Estado:</span> {animal.estado}</div>
+              <div className={styles.info}><span>Ubicación:</span> {animal.ubicacion}</div>
+              <div className={styles.info}><span>Edad:</span> {animal.edad}</div>
+               
+               {animal.estado === 'Disponible' && (
+                  <button
+                    onClick={() => handleAdoptClick(animal)}
+                    className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+                  >
+                    Adoptar
+                  </button>
+                )}
+            </div>
           ))}
-        </select>
-        {errors.animal && <p className="text-red-500 text-sm mt-1">{errors.animal.message}</p>}
-      </div>
-      <div className={styles.group}>
-        <label className={styles.label}>Nombre completo</label>
-        <input
-          className={styles.input}
-          type="text"
-          {...register("nombre", { required: "El nombre es obligatorio" })}
-        />
-        {errors.nombre && <p className="text-red-500 text-sm mt-1">{errors.nombre.message}</p>}
-      </div>
-      <div className={styles.group}>
-        <label className={styles.label}>Email</label>
-        <input
-          className={styles.input}
-          type="email"
-          {...register("email", { required: "El email es obligatorio" })}
-        />
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-      </div>
-      <div className={styles.group}>
-        <label className={styles.label}>Teléfono</label>
-        <input
-          className={styles.input}
-          type="tel"
-          {...register("telefono", { required: "El teléfono es obligatorio" })}
-        />
-        {errors.telefono && <p className="text-red-500 text-sm mt-1">{errors.telefono.message}</p>}
-      </div>
-      <div className={styles.group}>
-        <label className={styles.label}>Mensaje</label>
-        <textarea
-          className={styles.textarea}
-          rows={4}
-          placeholder="¿Por qué quieres adoptar?"
-          {...register("mensaje", { required: "El mensaje es obligatorio" })}
-        />
-        {errors.mensaje && <p className="text-red-500 text-sm mt-1">{errors.mensaje.message}</p>}
-      </div>
-      <div className={styles.actions}>
-        <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>
-          Enviar solicitud
-        </button>
-      </div>
-    </form>
         </div>
+        ) : (
+          <AdoptionForm animal={selectedAnimal} onSubmit={handleFormSubmit} />
+        )}
+
+        {showModal && (
+          <ConfirmationModal
+            title="Confirmar solicitud de adopción"
+            animal={selectedAnimal}
+            formData={formData}
+            onCancel={() => setShowModal(false)}
+            onConfirm={handleConfirm}
+          />
+        )}
       </main>
       <Footer />
     </>
   );
-};
+}
 
-export default Adopcion;
