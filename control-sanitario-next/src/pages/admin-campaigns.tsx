@@ -36,12 +36,12 @@ const CampaignList = () => {
       <Navbar />
       <main className={styles.container}>
         <h1 className={styles.title}>Campañas</h1>
-        <table className={styles.table}>
+        <table className={styles.table} role="table" aria-label="Listado de campañas">
           <thead className={styles.thead}>
             <tr className={styles.tr}>
-              <th className={styles.th}>Nombre</th>
-              <th className={styles.th}>Estado</th>
-              <th className={styles.th}>Acciones</th>
+              <th className={styles.th} scope="col">Nombre</th>
+              <th className={styles.th} scope="col">Estado</th>
+              <th className={styles.th} scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -52,8 +52,18 @@ const CampaignList = () => {
                 <td className={styles.td}>
                   {campaign.estado === "pendiente" && (
                     <div className={styles.actions}>
-                      <button onClick={() => handleApprove(campaign.id)}>Aprobar</button>
-                      <button onClick={() => handleReject(campaign.id)}>Rechazar</button>
+                      <button 
+                        onClick={() => handleApprove(campaign.id)}
+                        aria-label={`Aprobar campaña ${campaign.nombre}`}
+                        tabIndex={0}
+                        className="focus:outline focus:outline-2 focus:outline-blue-600"
+                      >Aprobar</button>
+                      <button 
+                        onClick={() => handleReject(campaign.id)}
+                        aria-label={`Rechazar campaña ${campaign.nombre}`}
+                        tabIndex={0}
+                        className="focus:outline focus:outline-2 focus:outline-red-600"
+                      >Rechazar</button>
                     </div>
                   )}
                 </td>

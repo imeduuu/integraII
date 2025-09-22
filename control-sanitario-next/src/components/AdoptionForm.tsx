@@ -48,43 +48,59 @@ export default function AdoptionForm({ animal, onSubmit }: Props) {
       </p>
 
       <div>
-        <label className="block font-medium">Tu nombre</label>
+        <label htmlFor="name" className="block font-medium">Tu nombre</label>
         <input
+          id="name"
           type="text"
           name="name"
           value={form.name}
           onChange={handleChange}
           required
-          className="border p-2 rounded w-full"
+          aria-required="true"
+          aria-label="Nombre del solicitante"
+          aria-describedby="name-help"
+          className="border p-2 rounded w-full focus:outline focus:outline-2 focus:outline-green-600"
         />
+        <span id="name-help" className="text-xs text-gray-500">Escribe tu nombre completo.</span>
       </div>
 
       <div>
-        <label className="block font-medium">Tu email</label>
+        <label htmlFor="email" className="block font-medium">Tu email</label>
         <input
+          id="email"
           type="email"
           name="email"
           value={form.email}
           onChange={handleChange}
           required
-          className="border p-2 rounded w-full"
+          aria-required="true"
+          aria-label="Correo electrónico"
+          aria-describedby="email-help"
+          className="border p-2 rounded w-full focus:outline focus:outline-2 focus:outline-green-600"
         />
+        <span id="email-help" className="text-xs text-gray-500">Debes ingresar un correo válido.</span>
       </div>
 
       <div>
-        <label className="block font-medium">Motivo de adopción</label>
+        <label htmlFor="reason" className="block font-medium">Motivo de adopción</label>
         <textarea
+          id="reason"
           name="reason"
           value={form.reason}
           onChange={handleChange}
           required
-          className="border p-2 rounded w-full"
+          aria-required="true"
+          aria-label="Motivo de adopción"
+          aria-describedby="reason-help"
+          className="border p-2 rounded w-full focus:outline focus:outline-2 focus:outline-green-600"
         />
+        <span id="reason-help" className="text-xs text-gray-500">Explica por qué quieres adoptar.</span>
       </div>
 
       <button
         type="submit"
-        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 focus:outline focus:outline-2 focus:outline-green-600"
+        aria-label="Enviar solicitud de adopción"
       >
         Enviar solicitud
       </button>

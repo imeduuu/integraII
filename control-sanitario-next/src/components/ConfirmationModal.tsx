@@ -30,9 +30,9 @@ export default function ConfirmationModal({
   onConfirm,
 }: Props) {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white rounded p-6 shadow-lg w-96">
-        <h2 className="text-lg font-bold mb-4">{title}</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" role="presentation" aria-modal="true">
+      <div className="bg-white rounded p-6 shadow-lg w-96" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1}>
+        <h2 id="modal-title" className="text-lg font-bold mb-4">{title}</h2>
         <p>
           ¿Seguro que quieres enviar la solicitud para adoptar a{" "}
           <strong>{animal.nombre}</strong>?
@@ -46,13 +46,17 @@ export default function ConfirmationModal({
         <div className="mt-6 flex justify-end gap-2">
           <button
             onClick={onCancel}
-            className="px-4 py-2 border rounded hover:bg-gray-100"
+            className="px-4 py-2 border rounded hover:bg-gray-100 focus:outline focus:outline-2 focus:outline-blue-600"
+            aria-label="Cancelar solicitud"
+            tabIndex={0}
           >
             Cancelar
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline focus:outline-2 focus:outline-blue-600"
+            aria-label="Confirmar solicitud"
+            tabIndex={0}
           >
             Confirmar
           </button>
