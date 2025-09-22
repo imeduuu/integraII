@@ -3,13 +3,27 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../styles/admin-campaigns.module.css";
 
-const campaigns = [
-  { id: 1, nombre: "Esterilización 2025", estado: "Activa" },
-  { id: 2, nombre: "Adopta un Amigo", estado: "Finalizada" },
-  { id: 3, nombre: "Vacunación Masiva", estado: "Activa" }
-];
-
 const CampaignList = () => {
+  const [campaigns, setCampaigns] = React.useState([
+    { id: 1, nombre: "Esterilización 2025", estado: "pendiente" },
+    { id: 2, nombre: "Adopta un Amigo", estado: "pendiente" },
+    { id: 3, nombre: "Vacunación Masiva", estado: "pendiente" }
+  ]);
+   
+  const handleApprove = (id: number) => {
+    setCampaigns(prev =>
+      prev.map(c => (c.id === id ? { ...c, estado: "aprobada" } : c))
+    );
+    alert("Campaña aprobada ✅");
+  };
+  
+  const handleReject = (id: number) => {
+    setCampaigns(prev =>
+      prev.map(c => (c.id === id ? { ...c, estado: "rechazada" } : c))
+    );
+    alert("Campaña rechazada ❌");
+  };
+
   return (
     <>
       <Navbar />
@@ -27,6 +41,14 @@ const CampaignList = () => {
               <tr key={campaign.id} className={styles.tr}>
                 <td className={styles.td}>{campaign.nombre}</td>
                 <td className={styles.td}>{campaign.estado}</td>
+                <td className={styles.td}>
+                  {campaign.estado === "pendiente" && (
+                    <div className={styles.actions}>
+                      <button onClick={() => handleApprove(campaign.id)}>Aprobar</button>
+                      <button onClick={() => handleReject(campaign.id)}>Rechazar</button>
+                    </div>
+            )}
+                </td>
               </tr>
             ))}
           </tbody>
