@@ -9,7 +9,14 @@ const users = [
   { id: 3, nombre: "Org Animal", email: "org@correo.com", rol: "org" }
 ];
 
+import { userMock } from "../context/userMock";
+import { useEffect } from "react";
 const UserList = () => {
+  useEffect(() => {
+    if (userMock.role !== "admin") {
+      window.location.replace("/denied");
+    }
+  }, []);
   return (
     <>
       <Navbar />

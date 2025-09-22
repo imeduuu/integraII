@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
+import { userMock } from "../../context/userMock";
 import Footer from "../../components/Footer";
 import Link from "next/link"; // Importamos Link para navegación
 
@@ -12,7 +13,13 @@ const mockOrgs = [
   { id: 3, name: "Refugio Animal", email: "refugio@correo.cl", status: "Activa" },
 ];
 
+import { useEffect } from "react";
 const AdminOrgs = () => {
+  useEffect(() => {
+    if (userMock.role !== "admin" && userMock.role !== "user") {
+      window.location.replace("/denied");
+    }
+  }, []);
   const [nameFilter, setNameFilter] = useState("");
   const [emailFilter, setEmailFilter] = useState("");
 
@@ -87,15 +94,19 @@ const AdminOrgs = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-center space-x-2">
-                        {/* Botón Editar enlazado a la página de detalle */}
-                        <Link href={`/admin-orgs/${org.id}`}>
-                          <button className="px-3 py-1 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600">
-                            Editar
-                          </button>
-                        </Link>
-                        <button className="px-3 py-1 bg-red-500 text-white rounded-lg shadow hover:bg-red-600">
-                          Eliminar
-                        </button>
+                        {/* Solo admin puede ver los botones de editar/eliminar */}
+                        {userMock.role === "admin" && (
+                          <>
+                            <Link href={`/admin-orgs/${org.id}`}>
+                              <button className="px-3 py-1 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600">
+                                Editar
+                              </button>
+                            </Link>
+                            <button className="px-3 py-1 bg-red-500 text-white rounded-lg shadow hover:bg-red-600">
+                              Eliminar
+                            </button>
+                          </>
+                        )}
                       </td>
                     </tr>
                   ))

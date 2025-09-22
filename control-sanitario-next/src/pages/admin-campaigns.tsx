@@ -9,7 +9,14 @@ const campaigns = [
   { id: 3, nombre: "Vacunación Masiva", estado: "Activa" }
 ];
 
+import { userMock } from "../context/userMock";
+import { useEffect } from "react";
 const CampaignList = () => {
+  useEffect(() => {
+    if (userMock.role !== "admin") {
+      window.location.replace("/denied");
+    }
+  }, []);
   return (
     <>
       <Navbar />

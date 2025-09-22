@@ -7,7 +7,14 @@ import { campaigns } from "../services/mockCampaigns";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 
+import { userMock } from "../context/userMock";
+import { useEffect } from "react";
 const OrgHome = () => {
+  useEffect(() => {
+    if (userMock.role !== "org") {
+      window.location.replace("/denied");
+    }
+  }, []);
   return (
     <ProtectedRoute allowedRoles={["org"]}>
       <>

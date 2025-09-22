@@ -26,7 +26,7 @@ const Navbar = () => {
       { href: '/report', label: 'Reportar' },
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
-      { href: '/admin-orgs', label: 'orgs' }
+  { href: '/admin-orgs', label: 'Organizaciones' }
     ];
   } else if (userMock.role === 'org') {
     links = [
@@ -38,7 +38,7 @@ const Navbar = () => {
 
   return (
     <nav className={styles.navbar}>
-      <span className={styles.navbarTitle}>Control Sanitario</span>
+  <span className={styles.navbarTitle}>Huella Segura</span>
       <div className={styles.navbarLinks}>
         <a href="/" className={getLinkClasses('/')}>Inicio</a>
         {links.map(link => (
@@ -47,7 +47,7 @@ const Navbar = () => {
           </a>
         ))}
       </div>
-      <div className={styles.profileSection}>
+      <div className={styles.profileSection + ' ' + styles.profileSectionRight}>
         <img 
           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=32&h=32" 
           alt="Perfil" 

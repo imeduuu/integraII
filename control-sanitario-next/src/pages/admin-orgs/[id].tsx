@@ -28,7 +28,7 @@ const AdminOrgDetail = () => {
   useEffect(() => {
     // Si el usuario no es admin, redirigir a acceso denegado
     if (userMock.role !== "admin") {
-      router.replace("/access-denied");
+      router.replace("/denied");
       return;
     }
     if (id) {

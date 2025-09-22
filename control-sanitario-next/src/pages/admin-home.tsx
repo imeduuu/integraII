@@ -45,7 +45,7 @@ const AdminHome: React.FC = () => {
   };
 
   return (
-    <ProtectedRoute allowedRoles={["admin"]}>
+  <ProtectedRoute allowedRoles={["admin"]}>
       <>
         <Navbar />
         {/* Hero / portada */}
