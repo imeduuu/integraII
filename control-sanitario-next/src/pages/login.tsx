@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNotification } from '../components/NotificationProvider';
 
 interface LoginFormInputs {
   email: string;
@@ -49,11 +50,13 @@ const buttonStyle: React.CSSProperties = {
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
+  const { addToast } = useNotification();
   const [mensaje, setMensaje] = React.useState('');
 
   const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
     console.log('Datos del formulario:', data);
     setMensaje('Login simulado (sin backend)');
+    addToast('Inicio de sesión exitoso', 'success');
   };
 
   return (
