@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+// Migración: Se reemplazaron todos los inputs y botones nativos por componentes UI estándar
+import Button from '../components/ui/Button';
+import Input from '../components/ui/Input';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Map from '../components/Map';
@@ -100,38 +103,35 @@ const Report = () => {
             {/* NUEVO: Buscar por dirección */}
             <label className={styles.label}>Buscar por Dirección</label>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <input
+              <Input
                 type="text"
-                className={styles.input}
                 value={direccion}
                 onChange={e => setDireccion(e.target.value)}
                 placeholder="Ej: Av. Siempre Viva 742"
                 style={{ flex: 1 }}
               />
-              <button type="button" onClick={buscarCoordenadas} className={styles.btn}>
+              <Button type="button" onClick={buscarCoordenadas} className={styles.btn}>
                 Buscar
-              </button>
+              </Button>
             </div>
 
             <label className={styles.label}>Latitud</label>
-            <input
+            <Input
               type="text"
-              className={styles.input}
               value={latitud}
               onChange={e => setLatitud(e.target.value)}
               required
             />
 
             <label className={styles.label}>Longitud</label>
-            <input
+            <Input
               type="text"
-              className={styles.input}
               value={longitud}
               onChange={e => setLongitud(e.target.value)}
               required
             />
 
-            <button className={styles.btn} type="submit">Enviar reporte</button>
+            <Button className={styles.btn} type="submit">Enviar reporte</Button>
           </form>
 
           {mensaje && <p className={styles.message}>{mensaje}</p>}

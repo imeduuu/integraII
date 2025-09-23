@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "./ui/Button"; // Migración: Usar botón UI estándar
 
 interface Animal {
   nombre: string;
@@ -97,13 +98,15 @@ export default function AdoptionForm({ animal, onSubmit }: Props) {
         <span id="reason-help" className="text-xs text-gray-500">Explica por qué quieres adoptar.</span>
       </div>
 
-      <button
+      {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. Se mantiene la lógica y accesibilidad. */}
+      <Button
         type="submit"
-        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 focus:outline focus:outline-2 focus:outline-green-600"
+        variant="primary"
+        className="bg-green-600 hover:bg-green-700 focus:outline-green-600"
         aria-label="Enviar solicitud de adopción"
       >
         Enviar solicitud
-      </button>
+      </Button>
     </form>
   );
 }

@@ -1,3 +1,4 @@
+import Button from "../../components/ui/Button"; // Migración: Usar botón UI estándar
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Navbar from "../../components/Navbar";
@@ -127,19 +128,22 @@ const AdminOrgDetail = () => {
             </div>
 
             <div className="flex justify-end gap-4 mt-6">
-              <button
+              {/* Migración: Se reemplazan los botones nativos por el componente Button UI estándar. */}
+              <Button
                 type="button"
+                variant="secondary"
+                className="bg-gray-300 hover:bg-gray-400"
                 onClick={() => router.push("/admin-orgs")}
-                className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 transition"
               >
                 Cancelar
-              </button>
-              <button
+              </Button>
+              <Button
                 type="submit"
-                className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+                variant="primary"
+                className="bg-blue-600 text-white hover:bg-blue-700"
               >
                 Guardar Cambios
-              </button>
+              </Button>
             </div>
           </form>
         </section>

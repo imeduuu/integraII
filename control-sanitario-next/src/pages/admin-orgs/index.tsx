@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import { userMock } from "../../context/userMock";
 import Footer from "../../components/Footer";
 import Link from "next/link"; // Importamos Link para navegación
+import Button from "../../components/ui/Button"; // Migración: Usar botón UI estándar
 
 const backgroundUrl = "/perrito.png";
 
@@ -97,14 +98,21 @@ const AdminOrgs = () => {
                         {/* Solo admin puede ver los botones de editar/eliminar */}
                         {userMock.role === "admin" && (
                           <>
+                            {/* Migración: Se reemplazan los botones nativos por el componente Button UI estándar. */}
                             <Link href={`/admin-orgs/${org.id}`}>
-                              <button className="px-3 py-1 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600">
+                              <Button
+                                variant="primary"
+                                className="px-3 py-1 bg-blue-500 shadow hover:bg-blue-600"
+                              >
                                 Editar
-                              </button>
+                              </Button>
                             </Link>
-                            <button className="px-3 py-1 bg-red-500 text-white rounded-lg shadow hover:bg-red-600">
+                            <Button
+                              variant="primary"
+                              className="px-3 py-1 bg-red-500 shadow hover:bg-red-600"
+                            >
                               Eliminar
-                            </button>
+                            </Button>
                           </>
                         )}
                       </td>
