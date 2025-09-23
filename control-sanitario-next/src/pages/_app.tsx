@@ -1,5 +1,13 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
+import { NotificationProvider } from '../components/NotificationProvider';
+import type { AppProps } from 'next/app';
 
-export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <NotificationProvider>
+      <Component {...pageProps} />
+    </NotificationProvider>
+  );
 }
+
+export default MyApp;
