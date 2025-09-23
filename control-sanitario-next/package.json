@@ -10,7 +10,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.62.0",
     "react-icons": "^5.5.0",
-    "react-toastify": "^11.0.5"
+    "react-toastify": "^8.2.0"
   },
   "name": "control-sanitario-next",
   "version": "1.0.0",
