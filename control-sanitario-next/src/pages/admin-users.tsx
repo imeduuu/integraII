@@ -4,11 +4,20 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { userMock } from "../context/userMock";
 import { HiUser, HiUserGroup, HiShieldCheck } from "react-icons/hi"; // Iconos para roles
+import styles from "../styles/admin-users.module.css";
+import UserTable from "../components/UserTable";
 
 const users = [
   { id: 1, nombre: "Ana Pérez", email: "ana@correo.com", rol: "admin" },
   { id: 2, nombre: "Luis Gómez", email: "luis@correo.com", rol: "user" },
-  { id: 3, nombre: "Org Animal", email: "org@correo.com", rol: "org" }
+  { id: 3, nombre: "Org Animal", email: "org@correo.com", rol: "org" },
+  { id: 4, nombre: "Pedro López", email: "pedro@correo.com", rol: "user" },
+  { id: 5, nombre: "María Torres", email: "maria@correo.com", rol: "admin" },
+  { id: 6, nombre: "Carlos Ruiz", email: "carlos@correo.com", rol: "user" },
+  { id: 7, nombre: "Sofía Díaz", email: "sofia@correo.com", rol: "org" },
+  { id: 8, nombre: "Andrés Muñoz", email: "andres@correo.com", rol: "user" },
+  { id: 9, nombre: "Andrea Muñoz", email: "andrea@correo.com", rol: "user" },
+  { id: 10, nombre: "Andy Muñoz", email: "andy@correo.com", rol: "user" },
 ];
 
 const roleBadge = (rol: string) => {
@@ -45,8 +54,9 @@ const UserList = () => {
   return (
     <>
       <Navbar />
-      <main className="min-h-[70vh] w-full flex flex-col items-center justify-start px-2 py-8 bg-gradient-to-br from-blue-50 via-white to-blue-100">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-blue-700 mb-6 text-center animate-fadeIn">Usuarios</h1>
+      <main className={styles.container}>
+        <h1 className={styles.title}>Usuarios</h1>
+        {/* Puedes alternar entre la tabla personalizada y el componente UserTable según lo que prefieras */}
         <div className="w-full max-w-3xl overflow-x-auto shadow-lg rounded-xl bg-white p-4 animate-fadeIn">
           <table className="w-full text-sm md:text-base border-separate border-spacing-y-2">
             <thead>
@@ -72,6 +82,10 @@ const UserList = () => {
               ))}
             </tbody>
           </table>
+        </div>
+        {/* Alternativamente, puedes mostrar el UserTable paginado */}
+        <div className="mt-8">
+          <UserTable users={users} usersPerPage={3} />
         </div>
         {/* Feedback visual y navegación clara */}
         <div className="mt-8 flex flex-col md:flex-row gap-4 w-full max-w-3xl justify-center">
