@@ -1,3 +1,4 @@
+// ...existing code...
 import React from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/navbar.module.css';
@@ -24,7 +25,8 @@ const Navbar = () => {
       { href: '/adopcion', label: 'Adopciones' },
       { href: '/report', label: 'Reportar' },
       { href: '/animals', label: 'Animales' },
-      { href: '/donations', label: 'Donaciones' }
+      { href: '/donations', label: 'Donaciones' },
+      { href: '/admin-orgs', label: 'orgs' }
     ];
   } else if (userMock.role === 'org') {
     links = [
@@ -57,4 +59,5 @@ const Navbar = () => {
   );
 };
 
+// ...existing code...
 export default Navbar;

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Button from './ui/Button';
+import Input from './ui/Input';
+import Modal from './ui/Modal';
 
 const LoginModal = ({ onClose }: { onClose: () => void }) => {
   const [email, setEmail] = useState('');
@@ -34,23 +37,20 @@ const LoginModal = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-      <form style={{ maxWidth: '400px', padding: '32px', background: '#f3f4f6', borderRadius: '12px', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', position: 'relative' }} onSubmit={handleSubmit} noValidate>
-        <button type="button" onClick={onClose} style={{ position: 'absolute', top: 12, right: 12, background: 'none', border: 'none', fontSize: 22, cursor: 'pointer' }}>&times;</button>
-        <h2 style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 20 }}>Iniciar Sesión</h2>
-        <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>Correo electrónico</label>
-        <input style={{ width: '100%', padding: '8px', marginBottom: '16px', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem' }} type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-        <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>Contraseña</label>
-        <input style={{ width: '100%', padding: '8px', marginBottom: '16px', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem' }} type="password" value={password} onChange={e => setPassword(e.target.value)} required />
-        <button style={{ width: '100%', padding: '10px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 700, fontSize: '1rem', cursor: 'pointer' }} type="submit">Entrar</button>
-        <div style={{ marginTop: 12, textAlign: 'center' }}>
-          <a href="/forgot-password" style={{ color: '#2563eb', textDecoration: 'underline', fontSize: '0.95rem' }}>
-            ¿Olvidaste tu contraseña?
-          </a>
+    <Modal isOpen={true} onClose={onClose}>
+      <form className="flex flex-col gap-3" style={{ minWidth: 320 }} onSubmit={handleSubmit} noValidate>
+        <h2 className="font-bold text-xl mb-2">Iniciar Sesión</h2>
+        <label className="font-semibold">Correo electrónico</label>
+        <Input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+        <label className="font-semibold">Contraseña</label>
+        <Input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
+        <Button type="submit" className="w-full mt-2">Entrar</Button>
+        <div className="mt-2 text-center">
+          <a href="/forgot-password" className="text-blue-600 underline text-sm">¿Olvidaste tu contraseña?</a>
         </div>
-        {mensaje && <p style={{ marginTop: 16, color: '#2563eb', fontWeight: 600 }}>{mensaje}</p>}
+        {mensaje && <p className="mt-2 text-blue-600 font-semibold">{mensaje}</p>}
       </form>
-    </div>
+    </Modal>
   );
 };
 

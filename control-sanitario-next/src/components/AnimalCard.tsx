@@ -1,5 +1,6 @@
 
 import React from 'react';
+import Button from './ui/Button';
 
 interface AnimalCardProps {
   name: string;
@@ -19,7 +20,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ name, status, location, age, im
       <p className="text-sm text-gray-600 mb-1"><span className="font-semibold">Estado:</span> {status}</p>
       <p className="text-sm text-gray-600 mb-1"><span className="font-semibold">Ubicación:</span> {location}</p>
       {age && <p className="text-sm text-gray-600 mb-2"><span className="font-semibold">Edad:</span> {age}</p>}
-      <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Ver más</button>
+  <Button className="bg-green-600 hover:bg-green-700">Ver más</Button>
     </div>
   );
 };
