@@ -1,4 +1,5 @@
 import Button from "../../components/ui/Button"; // Migración: Usar botón UI estándar
+import Input from "../../components/ui/Input"; // Migración: Usar input UI estándar
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Navbar from "../../components/Navbar";
@@ -80,7 +81,8 @@ const AdminOrgDetail = () => {
           <form onSubmit={handleSave} className="space-y-4">
             <div>
               <label className="block font-semibold text-gray-700">Nombre</label>
-              <input
+              {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
+              <Input
                 type="text"
                 name="name"
                 value={formData.name}
@@ -92,7 +94,7 @@ const AdminOrgDetail = () => {
 
             <div>
               <label className="block font-semibold text-gray-700">Email</label>
-              <input
+              <Input
                 type="email"
                 name="email"
                 value={formData.email}
@@ -104,7 +106,7 @@ const AdminOrgDetail = () => {
 
             <div>
               <label className="block font-semibold text-gray-700">Dirección</label>
-              <input
+              <Input
                 type="text"
                 name="address"
                 value={formData.address}

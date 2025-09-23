@@ -1,5 +1,6 @@
 
 import React, { useEffect } from "react";
+import Button from "../components/ui/Button"; // Migración: Usar botón UI estándar
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { userMock } from "../context/userMock";
@@ -82,22 +83,23 @@ const CampaignList = () => {
                   <td className="px-4 py-3">
                     {campaign.estado === "pendiente" ? (
                       <div className="flex gap-2">
-                        <button
+                        {/* Migración: Se reemplazan los botones nativos por el componente Button UI estándar. */}
+                        <Button
                           onClick={() => handleApprove(campaign.id)}
                           aria-label={`Aprobar campaña ${campaign.nombre}`}
                           tabIndex={0}
                           className="px-4 py-2 rounded-lg bg-green-600 text-white font-semibold shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all duration-200"
                         >
                           <HiCheckCircle className="inline w-4 h-4 mr-1" /> Aprobar
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                           onClick={() => handleReject(campaign.id)}
                           aria-label={`Rechazar campaña ${campaign.nombre}`}
                           tabIndex={0}
                           className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 transition-all duration-200"
                         >
                           <HiXCircle className="inline w-4 h-4 mr-1" /> Rechazar
-                        </button>
+                        </Button>
                       </div>
                     ) : (
                       <span className="text-gray-400 italic">Sin acciones</span>

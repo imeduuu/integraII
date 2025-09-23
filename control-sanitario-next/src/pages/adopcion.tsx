@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AnimalCard from '../components/AnimalCard';
@@ -77,14 +78,15 @@ export default function Adopcion() {
               <div className={styles.info}><span>Ubicación:</span> {animal.ubicacion}</div>
               <div className={styles.info}><span>Edad:</span> {animal.edad}</div>
                
-               {animal.estado === 'Disponible' && (
-                  <button
-                    onClick={() => handleAdoptClick(animal)}
-                    className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-                  >
-                    Adoptar
-                  </button>
-                )}
+              {animal.estado === 'Disponible' && (
+                // Migración: Se reemplaza el botón nativo por el componente Button UI estándar.
+                <Button
+                  className={styles.btn}
+                  onClick={() => handleAdoptClick(animal)}
+                >
+                  Solicitar Adopción
+                </Button>
+              )}
             </div>
           ))}
         </div>

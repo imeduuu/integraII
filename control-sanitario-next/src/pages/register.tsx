@@ -1,4 +1,6 @@
 import React from 'react';
+import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -66,8 +68,8 @@ const Register = () => {
         <h2 style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 20 }}>Crear Cuenta</h2>
         
         <label style={labelStyle}>Nombre</label>
-        <input
-          style={inputStyle}
+        {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
+        <Input
           type="text"
           placeholder="Tu nombre"
           {...register('nombre', { required: 'El nombre es obligatorio' })}
@@ -75,8 +77,7 @@ const Register = () => {
         {errors.nombre && <span style={errorStyle}>{errors.nombre.message}</span>}
         
         <label style={labelStyle}>Correo electrónico</label>
-        <input
-          style={inputStyle}
+        <Input
           type="email"
           placeholder="correo@ejemplo.com"
           {...register('email', {
@@ -90,8 +91,7 @@ const Register = () => {
         {errors.email && <span style={errorStyle}>{errors.email.message}</span>}
 
         <label style={labelStyle}>Contraseña</label>
-        <input
-          style={inputStyle}
+        <Input
           type="password"
           placeholder="Mínimo 6 caracteres"
           {...register('password', { 
@@ -105,8 +105,7 @@ const Register = () => {
         {errors.password && <span style={errorStyle}>{errors.password.message}</span>}
         
         <label style={labelStyle}>Confirmar contraseña</label>
-        <input
-          style={inputStyle}
+        <Input
           type="password"
           placeholder="Repite tu contraseña"
           {...register('confirm', {
@@ -116,7 +115,8 @@ const Register = () => {
         />
         {errors.confirm && <span style={errorStyle}>{errors.confirm.message}</span>}
 
-        <button style={buttonStyle} type="submit">Registrarse</button>
+  {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+  <Button type="submit" style={{ width: '100%', marginTop: 8 }}>Registrarse</Button>
         {mensaje && <p style={{ marginTop: 16, color: '#2563eb', fontWeight: 600 }}>{mensaje}</p>}
       </form>
       <Footer />

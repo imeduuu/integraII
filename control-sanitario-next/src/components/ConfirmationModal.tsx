@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./ui/Button"; // Migración: Usar botón UI estándar
 
 interface Animal {
   nombre: string;
@@ -44,22 +45,24 @@ export default function ConfirmationModal({
           <p><strong>Motivo:</strong> {formData.reason}</p>
         </div>
         <div className="mt-6 flex justify-end gap-2">
-          <button
+          {/* Migración: Se reemplazan los botones nativos por el componente Button UI estándar. */}
+          <Button
             onClick={onCancel}
+            variant="secondary"
             className="px-4 py-2 border rounded hover:bg-gray-100 focus:outline focus:outline-2 focus:outline-blue-600"
             aria-label="Cancelar solicitud"
             tabIndex={0}
           >
             Cancelar
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={onConfirm}
             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline focus:outline-2 focus:outline-blue-600"
             aria-label="Confirmar solicitud"
             tabIndex={0}
           >
             Confirmar
-          </button>
+          </Button>
         </div>
       </div>
     </div>

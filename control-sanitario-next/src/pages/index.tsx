@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Map from '../components/Map';
@@ -165,28 +166,30 @@ const Home = () => {
         <div className="my-8 p-6 border rounded-lg bg-gray-50 text-center">
           <h3 className="text-lg font-bold mb-4">Prueba de Notificaciones</h3>
           <div className="flex justify-center gap-4">
-            <button
+            {/* Migración: Se reemplazan los botones nativos por el componente Button UI estándar. */}
+            <Button
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
               onClick={() => addToast('¡Operación exitosa!', 'success')}
             >
               Notificación Éxito
-            </button>
-            <button
+            </Button>
+            <Button
               className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg"
               onClick={() => addToast('Ocurrió un error.', 'error')}
             >
               Notificación Error
-            </button>
-            <button
+            </Button>
+            <Button
               className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg"
               onClick={() => addToast('Revisa los datos.', 'warning')}
             >
               Notificación Advertencia
-            </button>
+            </Button>
           </div>
         </div>
         <h2>Mapa de Temuco</h2>
-        <button
+        {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+        <Button
           style={{
             ...buttonStyle,
             marginTop: '2rem',
@@ -195,7 +198,7 @@ const Home = () => {
           onClick={() => setShowMap(!showMap)}
         >
           {showMap ? 'Ocultar Mapa' : 'Mostrar Mapa'}
-        </button>
+        </Button>
         {showMap && <Map />}
       </main>
       <Footer />

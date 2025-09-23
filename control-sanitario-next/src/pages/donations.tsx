@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import styles from '../styles/donations.module.css';
@@ -35,7 +37,8 @@ const Donations = () => {
           <form onSubmit={handleSubmit} className={styles.formGrid}>
             <div className={styles.group}>
               <label className={styles.label}>Nombre</label>
-              <input
+              {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
+              <Input
                 className={styles.input}
                 type="text"
                 name="name"
@@ -47,7 +50,7 @@ const Donations = () => {
             </div>
             <div className={styles.group}>
               <label className={styles.label}>Correo electrónico</label>
-              <input
+              <Input
                 className={styles.input}
                 type="email"
                 name="email"
@@ -75,7 +78,7 @@ const Donations = () => {
             </div>
             <div className={styles.group}>
               <label className={styles.label}>Cantidad</label>
-              <input
+              <Input
                 className={styles.input}
                 type="text"
                 name="quantity"
@@ -96,9 +99,8 @@ const Donations = () => {
               />
             </div>
             <div className={styles.actions}>
-              <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>
-                Registrar Donación
-              </button>
+              {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+              <Button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>Registrar Donación</Button>
             </div>
           </form>
         </section>

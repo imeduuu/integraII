@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "./ui/Button"; // Migración: Usar botón UI estándar
+import Input from "./ui/Input"; // Migración: Usar input UI estándar
 
 interface Animal {
   nombre: string;
@@ -50,7 +51,8 @@ export default function AdoptionForm({ animal, onSubmit }: Props) {
 
       <div>
         <label htmlFor="name" className="block font-medium">Tu nombre</label>
-        <input
+        {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
+        <Input
           id="name"
           type="text"
           name="name"
@@ -67,7 +69,7 @@ export default function AdoptionForm({ animal, onSubmit }: Props) {
 
       <div>
         <label htmlFor="email" className="block font-medium">Tu email</label>
-        <input
+        <Input
           id="email"
           type="email"
           name="email"

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AnimalCard from '../components/AnimalCard';
@@ -108,7 +109,8 @@ const Animals = () => {
         </div>
         <h2 className="mt-12 mb-2 text-xl font-bold text-center">Mapa de Temuco</h2>
         <div className="flex justify-center">
-          <button
+          {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+          <Button
             style={{
               ...buttonStyle,
               marginTop: '2rem',
@@ -119,7 +121,7 @@ const Animals = () => {
             aria-label={showMap ? 'Ocultar Mapa' : 'Mostrar Mapa'}
           >
             {showMap ? 'Ocultar Mapa' : 'Mostrar Mapa'}
-          </button>
+          </Button>
         </div>
         {showMap && <Map />}
       </main>
