@@ -1,72 +1,86 @@
-Sistema de Notificaciones (Toasts)
-Este documento explica cómo utilizar el sistema de notificaciones global en la aplicación.
+Sistema de Notificaciones
 
-Cómo funciona
-El sistema se basa en un Contexto de React (NotificationContext) que provee una función para mostrar notificaciones tipo "toast" desde cualquier componente envuelto en él. Se ha implementado un hook personalizado useNotification para facilitar su uso.
+Este proyecto incluye un sistema de toasts/notificaciones reutilizables que permite mostrar mensajes de éxito, error y advertencia desde cualquier parte de la aplicación.
 
-Tipos de Notificaciones
-Existen tres tipos de notificaciones, cada una con un estilo visual diferente:
+ Cómo funciona
 
-success: Para mensajes de éxito (ej. "Perfil guardado correctamente").
+El sistema está implementado mediante un Contexto Global (NotificationProvider) y un hook (useNotification).
+Esto permite disparar notificaciones fácilmente sin importar en qué componente se encuentre el usuario.
 
-error: Para mensajes de error (ej. "No se pudo conectar al servidor").
+✅ Tipos soportados: success, error, warning
 
-warning: Para advertencias o información (ej. "Tu contraseña está a punto de expirar").
+✅ Reutilizable: se puede invocar en cualquier componente.
 
-Cómo usar el sistema
-Para mostrar una notificación desde cualquier componente de la aplicación, sigue estos pasos:
+✅ Estilos con Tailwind CSS para colores y diseño.
+
+📦 Configuración inicial
+
+El NotificationProvider ya envuelve la aplicación en _app.tsx, por lo que no necesitas configurarlo manualmente.
+
+Ejemplo en _app.tsx:
+
+import { NotificationProvider } from "../components/NotificationProvider";
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <NotificationProvider>
+      <Component {...pageProps} />
+    </NotificationProvider>
+  );
+}
+
+export default MyApp;
+
+🛠 Uso en componentes
 
 Importa el hook useNotification:
-Asegúrate de que el componente desde donde quieres llamar la notificación esté dentro del NotificationProvider (lo cual se configura por defecto en _app.tsx).
 
-import { useNotification } from '../hooks/useNotification';
+import { useNotification } from "../components/NotificationProvider";
 
-Obtén la función addToast del hook:
-Dentro de tu componente funcional, llama al hook para obtener acceso a la función que crea los toasts.
 
-const MyComponent = () => {
-  const { addToast } = useNotification();
-  // ...
-};
+Obtén la función showNotification:
 
-Llama a addToast con tu mensaje y el tipo:
-Puedes llamar a esta función como respuesta a un evento, como el clic de un botón o la finalización de una llamada a la API.
+const { showNotification } = useNotification();
 
-const handleClick = () => {
-  // Para un mensaje de éxito
-  addToast('¡Operación realizada con éxito!', 'success');
 
-  // Para un mensaje de error
-  addToast('Hubo un problema al procesar tu solicitud.', 'error');
+Dispara una notificación con el mensaje y el tipo:
 
-  // Para una advertencia
-  addToast('Por favor, revisa los campos del formulario.', 'warning');
-};
+// Éxito
+showNotification("Operación realizada con éxito ✅", "success");
 
-Ejemplo completo en un componente
-import React from 'react';
-import { useNotification } from '../hooks/useNotification';
+// Error
+showNotification("Algo salió mal ❌", "error");
 
-const ExampleComponent = () => {
-  const { addToast } = useNotification();
+// Advertencia
+showNotification("Revisa los datos ingresados ⚠️", "warning");
 
-  const handleSuccess = () => {
-    addToast('¡Todo salió bien!', 'success');
-  };
+🎨 Ejemplo completo
+import { useNotification } from "../components/NotificationProvider";
 
-  const handleError = () => {
-    addToast('Algo salió mal.', 'error');
+export default function ExampleButton() {
+  const { showNotification } = useNotification();
+
+  const handleClick = () => {
+    showNotification("Guardado correctamente", "success");
   };
 
   return (
-    <div>
-      <h2>Ejemplo de Notificaciones</h2>
-      <button onClick={handleSuccess}>Mostrar Éxito</button>
-      <button onClick={handleError}>Mostrar Error</button>
-    </div>
+    <button
+      className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+      onClick={handleClick}
+    >
+      Guardar
+    </button>
   );
-};
+}
 
-export default ExampleComponent;
 
-Las notificaciones aparecerán automáticamente en la esquina inferior derecha de la pantalla y desaparecerán después de 5 segundos.
+Cuando el usuario hace clic en el botón, aparecerá una notificación verde de éxito.
+
+📌 Notas
+
+Actualmente el sistema muestra una notificación a la vez. Si disparas otra, reemplazará la anterior.
+
+Se puede extender para permitir múltiples notificaciones en cola.
+
+Se recomienda mejorar la UX con animaciones (ej. framer-motion o transiciones de Tailwind).
