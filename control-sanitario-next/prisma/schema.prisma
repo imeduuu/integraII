@@ -46,6 +46,8 @@ model usuario {
   solicitudes        solicitud_adopcion[]
   avistamientos      avistamiento[]
   google_accounts    google_accounts[]
+  mensajes_enviados   mensaje[] @relation("mensajes_enviados")
+  mensajes_recibidos  mensaje[] @relation("mensajes_recibidos")
 }
 
 model animal {
@@ -141,3 +143,17 @@ model google_accounts {
   updated_at          DateTime @updatedAt
   usuario             usuario  @relation(fields: [id_usuario], references: [id_usuario])
 }
+
+model mensaje {
+  id_mensaje      Int      @id @default(autoincrement())
+  contenido       String   @db.Text
+  fecha_envio     DateTime @default(now())
+  id_remitente    Int
+  id_destinatario Int
+
+  // Relación con el usuario remitente
+  remitente    usuario @relation("mensajes_enviados", fields: [id_remitente], references: [id_usuario])
+  // Relación con el usuario destinatario
+  destinatario usuario @relation("mensajes_recibidos", fields: [id_destinatario], references: [id_usuario])
+}
+
