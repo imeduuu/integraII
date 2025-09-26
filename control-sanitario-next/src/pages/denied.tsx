@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useRouter } from 'next/router';
@@ -52,18 +53,19 @@ const DeniedPage: React.FC = () => {
             No tienes permisos para ver esta página.
           </p>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <button
+            {/* Migración: Se reemplazan los botones nativos por el componente Button UI estándar. */}
+            <Button
               style={buttonStyle}
               onClick={() => router.push('/login')}
             >
               Ir a Iniciar sesión
-            </button>
-            <button
+            </Button>
+            <Button
               style={{ ...buttonStyle, background: '#e5e7eb', color: '#2563eb' }}
               onClick={() => router.push('/')}
             >
               Ir al Inicio
-            </button>
+            </Button>
           </div>
         </div>
       </div>

@@ -1,28 +1,14 @@
+
 import React, { useState } from "react";
+import Button from "../components/ui/Button"; // Migración: Usar botón UI estándar
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import InfoBox from "../components/InfoBox";
 import AdminActionModal from "../components/AdminActionModal";
 import ProtectedRoute from "../components/ProtectedRoute";
+import { HiUserGroup, HiSpeakerphone, HiChartBar, HiCog } from "react-icons/hi";
 
 const backgroundUrl = "/admin-bg.png";
-
-const buttonStyle: React.CSSProperties = {
-  width: "clamp(140px, 40vw, 180px)",
-  padding: "12px",
-  background: "linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)",
-  color: "#fff",
-  border: "none",
-  borderRadius: "8px",
-  fontWeight: 700,
-  fontSize: "1.08rem",
-  cursor: "pointer",
-  boxShadow: "0 2px 8px rgba(37,99,235,0.12)",
-  transition: "transform 0.2s",
-  textDecoration: "none",
-  textAlign: "center",
-  lineHeight: "2.5rem",
-};
 
 const AdminHome: React.FC = () => {
   const [showStats, setShowStats] = useState(false);
@@ -50,65 +36,26 @@ const AdminHome: React.FC = () => {
         <Navbar />
         {/* Hero / portada */}
         <div
+          className="min-h-[60vh] w-full flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-200 px-2 py-8"
           style={{
-            minHeight: "60vh",
-            width: "100%",
             backgroundImage: `linear-gradient(rgba(37,99,235,0.25),rgba(255,255,255,0.85)), url(${backgroundUrl})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "5vw 0",
           }}
         >
-          <div
-            style={{
-              background: "rgba(255,255,255,0.8)",
-              borderRadius: 24,
-              boxShadow: "0 8px 32px rgba(37,99,235,0.12)",
-              padding: "3vw 6vw",
-              maxWidth: 480,
-              width: "95vw",
-              textAlign: "center",
-              border: "1px solid #e0e7ef",
-              animation: "fadeIn 0.7s",
-              backdropFilter: "blur(10px)",
-            }}
-          >
-            <h1
-              style={{
-                fontWeight: 800,
-                fontSize: "clamp(1.5rem, 4vw, 2.5rem)",
-                color: "#2563eb",
-                marginBottom: 12,
-              }}
-            >
-              Panel de Administración
+          <div className="bg-white/80 rounded-3xl shadow-2xl border border-blue-100 p-8 max-w-lg w-full text-center animate-fadeIn backdrop-blur-md">
+            <h1 className="font-extrabold text-3xl md:text-4xl text-blue-700 mb-3 flex items-center justify-center gap-2">
+              <HiCog className="w-8 h-8 text-blue-400" /> Panel de Administración
             </h1>
-            <p
-              style={{
-                color: "#334155",
-                fontSize: "1.1rem",
-                marginBottom: 24,
-                fontWeight: 500,
-              }}
-            >
+            <p className="text-blue-900 text-lg mb-6 font-medium">
               Gestiona usuarios, revisa campañas y consulta estadísticas del sistema.
             </p>
-
-            {/* Botones que abren modales */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "16px",
-                marginBottom: "10px",
-                flexWrap: "wrap",
-              }}
-            >
-              <button
-                style={buttonStyle}
+            {/* Botones con iconos y feedback visual */}
+            <div className="flex flex-wrap justify-center gap-4 mb-2">
+              {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+              <Button
+                variant="primary"
+                className="px-6 py-3 rounded-xl bg-blue-600 shadow-md hover:bg-blue-700 flex items-center gap-2 focus:ring-2 focus:ring-blue-400"
                 onClick={() =>
                   openModal(
                     "Editar Usuario",
@@ -121,11 +68,12 @@ const AdminHome: React.FC = () => {
                   )
                 }
               >
-                Gestión de Usuarios
-              </button>
-
-              <button
-                style={buttonStyle}
+                <HiUserGroup className="w-5 h-5" /> Gestión de Usuarios
+              </Button>
+              {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+              <Button
+                variant="primary"
+                className="px-6 py-3 rounded-xl bg-green-500 shadow-md hover:bg-green-600 flex items-center gap-2 focus:ring-2 focus:ring-green-400"
                 onClick={() =>
                   openModal(
                     "Aprobar Campaña",
@@ -138,11 +86,12 @@ const AdminHome: React.FC = () => {
                   )
                 }
               >
-                Revisar Campañas
-              </button>
-
-              <button
-                style={{ ...buttonStyle, background: "#e5e7eb", color: "#2563eb" }}
+                <HiSpeakerphone className="w-5 h-5" /> Revisar Campañas
+              </Button>
+              {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+              <Button
+                variant="secondary"
+                className={`px-6 py-3 rounded-xl font-semibold shadow-md flex items-center gap-2 focus:ring-2 focus:ring-blue-400 ${showStats ? "bg-gray-200 text-blue-700" : "bg-blue-200 text-blue-700"}`}
                 onClick={() =>
                   openModal(
                     "Ver Estadísticas",
@@ -155,74 +104,27 @@ const AdminHome: React.FC = () => {
                   )
                 }
               >
+                <HiChartBar className="w-5 h-5" />
                 {showStats ? "Ocultar Estadísticas" : "Ver Estadísticas"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
 
         {/* Contenido principal */}
-        <main
-          style={{
-            padding: "2rem",
-            maxWidth: "1200px",
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontWeight: 800,
-              color: "#2563eb",
-              marginBottom: "1.5rem",
-              textAlign: "center",
-            }}
-          >
-            Resumen del sistema
-          </h2>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-              gap: "20px",
-              width: "100%",
-              marginBottom: "2rem",
-            }}
-          >
+        <main className="px-4 py-8 max-w-6xl mx-auto flex flex-col items-center">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-blue-700 mb-6 text-center">Resumen del sistema</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-8">
             <InfoBox title="Usuarios activos" value={120} link="/admin/users" />
             <InfoBox title="Campañas en curso" value={12} link="/admin/campaigns" />
             <InfoBox title="Reportes generados" value={45} link="/admin/reports" />
           </div>
-
           {showStats && (
-            <div
-              style={{
-                width: "100%",
-                maxWidth: "800px",
-                background: "white",
-                padding: "2rem",
-                borderRadius: "18px",
-                boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-                animation: "fadeIn 0.5s",
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: "1.5rem",
-                  fontWeight: 700,
-                  color: "#2563eb",
-                  marginBottom: "1rem",
-                }}
-              >
-                Estadísticas Generales
+            <div className="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-lg animate-fadeIn">
+              <h3 className="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2">
+                <HiChartBar className="w-6 h-6 text-blue-400" /> Estadísticas Generales
               </h3>
-              <p style={{ color: "#334155" }}>
-                Aquí irán gráficas o métricas más detalladas en el futuro.
-              </p>
+              <p className="text-blue-900">Aquí irán gráficas o métricas más detalladas en el futuro.</p>
             </div>
           )}
         </main>
@@ -240,15 +142,17 @@ const AdminHome: React.FC = () => {
         )}
 
         <Footer />
-
-        <style>
-          {`
-            @keyframes fadeIn {
-              from { opacity: 0; transform: translateY(20px);}
-              to { opacity: 1; transform: translateY(0);}
-            }
-          `}
-        </style>
+        {/* Animación fadeIn personalizada y comentario de estilos */}
+        <style>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+          }
+          .animate-fadeIn {
+            animation: fadeIn 0.7s;
+          }
+        `}</style>
+        {/* Comentario: Se utiliza Tailwind CSS, iconos y animación fadeIn para mejorar la experiencia visual y responsividad. */}
       </>
     </ProtectedRoute>
   );

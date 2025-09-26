@@ -2,11 +2,56 @@ import React, { useState } from 'react';
 import AnimalCard from './AnimalCard';
 
 const animals = [
-  { nombre: 'Luna', estado: 'Disponible', ubicacion: 'Norte', edad: '1 año', imagen: 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=facearea&w=96&h=96' },
-  { nombre: 'Max', estado: 'Adoptado', ubicacion: 'Sur', edad: '3 años', imagen: 'https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=facearea&w=96&h=96' },
-  { nombre: 'Bella', estado: 'Disponible', ubicacion: 'Centro', edad: '2 años', imagen: 'https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=facearea&w=96&h=96' },
-  { nombre: 'Rocky', estado: 'En tratamiento', ubicacion: 'Centro', edad: '2 años', imagen: 'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96' },
-  { nombre: 'Nina', estado: 'Disponible', ubicacion: 'Norte', edad: '4 años', imagen: 'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96' },
+  {
+    nombre: 'Luna',
+    estado: 'Disponible',
+    ubicacion: 'Norte',
+    edad: '1 año',
+    imagenes: [
+      'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=facearea&w=96&h=96',
+      'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=facearea&w=400&h=300',
+    ],
+  },
+  {
+    nombre: 'Max',
+    estado: 'Adoptado',
+    ubicacion: 'Sur',
+    edad: '3 años',
+    imagenes: [
+      'https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=facearea&w=96&h=96',
+      'https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=facearea&w=400&h=300',
+    ],
+  },
+  {
+    nombre: 'Bella',
+    estado: 'Disponible',
+    ubicacion: 'Centro',
+    edad: '2 años',
+    imagenes: [
+      'https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=facearea&w=96&h=96',
+      'https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=facearea&w=400&h=300',
+    ],
+  },
+  {
+    nombre: 'Rocky',
+    estado: 'En tratamiento',
+    ubicacion: 'Centro',
+    edad: '2 años',
+    imagenes: [
+      'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96',
+      'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=400&h=300',
+    ],
+  },
+  {
+    nombre: 'Nina',
+    estado: 'Disponible',
+    ubicacion: 'Norte',
+    edad: '4 años',
+    imagenes: [
+      'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=96&h=96',
+      'https://images.unsplash.com/photo-1518715308788-300e1e1e2d4c?auto=format&fit=facearea&w=400&h=300',
+    ],
+  },
 ];
 
 export default function AnimalList() {
@@ -50,7 +95,7 @@ export default function AnimalList() {
             status={animal.estado}
             location={animal.ubicacion}
             age={animal.edad}
-            image={animal.imagen}
+            images={animal.imagenes}
           />
         ))}
       </div>

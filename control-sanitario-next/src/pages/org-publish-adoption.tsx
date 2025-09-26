@@ -1,5 +1,7 @@
 
 import React from "react";
+import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import { useForm } from "react-hook-form";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -36,7 +38,8 @@ const OrgPublishAdoption = () => {
             {/* Nombre de la mascota */}
             <div>
               <label className={styles.label}>Nombre de la mascota</label>
-              <input
+              {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
+              <Input
                 className={styles.input}
                 type="text"
                 placeholder="Ejemplo: Luna"
@@ -50,7 +53,7 @@ const OrgPublishAdoption = () => {
             {/* Edad */}
             <div>
               <label className={styles.label}>Edad</label>
-              <input
+              <Input
                 className={styles.input}
                 type="number"
                 placeholder="Ejemplo: 2"
@@ -93,13 +96,12 @@ const OrgPublishAdoption = () => {
             {/* Foto */}
             <div>
               <label className={styles.label}>Foto (opcional)</label>
-              <input className={styles.input} type="file" {...register("foto")} />
+              <Input className={styles.input} type="file" {...register("foto")} />
             </div>
 
             {/* Botón */}
-            <button className={styles.button} type="submit">
-              Publicar
-            </button>
+            {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+            <Button className={styles.button} type="submit">Publicar</Button>
           </form>
         </main>
         <Footer />

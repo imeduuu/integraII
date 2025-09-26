@@ -1,7 +1,10 @@
 import React from 'react';
+import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNotification } from '../components/NotificationProvider';
 
 interface LoginFormInputs {
   email: string;
@@ -49,11 +52,13 @@ const buttonStyle: React.CSSProperties = {
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
+  const { addToast } = useNotification();
   const [mensaje, setMensaje] = React.useState('');
 
   const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
     console.log('Datos del formulario:', data);
     setMensaje('Login simulado (sin backend)');
+    addToast('Inicio de sesión exitoso', 'success');
   };
 
   return (
@@ -63,8 +68,8 @@ const Login = () => {
         <h2 style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 20 }}>Iniciar Sesión</h2>
         
         <label style={labelStyle}>Correo electrónico</label>
-        <input
-          style={inputStyle}
+        {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
+        <Input
           type="email"
           placeholder="correo@ejemplo.com"
           {...register('email', {
@@ -78,8 +83,7 @@ const Login = () => {
         {errors.email && <span style={errorStyle}>{errors.email.message}</span>}
 
         <label style={labelStyle}>Contraseña</label>
-        <input
-          style={inputStyle}
+        <Input
           type="password"
           placeholder="Mínimo 6 caracteres"
           {...register('password', { 
@@ -92,7 +96,8 @@ const Login = () => {
         />
         {errors.password && <span style={errorStyle}>{errors.password.message}</span>}
 
-        <button style={buttonStyle} type="submit">Entrar</button>
+  {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+  <Button type="submit" style={{ width: '100%', marginTop: 8 }}>Entrar</Button>
         
         <div style={{ marginTop: 12 }}>
           <a href="/forgot-password" style={{ color: '#2563eb', textDecoration: 'underline', fontSize: '0.95rem' }}>
