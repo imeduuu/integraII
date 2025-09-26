@@ -1,3 +1,20 @@
+/* Título alineado a la izquierda */
+.navbarTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+  letter-spacing: 0.05em;
+  margin-right: auto;
+  align-self: flex-start;
+}
+.profileSectionRight {
+  position: absolute;
+  top: 1.2rem;
+  right: 2.5vw;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 .navbar {
   background-color: hsl(212, 92%, 64%); /* Un negro muy oscuro */
   color: #43a2f0;
@@ -14,20 +31,26 @@
   }
 }
 
-.navbarTitle {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #000000; /* Título blanco */
-  letter-spacing: 0.05em;
+/* Navbar ocupa todo el ancho, sin bordes blancos laterales */
+.navbar {
+  width: 100vw;
+  min-width: 100vw;
+  margin: 0;
+  left: 0;
+  top: 0;
+  background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
+  color: #fff;
+  padding: 1.2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #2563eb;
+  box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+  position: relative;
+  z-index: 10;
 }
 
-.navbarLinks {
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
 
 .navLink {
   color: #000000;
@@ -36,19 +59,15 @@
   text-decoration: none; /* Quitamos el subrayado por defecto */
   transition: background-color 0.3s ease-in-out;
 }
-
 .navLink:hover {
   background-color: #ffffff; /* Un gris oscuro al pasar el cursor */
 }
-
 .navLinkActive {
   background-color: #43a2f0; /* Un gris oscuro para el enlace activo */
   font-weight: bold;
   position: relative;
   overflow: hidden;
 }
-
-/* Subrayado animado para el enlace activo */
 .navLinkActive::after {
   content: '';
   position: absolute;
@@ -59,11 +78,17 @@
   height: 2px;
   background-color: #000000;
 }
-
 .profileSection {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+.profileImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #000000;
 }
 
 .profileImage {

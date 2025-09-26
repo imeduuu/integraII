@@ -1,4 +1,6 @@
 import React from 'react';
+import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import { useForm } from 'react-hook-form';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -40,7 +42,8 @@ const EditProfile = () => {
               <label className={styles.label}>
                 Nombre completo
               </label>
-              <input
+              {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
+              <Input
                 type="text"
                 {...register('nombre', {
                   required: 'El nombre es obligatorio',
@@ -62,7 +65,7 @@ const EditProfile = () => {
               <label className={styles.label}>
                 Correo electrónico
               </label>
-              <input
+              <Input
                 type="email"
                 {...register('email', {
                   required: 'El email es obligatorio',
@@ -84,7 +87,7 @@ const EditProfile = () => {
               <label className={styles.label}>
                 Teléfono
               </label>
-              <input
+              <Input
                 type="tel"
                 {...register('telefono', {
                   required: 'El teléfono es obligatorio',
@@ -129,19 +132,9 @@ const EditProfile = () => {
 
             {/* Botones */}
             <div className={styles.buttonContainer}>
-              <button
-                type="submit"
-                className={styles.submitButton}
-              >
-                Guardar Cambios
-              </button>
-              <button
-                type="button"
-                onClick={() => reset()}
-                className={styles.resetButton}
-              >
-                Limpiar
-              </button>
+              {/* Migración: Se reemplazan los botones nativos por el componente Button UI estándar. */}
+              <Button type="submit" className={styles.submitButton}>Guardar Cambios</Button>
+              <Button type="button" onClick={() => reset()} className={styles.resetButton} variant="secondary">Limpiar</Button>
             </div>
           </form>
         </div>

@@ -1,8 +1,12 @@
-import React from 'react';
+
+import React, { useState } from 'react';
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AnimalCard from '../components/AnimalCard';
 import styles from '../styles/adopcion.module.css';
+import AdoptionForm from '../components/AdoptionForm';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 const animales = [
   {
@@ -38,11 +42,33 @@ const animales = [
 ].sort((a, b) => a.nombre.localeCompare(b.nombre));
 
 export default function Adopcion() {
+  const [selectedAnimal, setSelectedAnimal] = useState<any | null>(null);
+  const [formData, setFormData] = useState<any | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  
+  const handleAdoptClick = (animal: any) => {
+    setSelectedAnimal(animal);
+  };
+
+  const handleFormSubmit = (data: any) => {
+    setFormData(data);
+    setShowModal(true); // abrir modal al enviar formulario
+  };
+
+  const handleConfirm = () => {
+    console.log("Solicitud enviada:", { animal: selectedAnimal, ...formData });
+    setShowModal(false);
+    setSelectedAnimal(null);
+    setFormData(null);
+  };
+  
   return (
     <>
       <Navbar />
       <main className="min-h-screen bg-gray-50 py-8">
         <h1 className="text-3xl font-bold text-center mb-8">Animales en Adopción</h1>
+
+        {!selectedAnimal ? (
         <div className={styles.grid}>
           {animales.map((animal, idx) => (
             <div className={styles.card} key={idx}>
@@ -51,11 +77,35 @@ export default function Adopcion() {
               <div className={styles.info}><span>Estado:</span> {animal.estado}</div>
               <div className={styles.info}><span>Ubicación:</span> {animal.ubicacion}</div>
               <div className={styles.info}><span>Edad:</span> {animal.edad}</div>
+               
+              {animal.estado === 'Disponible' && (
+                // Migración: Se reemplaza el botón nativo por el componente Button UI estándar.
+                <Button
+                  className={styles.btn}
+                  onClick={() => handleAdoptClick(animal)}
+                >
+                  Solicitar Adopción
+                </Button>
+              )}
             </div>
           ))}
         </div>
+        ) : (
+          <AdoptionForm animal={selectedAnimal} onSubmit={handleFormSubmit} />
+        )}
+
+        {showModal && (
+          <ConfirmationModal
+            title="Confirmar solicitud de adopción"
+            animal={selectedAnimal}
+            formData={formData}
+            onCancel={() => setShowModal(false)}
+            onConfirm={handleConfirm}
+          />
+        )}
       </main>
       <Footer />
     </>
   );
 }
+

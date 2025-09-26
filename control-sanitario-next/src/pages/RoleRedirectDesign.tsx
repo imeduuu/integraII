@@ -1,4 +1,5 @@
 import React from "react";
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 
 const roles = [
   {
@@ -55,11 +56,12 @@ export default function RoleRedirectDesign() {
                 </li>
               ))}
             </ul>
-            <button
+            {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+            <Button
               className={`mt-auto px-5 py-2 bg-gradient-to-r ${role.color} text-white rounded-lg font-bold shadow-md hover:brightness-110 transition`}
             >
               Ir al panel de {role.name.toLowerCase()}
-            </button>
+            </Button>
           </div>
         ))}
       </div>

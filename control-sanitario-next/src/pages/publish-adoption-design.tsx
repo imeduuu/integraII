@@ -1,4 +1,6 @@
 import React from "react";
+import Input from "../components/ui/Input"; // Migración: Usar input UI estándar
+import Button from "../components/ui/Button"; // Migración: Usar botón UI estándar
 
 export default function PublishAdoptionDesign() {
   return (
@@ -12,7 +14,8 @@ export default function PublishAdoptionDesign() {
           <label className="block text-gray-700 font-semibold mb-2">
             Nombre de la mascota
           </label>
-          <input
+          {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
+          <Input
             type="text"
             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-300"
             placeholder="Ejemplo: Luna"
@@ -23,7 +26,7 @@ export default function PublishAdoptionDesign() {
           <label className="block text-gray-700 font-semibold mb-2">
             Edad
           </label>
-          <input
+          <Input
             type="number"
             min="0"
             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-300"
@@ -57,19 +60,20 @@ export default function PublishAdoptionDesign() {
           <label className="block text-gray-700 font-semibold mb-2">
             Foto
           </label>
-          <input
+          <Input
             type="file"
             accept="image/*"
             className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-gray-50"
           />
         </div>
         {/* Botón (sin funcionalidad) */}
-        <button
+        {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+        <Button
           type="button"
           className="mt-4 px-6 py-2 bg-gradient-to-r from-pink-400 to-green-400 text-white rounded-lg font-bold shadow-md hover:brightness-110 transition"
         >
           Publicar
-        </button>
+        </Button>
       </form>
     </div>
   );

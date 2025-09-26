@@ -6,11 +6,17 @@ import Modal from "./ui/Modal";
 
 // --- estilos base ---
 const footerStyle: React.CSSProperties = {
-  background: "#5e8ff8ff",
+  width: "100vw",
+  minWidth: "100vw",
+  left: 0,
+  background: "linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)",
   color: "#fff",
-  padding: "2rem",
+  padding: "2.5rem 0 2rem 0",
   textAlign: "center",
-  marginTop: "3rem"
+  marginTop: "3rem",
+  boxShadow: "0 -2px 12px rgba(37,99,235,0.08)",
+  position: "relative",
+  zIndex: 10
 };
 
 

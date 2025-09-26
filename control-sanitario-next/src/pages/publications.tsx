@@ -1,4 +1,6 @@
 import React from 'react';
+import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
+import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import styles from '../styles/publications.module.css';
@@ -10,13 +12,15 @@ const PublicationsPage = () => {
       <main className={styles.pageContainer}>
         {/* Área de Controles de Filtro */}
         <div className={styles.filters}>
-          <input type="text" placeholder="Buscar por palabra clave..." className={styles.filterInput} />
+          {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
+          <Input type="text" placeholder="Buscar por palabra clave..." className={styles.filterInput} />
           <select className={styles.filterInput}>
             <option value="">Todas las categorías</option>
             <option value="avistamientos">Avistamientos</option>
             <option value="adopciones">Adopciones</option>
           </select>
-          <button className={styles.filterButton}>Filtrar</button>
+          {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
+          <Button className={styles.filterButton}>Filtrar</Button>
         </div>
 
         {/* Contenido Principal (Mapa y Lista) */}
