@@ -16,8 +16,6 @@ async function main() {
   });
 
   // Crear usuarios
-  // El modelo usuario no tiene clave única en email, solo id_usuario
-  // Por lo tanto, solo se puede crear usuarios de prueba (no upsert por email)
   const user1 = await prisma.usuario.create({
     data: {
       nombre_usuario: 'Admin',
@@ -62,6 +60,16 @@ async function main() {
     where: { id_estado_salud: 1 },
     update: {},
     create: { nombre_estado_salud: 'Sano' },
+  });
+
+  // Crear estados de avistamiento
+  await prisma.estado_avistamiento.createMany({
+    data: [
+      { id_estado_avistamiento: 1, estado_avistamiento: 'Pendiente' },
+      { id_estado_avistamiento: 2, estado_avistamiento: 'En Progreso' },
+      { id_estado_avistamiento: 3, estado_avistamiento: 'Resuelto' },
+    ],
+    skipDuplicates: true, // Evita errores si ya existen
   });
 
   // Crear animales
