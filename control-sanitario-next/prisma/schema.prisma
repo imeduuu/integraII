@@ -48,6 +48,7 @@ model usuario {
   google_accounts    google_accounts[]
   mensajes_enviados   mensaje[] @relation("mensajes_enviados")
   mensajes_recibidos  mensaje[] @relation("mensajes_recibidos")
+  historial_reportes  historial_reporte[]
 }
 
 model animal {
@@ -155,5 +156,18 @@ model mensaje {
   remitente    usuario @relation("mensajes_enviados", fields: [id_remitente], references: [id_usuario])
   // Relación con el usuario destinatario
   destinatario usuario @relation("mensajes_recibidos", fields: [id_destinatario], references: [id_usuario])
+}
+
+/// Modelo para historial de cambios/eventos en reportes de animales
+model historial_reporte {
+  id_historial      Int      @id @default(autoincrement())
+  id_reporte        Int      // ID del reporte relacionado (ajustar si existe modelo de reporte)
+  fecha_evento      DateTime @default(now())
+  id_usuario        Int      // Usuario responsable
+  estado            String   @db.VarChar(30)
+  observaciones     String?  @db.Text
+
+  // Relaciones
+  usuario           usuario  @relation(fields: [id_usuario], references: [id_usuario])
 }
 
