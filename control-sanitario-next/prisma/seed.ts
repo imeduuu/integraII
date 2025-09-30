@@ -126,7 +126,7 @@ async function main() {
     create: { id_estado_salud: 1, nombre_estado_salud: 'Sano' },
   });
 
-  // Animales de prueba
+  // Crear animales de prueba
   await prisma.animal.upsert({
     where: { id_animal: 1 },
     update: {},
@@ -136,7 +136,7 @@ async function main() {
       edad_animal: '2 años',
       id_estado_salud: estadoSalud.id_estado_salud,
       id_categoria: categoria.id_categoria,
-      id_especie: especie.id_especie,
+      id_especie: especie.id_especie
     },
   });
   await prisma.animal.upsert({
@@ -148,9 +148,11 @@ async function main() {
       edad_animal: '1 año',
       id_estado_salud: estadoSalud.id_estado_salud,
       id_categoria: categoria.id_categoria,
-      id_especie: especie.id_especie,
+      id_especie: especie.id_especie
     },
   });
+
+  // Estados de solicitud
   await prisma.estado_solicitud.upsert({
     where: { id_estado_solicitud: 2 },
     update: {},

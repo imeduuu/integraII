@@ -11,6 +11,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Estado {
+  Activo
+  Inactivo
+  Pendiente
+}
+
 model organizacion {
   id_organizacion      Int      @id @default(autoincrement())
   nombre_organizacion String   @db.VarChar(30)
@@ -58,6 +64,8 @@ model animal {
   id_estado_salud Int
   id_categoria   Int
   id_especie     Int
+  estado_general  Estado    @default(Activo) 
+  zona            String?  @db.VarChar(50)
   estado_salud   estado_salud @relation(fields: [id_estado_salud], references: [id_estado_salud])
   categoria      categoria     @relation(fields: [id_categoria], references: [id_categoria])
   especie        especie       @relation(fields: [id_especie], references: [id_especie])
@@ -119,6 +127,8 @@ model avistamiento {
   fotos                   Json?
   ubicacion               String?
   direccion               String?  @db.VarChar(30)
+  estado_general      Estado?   
+  zona                String?   @db.VarChar(50) 
   usuario                 usuario  @relation(fields: [id_usuario], references: [id_usuario])
   estado_avistamiento     estado_avistamiento @relation(fields: [id_estado_avistamiento], references: [id_estado_avistamiento])
   estado_salud            estado_salud @relation(fields: [id_estado_salud], references: [id_estado_salud])
