@@ -42,6 +42,13 @@ export default function AnimalSanitarioPage() {
         <span className="font-semibold">Estado actual: </span>
         <span>{estadoSanitario}</span>
       </div>
+      {/* Botón para ver historial */}
+      <button
+        className="mb-4 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800"
+        onClick={() => router.push(`/animal/${id}/historial`)}
+      >
+        Ver historial de eventos
+      </button>
       {puedeEditar && (
         <form onSubmit={handleSubmit} className="mb-4">
           <label className="block mb-2 font-semibold">Modificar estado sanitario:</label>
