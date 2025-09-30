@@ -1,45 +1,55 @@
-// src/components/CampaignList.tsx
 import React from "react";
+import { campaigns } from "../services/mockCampaigns";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-interface Campaign {
-  id: number;
-  title: string;
-  description: string;
-  date: string;
-  active: boolean;
-}
+const CampaignList = () => {
+  const handleRegister = (title: string, active: boolean) => {
+    if (!active) {
+      toast.error(`La campaña "${title}" está inactiva, no puedes inscribirte.`);
+      return;
+    }
+    toast.success(`Te has inscrito en la campaña "${title}" con éxito.`);
+  };
 
-interface CampaignListProps {
-  campaigns: Campaign[];
-}
-
-const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {campaigns.map((campaign) => (
-        <div
-          key={campaign.id}
-          className="bg-white rounded-xl shadow-md p-6 border border-blue-300 hover:shadow-lg transition"
-        >
-          <p className="text-xl font-bold text-blue-800 mb-2">
-            📌 Nombre: {campaign.title}
-          </p>
-          <p className="text-gray-700 mb-2">{campaign.description}</p>
-          <p className="text-sm text-gray-600 mb-1">
-            📅 Fecha:{" "}
-            <span className="font-semibold text-blue-700">
-              {new Date(campaign.date).toLocaleDateString()}
-            </span>
-          </p>
-          <p
-            className={`mt-2 text-md font-bold ${
-              campaign.active ? "text-green-600" : "text-red-600"
-            }`}
+    <div>
+      <h2>Campañas Disponibles</h2>
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        {campaigns.map((c) => (
+          <li
+            key={c.id}
+            style={{
+              border: "1px solid #ccc",
+              padding: "1rem",
+              marginBottom: "1rem",
+              borderRadius: "8px",
+            }}
           >
-            📊 Estado: {campaign.active ? "Activa ✅" : "Inactiva ❌"}
-          </p>
-        </div>
-      ))}
+            <h3>{c.title}</h3>
+            <p>{c.description}</p>
+            <p>
+              <strong>Fecha:</strong> {c.date}
+            </p>
+            <p>
+              <strong>Estado:</strong> {c.active ? "Activa ✅" : "Inactiva ❌"}
+            </p>
+            <button
+              onClick={() => handleRegister(c.title, c.active)}
+              style={{
+                padding: "0.5rem 1rem",
+                backgroundColor: "#0070f3", 
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+            >
+              Inscribirse
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
