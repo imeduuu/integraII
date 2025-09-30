@@ -1,3 +1,6 @@
+/**
+ * Provider de notificaciones usando react-toastify
+ */
 import React, { createContext, useContext } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,7 +11,12 @@ interface NotificationContextProps {
 
 const NotificationContext = createContext<NotificationContextProps | undefined>(undefined);
 
+/**
+ * Provider que maneja notificaciones toast en toda la aplicación
+ * Utilizado para mostrar mensajes de éxito, error y advertencia
+ */
 export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Función para mostrar diferentes tipos de notificaciones
   const addToast = (message: string, type: 'success' | 'error' | 'warning') => {
     switch (type) {
       case 'success':

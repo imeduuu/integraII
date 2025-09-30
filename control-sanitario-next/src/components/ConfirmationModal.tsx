@@ -1,5 +1,8 @@
+/**
+ * Modal de confirmación para solicitudes de adopción
+ */
 import React from "react";
-import Button from "./ui/Button"; // Migración: Usar botón UI estándar
+import Button from "./ui/Button";
 
 interface Animal {
   nombre: string;
@@ -16,13 +19,17 @@ interface FormData {
 }
 
 interface Props {
-  title: string;
-  animal: Animal;
-  formData: FormData;
+  title: string; // Título del modal
+  animal: Animal; // Datos del animal a adoptar
+  formData: FormData; // Datos del formulario de adopción
   onCancel: () => void;
   onConfirm: () => void;
 }
 
+/**
+ * Modal que muestra resumen de solicitud de adopción antes de enviar
+ * Incluye datos del animal y del solicitante
+ */
 export default function ConfirmationModal({
   title,
   animal,
@@ -45,7 +52,7 @@ export default function ConfirmationModal({
           <p><strong>Motivo:</strong> {formData.reason}</p>
         </div>
         <div className="mt-6 flex justify-end gap-2">
-          {/* Migración: Se reemplazan los botones nativos por el componente Button UI estándar. */}
+          {/* Botones de acción con componentes UI estandarizados */}
           <Button
             onClick={onCancel}
             variant="secondary"

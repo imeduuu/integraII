@@ -1,6 +1,9 @@
 
+/**
+ * Página de adopción de animales con formulario y proceso de confirmación
+ */
 import React, { useState } from 'react';
-import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
+import Button from '../components/ui/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AnimalCard from '../components/AnimalCard';
@@ -8,6 +11,7 @@ import styles from '../styles/adopcion.module.css';
 import AdoptionForm from '../components/AdoptionForm';
 import ConfirmationModal from '../components/ConfirmationModal';
 
+// Datos mock de animales disponibles para adopción
 const animales = [
   {
     nombre: 'Bella', estado: 'Disponible', ubicacion: 'Monterrey', edad: '3 años', imagen: 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=facearea&w=96&h=96',
