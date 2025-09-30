@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Proyecto Next.js para control sanitario animal",
   "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
