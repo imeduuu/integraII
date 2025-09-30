@@ -1,3 +1,19 @@
+/// Estado posible de un caso
+enum EstadoCaso {
+  Abierto
+  Cerrado
+  EnProceso
+}
+
+/// Modelo para casos reportados en el sistema
+model caso {
+  id_caso        Int        @id @default(autoincrement())
+  titulo         String     @db.VarChar(100)
+  descripcion    String?    @db.Text
+  fecha_creacion DateTime   @default(now())
+  estado         EstadoCaso @default(Abierto)
+  // Puedes agregar relaciones a usuario, animal, etc. según necesidades
+}
 // Prisma schema for PostgreSQL
 
 
