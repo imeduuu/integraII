@@ -1,9 +1,12 @@
 
+/**
+ * Tabla de usuarios con filtrado y paginación para panel administrativo
+ */
 import React, { useState } from "react";
 import Link from "next/link";
 import styles from "../styles/admin-users.module.css";
 
-// Definimos el tipo User con los datos básicos del usuario
+// Estructura de datos de usuario
 type User = {
   id: number;
   nombre: string;
@@ -11,21 +14,24 @@ type User = {
   rol: string;
 };
 
-// Props que recibe el componente: lista de usuarios y cantidad de usuarios por página
 type Props = {
-  users: User[];
-  usersPerPage?: number;
+  users: User[]; // Lista de usuarios a mostrar
+  usersPerPage?: number; // Cantidad por página (default: 5)
 };
 
+/**
+ * Tabla interactiva con filtros por nombre, email y rol + paginación
+ * Utilizada principalmente en /admin-users para gestión de usuarios
+ */
 const UserTable: React.FC<Props> = ({ users, usersPerPage = 5 }) => {
-  // Estado para manejar la página actual
+  // Control de paginación
   const [currentPage, setCurrentPage] = useState(1);
-  // Estados para los filtros de búsqueda (nombre, email, rol)
+  // Estados de filtros de búsqueda
   const [filterName, setFilterName] = useState("");
   const [filterEmail, setFilterEmail] = useState("");
   const [filterRol, setFilterRol] = useState("");
 
-  // 🔹 Filtro: se revisa cada usuario según los criterios ingresados
+  // Aplicar filtros según criterios de búsqueda
   const filteredUsers = users.filter((user) => {
     return (
       user.nombre.toLowerCase().includes(filterName.toLowerCase()) &&

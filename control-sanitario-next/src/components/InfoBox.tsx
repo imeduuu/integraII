@@ -1,16 +1,24 @@
+/**
+ * Caja informativa clickeable con íconos para mostrar métricas
+ */
 import React from 'react';
 import styles from '../styles/infoBox.module.css';
 import { useRouter } from 'next/router';
 
 interface InfoBoxProps {
-  title: string;
-  value: string | number;
-  icon?: React.ReactNode;
-  link?: string;
+  title: string; // Título descriptivo de la métrica
+  value: string | number; // Valor numérico o texto a mostrar
+  icon?: React.ReactNode; // Ícono opcional
+  link?: string; // URL de navegación opcional
 }
 
+/**
+ * Componente para mostrar información resumida con navegación opcional
+ * Usado en dashboards para métricas y estadísticas
+ */
 const InfoBox: React.FC<InfoBoxProps> = ({ title, value, icon, link }) => {
   const router = useRouter();
+  // Navegación programática si se proporciona un enlace
   const handleClick = () => {
     if (link) router.push(link);
   };

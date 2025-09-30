@@ -1,6 +1,9 @@
 
+/**
+ * Dashboard principal de administradores con gestión de usuarios, campañas y estadísticas
+ */
 import React, { useState } from "react";
-import Button from "../components/ui/Button"; // Migración: Usar botón UI estándar
+import Button from "../components/ui/Button";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import InfoBox from "../components/InfoBox";
@@ -10,9 +13,14 @@ import { HiUserGroup, HiSpeakerphone, HiChartBar, HiCog } from "react-icons/hi";
 
 const backgroundUrl = "/admin-bg.png";
 
+/**
+ * Página principal del panel administrativo
+ * Incluye: gestión de usuarios, revisión de campañas, estadísticas y modales de confirmación
+ */
 const AdminHome: React.FC = () => {
-  const [showStats, setShowStats] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showStats, setShowStats] = useState(false); // Control de visibilidad de estadísticas
+  const [showModal, setShowModal] = useState(false); // Control del modal de confirmación
+  // Configuración dinámica del modal
   const [modalContent, setModalContent] = useState<{
     title: string;
     message: string;
@@ -20,6 +28,7 @@ const AdminHome: React.FC = () => {
     confirmText?: string;
   } | null>(null);
 
+  // Helper para abrir modales con contenido personalizado
   const openModal = (
     title: string,
     message: string,
@@ -34,7 +43,7 @@ const AdminHome: React.FC = () => {
     <ProtectedRoute allowedRoles={["admin"]}>
       <>
         <Navbar />
-        {/* Hero / portada */}
+        {/* Sección hero con fondo de imagen y panel principal */}
         <div
           className="min-h-[60vh] w-full flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-200 px-2 py-8"
           style={{
@@ -50,9 +59,8 @@ const AdminHome: React.FC = () => {
             <p className="text-blue-900 text-lg mb-6 font-medium">
               Gestiona usuarios, revisa campañas y consulta estadísticas del sistema.
             </p>
-            {/* Botones con iconos y feedback visual */}
+            {/* Botones de acciones administrativas principales */}
             <div className="flex flex-wrap justify-center gap-4 mb-2">
-              {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
               <Button
                 variant="primary"
                 className="px-6 py-3 rounded-xl bg-blue-600 shadow-md hover:bg-blue-700 flex items-center gap-2 focus:ring-2 focus:ring-blue-400"

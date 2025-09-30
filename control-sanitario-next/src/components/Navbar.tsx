@@ -1,17 +1,24 @@
-// ...existing code...
+/**
+ * Barra de navegación principal con menús dinámicos por rol
+ */
 import React from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/navbar.module.css';
 import { userMock } from '../context/userMock';
 
+/**
+ * Componente de navegación que renderiza menús específicos según el rol del usuario
+ * Roles soportados: admin, user, org
+ */
 const Navbar = () => {
   const router = useRouter();
 
+  // Aplica estilos activos al enlace de la página actual
   const getLinkClasses = (path: string) => {
     return `${styles.navLink} ${router.pathname === path ? styles.navLinkActive : ''}`;
   };
 
-  // Menú dinámico por rol
+  // Configuración de enlaces por rol de usuario
   let links = [];
   if (userMock.role === 'admin') {
     links = [

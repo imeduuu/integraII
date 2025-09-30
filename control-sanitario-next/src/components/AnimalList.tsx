@@ -1,6 +1,10 @@
+/**
+ * Lista de animales con filtros por estado y ubicación
+ */
 import React, { useState } from 'react';
 import AnimalCard from './AnimalCard';
 
+// Datos mock de animales disponibles
 const animals = [
   {
     nombre: 'Luna',
@@ -54,10 +58,15 @@ const animals = [
   },
 ];
 
+/**
+ * Componente que renderiza lista filtrable de animales disponibles
+ * Incluye filtros por estado y ubicación con vista en grid responsivo
+ */
 export default function AnimalList() {
   const [estado, setEstado] = useState('');
   const [ubicacion, setUbicacion] = useState('');
 
+  // Aplicar filtros de búsqueda
   const filtered = animals.filter(a =>
     (estado ? a.estado === estado : true) &&
     (ubicacion ? a.ubicacion === ubicacion : true)
@@ -65,6 +74,7 @@ export default function AnimalList() {
 
   return (
     <div className="p-4">
+      {/* Filtros de búsqueda */}
       <div className="flex gap-4 mb-6 flex-wrap">
         <select
           className="border rounded px-2 py-1"

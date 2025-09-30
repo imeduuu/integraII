@@ -1,12 +1,16 @@
 
+/**
+ * Página de gestión de usuarios para administradores con filtros avanzados
+ */
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { userMock } from "../context/userMock";
-import { HiUser, HiUserGroup, HiShieldCheck } from "react-icons/hi"; // Iconos para roles
+import { HiUser, HiUserGroup, HiShieldCheck } from "react-icons/hi";
 import styles from "../styles/admin-users.module.css";
 import UserTable from "../components/UserTable";
 
+// Datos mock de usuarios del sistema
 const users = [
   { id: 1, nombre: "Ana Pérez", email: "ana@correo.com", rol: "admin" },
   { id: 2, nombre: "Luis Gómez", email: "luis@correo.com", rol: "user" },
@@ -21,8 +25,8 @@ const users = [
   { id: 11, nombre: "Martina López", email: "ejemplo@correo.com", rol: "user" },
 ];
 
+// Helper para renderizar badges visuales por rol de usuario
 const roleBadge = (rol: string) => {
-  // Badge visual para cada rol usando clases CSS del módulo
   switch (rol) {
     case "admin":
       return (
@@ -45,10 +49,14 @@ const roleBadge = (rol: string) => {
   }
 };
 
+/**
+ * Página de gestión de usuarios con tabla filtrable y búsqueda avanzada
+ * Incluye filtros por nombre, email y sistema de toggle para tipos de búsqueda
+ */
 const UserList = () => {
-  const [filtro, setFiltro] = useState('');
-  const [filtroNombre, setFiltroNombre] = useState(false);
-  const [filtroEmail, setFiltroEmail] = useState(false);
+  const [filtro, setFiltro] = useState(''); // Texto de búsqueda
+  const [filtroNombre, setFiltroNombre] = useState(false); // Toggle filtro por nombre
+  const [filtroEmail, setFiltroEmail] = useState(false); // Toggle filtro por email
 
   useEffect(() => {
     if (userMock.role !== "admin") {

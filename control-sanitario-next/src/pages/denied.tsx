@@ -1,5 +1,8 @@
+/**
+ * Página de acceso denegado para usuarios sin permisos
+ */
 import React from 'react';
-import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
+import Button from '../components/ui/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useRouter } from 'next/router';
@@ -17,6 +20,10 @@ const buttonStyle: React.CSSProperties = {
   boxShadow: '0 2px 8px rgba(37,99,235,0.12)',
 };
 
+/**
+ * Página que se muestra cuando un usuario intenta acceder a una ruta sin permisos
+ * Incluye opciones de navegación para redirigir a páginas apropiadas
+ */
 const DeniedPage: React.FC = () => {
   const router = useRouter();
 
