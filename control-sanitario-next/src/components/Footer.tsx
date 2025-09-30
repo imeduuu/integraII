@@ -1,10 +1,13 @@
+/**
+ * Footer principal con información de contacto y modal de feedback
+ */
 import React, { useState } from "react";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
 import Modal from "./ui/Modal";
 
-// --- estilos base ---
+// Estilos base del footer
 const footerStyle: React.CSSProperties = {
   width: "100vw",
   minWidth: "100vw",
@@ -20,6 +23,10 @@ const footerStyle: React.CSSProperties = {
 };
 
 
+/**
+ * Componente de footer con información corporativa y formulario de contacto
+ * Incluye: datos de contacto, redes sociales, modal de feedback
+ */
 const Footer: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
 
@@ -38,12 +45,12 @@ const Footer: React.FC = () => {
           </span>
         </p>
 
-        {/* Botón Quiénes Somos */}
+        {/* Enlace a página institucional */}
         <a href="/quienes-somos">
           <Button className="mt-2">Quiénes Somos</Button>
         </a>
 
-        {/* Redes sociales */}
+        {/* Enlaces a redes sociales */}
         <div style={{ marginTop: "1rem", fontSize: "1.4rem" }}>
           <a href="#" style={{ margin: "0 10px" }}>
             <FaFacebook />

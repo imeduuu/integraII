@@ -1,15 +1,21 @@
 
+/**
+ * Dashboard principal para organizaciones con gestión de campañas
+ */
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../styles/org-home.module.css";
 import { campaigns } from "../services/mockCampaigns";
 import ProtectedRoute from "../components/ProtectedRoute";
-
-
 import { userMock } from "../context/userMock";
 import { useEffect } from "react";
+/**
+ * Página principal para organizaciones con listado de campañas activas
+ * Incluye protección de ruta y redirección para usuarios no autorizados
+ */
 const OrgHome = () => {
+  // Verificación adicional de permisos
   useEffect(() => {
     if (userMock.role !== "org") {
       window.location.replace("/denied");

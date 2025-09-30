@@ -1,21 +1,28 @@
-// src/components/CampaignList.tsx
+/**
+ * Lista de campañas con tarjetas informativas
+ */
 import React from "react";
 
 interface Campaign {
   id: number;
-  title: string;
-  description: string;
-  date: string;
-  active: boolean;
+  title: string; // Nombre de la campaña
+  description: string; // Descripción detallada
+  date: string; // Fecha de inicio
+  active: boolean; // Estado activo/inactivo
 }
 
 interface CampaignListProps {
-  campaigns: Campaign[];
+  campaigns: Campaign[]; // Array de campañas a mostrar
 }
 
+/**
+ * Componente que renderiza lista de campañas en formato grid
+ * Muestra información básica y estado de cada campaña
+ */
 const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {/* Renderizar cada campaña como tarjeta */}
       {campaigns.map((campaign) => (
         <div
           key={campaign.id}

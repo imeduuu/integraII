@@ -1,8 +1,11 @@
 
+/**
+ * Formulario de edición detallada de usuarios para administradores
+ */
 import React, { useState } from "react";
 import styles from "../styles/admin-users.module.css";
 
-// Tipo de datos que representa a un usuario
+// Estructura de datos de usuario
 type User = {
   id: number;
   nombre: string;
@@ -11,18 +14,21 @@ type User = {
   estado: "activo" | "inactivo"; // estado solo puede ser activo o inactivo
 };
 
-// Props que recibe este componente (un usuario específico)
 type Props = {
-  user: User;
+  user: User; // Usuario a editar
 };
 
+/**
+ * Componente de edición de usuario con validaciones y estado local
+ * Permite modificar: nombre, email, rol y estado del usuario
+ */
 const UserDetail: React.FC<Props> = ({ user }) => {
-  // Estado local del formulario (copia del usuario que se edita)
+  // Estado del formulario editable
   const [formData, setFormData] = useState<User>(user);
-  // Estado para mostrar mensajes de error o confirmación
+  // Mensajes de validación y confirmación
   const [message, setMessage] = useState<string | null>(null);
 
-  // 🔹 Validación del formulario antes de guardar
+  // Validaciones de campos requeridos
   const validateForm = (): boolean => {
     if (!formData.nombre.trim()) {
       setMessage("El nombre no puede estar vacío");
@@ -35,7 +41,7 @@ const UserDetail: React.FC<Props> = ({ user }) => {
     return true;
   };
 
-  // 🔹 Guardar cambios (de momento solo simulado con console.log)
+  // Guardar cambios (simulado - sin backend)
   const handleSave = () => {
     if (!validateForm()) return;
 

@@ -1,64 +1,78 @@
-import Button from "../../components/ui/Button"; // Migración: Usar botón UI estándar
-import Input from "../../components/ui/Input"; // Migración: Usar input UI estándar
+/**
+ * Página de edición detallada de organizaciones para administradores
+ */
+import Button from "../../components/ui/Button";
+import Input from "../../components/ui/Input";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { userMock } from "../../context/userMock";
 
+// Datos mock de organizaciones para desarrollo
 const mockOrgs = [
   { id: 1, name: "Simon", email: "hola123@gmail.com", address: "Av. Central 123", status: "Activa" },
   { id: 2, name: "Huella Segura", email: "contacto@huella.com", address: "Calle Norte 456", status: "Inactiva" },
   { id: 3, name: "Refugio Animal", email: "refugio@correo.cl", address: "Ruta 78 KM 12", status: "Activa" },
 ];
 
+/**
+ * Página de edición de organización individual (ruta dinámica /admin-orgs/[id])
+ * Permite a administradores editar datos de organizaciones: nombre, email, dirección y estado
+ */
 const AdminOrgDetail = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id } = router.query; // ID de la organización desde la URL
 
-  const [org, setOrg] = useState<any>(null);
+  const [org, setOrg] = useState<any>(null); // Organización actual
+  // Estado del formulario editable
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     address: "",
     status: "",
   });
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(""); // Mensaje de confirmación
 
   const backgroundUrl = "/perrito.png";
 
   useEffect(() => {
-    // Si el usuario no es admin, redirigir a acceso denegado
+    // Verificar permisos de administrador
     if (userMock.role !== "admin") {
       router.replace("/denied");
       return;
     }
+    // Cargar datos de la organización según ID de la URL
     if (id) {
       const foundOrg = mockOrgs.find((o) => o.id === Number(id));
       if (foundOrg) {
         setOrg(foundOrg);
-        setFormData(foundOrg);
+        setFormData(foundOrg); // Pre-llenar formulario con datos existentes
       }
     }
   }, [id]);
 
+  // Actualizar campos del formulario
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Guardar cambios (simulado - sin backend)
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Datos guardados:", formData);
     setMessage("Cambios guardados correctamente");
-    setTimeout(() => setMessage(""), 3000);
+    setTimeout(() => setMessage(""), 3000); // Auto-ocultar mensaje
   };
 
+  // Mostrar loading mientras carga la organización
   if (!org) return <p className="text-center mt-10">Cargando organización...</p>;
 
   return (
     <>
       <Navbar />
+      {/* Contenedor principal con fondo de imagen */}
       <div
         className="min-h-[75vh] flex items-center justify-center px-4 py-12"
         style={{
@@ -67,11 +81,13 @@ const AdminOrgDetail = () => {
           backgroundPosition: "center",
         }}
       >
+        {/* Formulario de edición con fondo translúcido */}
         <section className="bg-white/80 backdrop-blur-md border border-gray-200 shadow-lg rounded-2xl p-8 w-full max-w-2xl">
           <h1 className="text-2xl font-bold text-blue-600 text-center mb-6">
             Editar Organización
           </h1>
 
+          {/* Mensaje de confirmación */}
           {message && (
             <div className="mb-4 p-3 rounded-lg bg-green-100 text-green-700 text-center">
               {message}
@@ -79,9 +95,9 @@ const AdminOrgDetail = () => {
           )}
 
           <form onSubmit={handleSave} className="space-y-4">
+            {/* Campo: Nombre de la organización */}
             <div>
               <label className="block font-semibold text-gray-700">Nombre</label>
-              {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
               <Input
                 type="text"
                 name="name"
@@ -92,6 +108,7 @@ const AdminOrgDetail = () => {
               />
             </div>
 
+            {/* Campo: Email de contacto */}
             <div>
               <label className="block font-semibold text-gray-700">Email</label>
               <Input
@@ -104,6 +121,7 @@ const AdminOrgDetail = () => {
               />
             </div>
 
+            {/* Campo: Dirección física */}
             <div>
               <label className="block font-semibold text-gray-700">Dirección</label>
               <Input
@@ -116,6 +134,7 @@ const AdminOrgDetail = () => {
               />
             </div>
 
+            {/* Campo: Estado de la organización */}
             <div>
               <label className="block font-semibold text-gray-700">Estado</label>
               <select
@@ -129,8 +148,8 @@ const AdminOrgDetail = () => {
               </select>
             </div>
 
+            {/* Botones de acción */}
             <div className="flex justify-end gap-4 mt-6">
-              {/* Migración: Se reemplazan los botones nativos por el componente Button UI estándar. */}
               <Button
                 type="button"
                 variant="secondary"

@@ -1,13 +1,21 @@
+/**
+ * Página de gestión de campañas para organizaciones
+ */
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../styles/org-campaigns.module.css";
 
+// Datos mock de campañas de la organización
 const campaigns = [
   { id: 1, nombre: "Rescate Felino", estado: "Activa" },
   { id: 2, nombre: "Adopción Responsable", estado: "En curso" }
 ];
 
+/**
+ * Página que muestra las campañas de la organización en formato tabla
+ * Lista campañas con su nombre y estado actual
+ */
 const OrgCampaigns = () => (
   <>
     <Navbar />

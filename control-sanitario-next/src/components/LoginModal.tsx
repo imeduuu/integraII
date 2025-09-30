@@ -1,3 +1,6 @@
+/**
+ * Modal de inicio de sesión con validaciones básicas
+ */
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -5,16 +8,21 @@ import Button from './ui/Button';
 import Input from './ui/Input';
 import Modal from './ui/Modal';
 
+/**
+ * Modal de login con validación de email y contraseña
+ * Incluye enlace de recuperación de contraseña
+ */
 const LoginModal = ({ onClose }: { onClose: () => void }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mensaje, setMensaje] = useState('');
 
-  // Función de validación de email
+  // Validador de formato de email
   const validateEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
+  // Manejo de envío con validaciones
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setMensaje(''); // Limpiamos mensajes anteriores
