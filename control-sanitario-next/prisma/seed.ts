@@ -63,6 +63,25 @@ async function main() {
     update: {},
     create: { nombre_estado_salud: 'Sano' },
   });
+// Crear estado avistamiento 
+  const user = await prisma.usuario.findFirst();
+const estadoAvistamiento = await prisma.estado_avistamiento.upsert({
+  where: { id_estado_avistamiento: 1 },
+  update: {},
+  create: { estado_avistamiento: 'Reportado' },
+});
+
+await prisma.avistamiento.create({
+  data: {
+    id_usuario: user.id_usuario,
+    id_estado_avistamiento: estadoAvistamiento.id_estado_avistamiento,
+    id_estado_salud: estadoSalud.id_estado_salud,
+    id_especie: especie.id_especie,
+    descripcion: 'Avistamiento de prueba',
+    estado_general: 'Activo', 
+    zona: 'Centro',           
+  },
+});
 
   // Crear animales
   await prisma.animal.createMany({
@@ -73,6 +92,8 @@ async function main() {
         id_estado_salud: estadoSalud.id_estado_salud,
         id_categoria: categoria.id_categoria,
         id_especie: especie.id_especie,
+        estado_general: 'Activo', 
+        zona: 'Norte',           
       },
       {
         nombre_animal: 'Michi',
@@ -80,6 +101,8 @@ async function main() {
         id_estado_salud: estadoSalud.id_estado_salud,
         id_categoria: categoria.id_categoria,
         id_especie: especie.id_especie,
+        estado_general: 'Activo', 
+        zona: 'Sur',              
       },
     ],
     skipDuplicates: true,
