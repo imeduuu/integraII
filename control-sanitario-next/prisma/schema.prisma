@@ -55,7 +55,18 @@ model usuario {
   mensajes_enviados   mensaje[] @relation("mensajes_enviados")
   mensajes_recibidos  mensaje[] @relation("mensajes_recibidos")
   historial_reportes  historial_reporte[]
+    voluntario voluntario?
 }
+
+
+model voluntario {
+  id_voluntario  Int      @id @default(autoincrement())
+  fecha_registro DateTime @default(now())
+
+  usuario   usuario @relation(fields: [id_usuario], references: [id_usuario])
+  id_usuario Int   @unique
+}
+
 
 model animal {
   id_animal      Int      @id @default(autoincrement())

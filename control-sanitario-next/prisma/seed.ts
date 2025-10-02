@@ -73,6 +73,38 @@ async function main() {
       id_rol: 2,
     },
   });
+
+
+  await prisma.usuario.upsert({
+    where: { id_usuario: 4 },
+    update: {},
+    create: {
+      id_usuario: 4,
+      nombre_usuario: 'Jorge',
+      apellido_paterno: 'Perez',
+      apellido_materno: 'Ayuda',
+      fecha_nacimiento: new Date('1998-03-15'),
+      telefono: '333333333',
+      email: 'volunt@demo.com',
+      password_hash: 'volunt123',
+      sexo: 'M',
+      activo: true,
+      id_rol: 4,
+    },
+  });
+
+  // Asociar a tabla voluntario
+  await prisma.voluntario.upsert({
+    where: { id_voluntario: 1 },
+    update: {},
+    create: {
+      id_voluntario: 1,
+      id_usuario: 4, 
+      fecha_registro: new Date(),
+    },
+  });
+
+  
   await prisma.usuario.upsert({
     where: { id_usuario: 3 },
     update: {},
