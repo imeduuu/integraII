@@ -25,7 +25,7 @@ const Navbar = () => {
       { href: '/admin-home', label: 'Panel Admin' },
       { href: '/admin-users', label: 'Usuarios' },
       { href: '/admin-campaigns', label: 'Campañas' },
-      { href: '/admin-inbox', label: 'Bandeja de Entrada' } // <-- NUEVO ENLACE
+      { href: '/admin-inbox', label: 'Bandeja de Entrada' }
     ];
   } else if (userMock.role === 'user') {
     links = [
@@ -34,7 +34,8 @@ const Navbar = () => {
       { href: '/report', label: 'Reportar' },
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
-      { href: '/admin-orgs', label: 'Organizaciones' }
+      { href: '/admin-orgs', label: 'Organizaciones' },
+      { href: '/faqs', label: 'FAQs' } // <-- ENLACE AÑADIDO AQUÍ
     ];
   } else if (userMock.role === 'org') {
     links = [
