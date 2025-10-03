@@ -24,7 +24,8 @@ const Navbar = () => {
     links = [
       { href: '/admin-home', label: 'Panel Admin' },
       { href: '/admin-users', label: 'Usuarios' },
-      { href: '/admin-campaigns', label: 'Campañas' }
+      { href: '/admin-campaigns', label: 'Campañas' },
+      { href: '/admin-inbox', label: 'Bandeja de Entrada' } // <-- NUEVO ENLACE
     ];
   } else if (userMock.role === 'user') {
     links = [
@@ -33,7 +34,7 @@ const Navbar = () => {
       { href: '/report', label: 'Reportar' },
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
-  { href: '/admin-orgs', label: 'Organizaciones' }
+      { href: '/admin-orgs', label: 'Organizaciones' }
     ];
   } else if (userMock.role === 'org') {
     links = [
@@ -45,7 +46,7 @@ const Navbar = () => {
 
   return (
     <nav className={styles.navbar}>
-  <span className={styles.navbarTitle}>Huella Segura</span>
+      <span className={styles.navbarTitle}>Huella Segura</span>
       <div className={styles.navbarLinks}>
         <a href="/" className={getLinkClasses('/')}>Inicio</a>
         {links.map(link => (
@@ -66,5 +67,4 @@ const Navbar = () => {
   );
 };
 
-// ...existing code...
 export default Navbar;
