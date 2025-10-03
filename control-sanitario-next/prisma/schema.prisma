@@ -171,25 +171,9 @@ model mensaje {
 /// Modelo para historial de cambios/eventos en reportes de animales
 model historial_reporte {
   id_historial      Int      @id @default(autoincrement())
-  id_reporte        Int      // ID del reporte relacionado (ajustar si existe modelo de reporte)
+  id_reporte        Int
   fecha_evento      DateTime @default(now())
-  id_usuario        Int      // Usuario responsable
-  estado            String   @db.VarChar(30)
-  observaciones     String?  @db.Text
-
-  // Relaciones
-  usuario           usuario  @relation(fields: [id_usuario], references: [id_usuario])
-}
-
-// (Contenido existente del archivo schema.prisma)
-// ...
-
-/// Modelo para historial de cambios/eventos en reportes de animales
-model historial_reporte {
-  id_historial      Int      @id @default(autoincrement())
-  id_reporte        Int      // ID del reporte relacionado (ajustar si existe modelo de reporte)
-  fecha_evento      DateTime @default(now())
-  id_usuario        Int      // Usuario responsable
+  id_usuario        Int
   estado            String   @db.VarChar(30)
   observaciones     String?  @db.Text
 
