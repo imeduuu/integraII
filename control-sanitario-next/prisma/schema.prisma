@@ -11,6 +11,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Estado {
+  Activo
+  Inactivo
+  Pendiente
+}
+
 model organizacion {
   id_organizacion      Int      @id @default(autoincrement())
   nombre_organizacion String   @db.VarChar(30)
@@ -48,6 +54,7 @@ model usuario {
   google_accounts    google_accounts[]
   mensajes_enviados   mensaje[] @relation("mensajes_enviados")
   mensajes_recibidos  mensaje[] @relation("mensajes_recibidos")
+  historial_reportes  historial_reporte[]
 }
 
 model animal {
@@ -57,6 +64,8 @@ model animal {
   id_estado_salud Int
   id_categoria   Int
   id_especie     Int
+  estado_general  Estado    @default(Activo) 
+  zona            String?  @db.VarChar(50)
   estado_salud   estado_salud @relation(fields: [id_estado_salud], references: [id_estado_salud])
   categoria      categoria     @relation(fields: [id_categoria], references: [id_categoria])
   especie        especie       @relation(fields: [id_especie], references: [id_especie])
@@ -118,6 +127,8 @@ model avistamiento {
   fotos                   Json?
   ubicacion               String?
   direccion               String?  @db.VarChar(30)
+  estado_general      Estado?   
+  zona                String?   @db.VarChar(50) 
   usuario                 usuario  @relation(fields: [id_usuario], references: [id_usuario])
   estado_avistamiento     estado_avistamiento @relation(fields: [id_estado_avistamiento], references: [id_estado_avistamiento])
   estado_salud            estado_salud @relation(fields: [id_estado_salud], references: [id_estado_salud])
@@ -155,5 +166,18 @@ model mensaje {
   remitente    usuario @relation("mensajes_enviados", fields: [id_remitente], references: [id_usuario])
   // Relación con el usuario destinatario
   destinatario usuario @relation("mensajes_recibidos", fields: [id_destinatario], references: [id_usuario])
+}
+
+/// Modelo para historial de cambios/eventos en reportes de animales
+model historial_reporte {
+  id_historial      Int      @id @default(autoincrement())
+  id_reporte        Int      // ID del reporte relacionado (ajustar si existe modelo de reporte)
+  fecha_evento      DateTime @default(now())
+  id_usuario        Int      // Usuario responsable
+  estado            String   @db.VarChar(30)
+  observaciones     String?  @db.Text
+
+  // Relaciones
+  usuario           usuario  @relation(fields: [id_usuario], references: [id_usuario])
 }
 

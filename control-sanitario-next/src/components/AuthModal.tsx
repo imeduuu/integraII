@@ -1,3 +1,6 @@
+/**
+ * Modal de autenticación con toggle entre login y registro
+ */
 import React, { useState } from 'react';
 import Button from './ui/Button';
 import Input from './ui/Input';
@@ -6,21 +9,26 @@ import Modal from './ui/Modal';
 interface AuthModalProps {
   open: boolean;
   onClose: () => void;
-  mode: 'login' | 'register';
+  mode: 'login' | 'register'; // Modo actual del modal
   setMode: (mode: 'login' | 'register') => void;
 }
 
-
+// Validador de email con regex
 function validateEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+/**
+ * Modal unificado para login y registro con validaciones en tiempo real
+ * Incluye toggle entre modos y validación de formulario
+ */
 const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, mode, setMode }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [touched, setTouched] = useState(false);
 
+  // Manejo de envío con validaciones
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
@@ -52,6 +60,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, mode, setMode }) =
   return (
     <Modal isOpen={open} onClose={onClose}>
       <div className="relative">
+        {/* Toggle entre login y registro */}
         <div className="flex mb-6 border-b border-gray-200">
           <Button
             type="button"

@@ -1,5 +1,8 @@
+/**
+ * Página de inicio pública con información principal del sistema
+ */
 import React, { useState } from 'react';
-import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
+import Button from '../components/ui/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Map from '../components/Map';
@@ -25,9 +28,13 @@ const buttonStyle: React.CSSProperties = {
   width: 'clamp(140px, 40vw, 180px)',
 };
 
+/**
+ * Página principal de landing con hero section, métricas y mapa interactivo
+ * Accesible a todos los usuarios sin autenticación
+ */
 const Home = () => {
-  const [showMap, setShowMap] = useState(false);
-  const { addToast } = useNotification();
+  const [showMap, setShowMap] = useState(false); // Control de visibilidad del mapa
+  const { addToast } = useNotification(); // Hook de notificaciones
 
   return (
     <>

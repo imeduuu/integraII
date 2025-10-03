@@ -1,6 +1,9 @@
+/**
+ * Formulario de solicitud de adopción de animales
+ */
 import React, { useState } from "react";
-import Button from "./ui/Button"; // Migración: Usar botón UI estándar
-import Input from "./ui/Input"; // Migración: Usar input UI estándar
+import Button from "./ui/Button";
+import Input from "./ui/Input";
 
 interface Animal {
   nombre: string;
@@ -11,30 +14,37 @@ interface Animal {
 }
 
 interface FormData {
-  name: string;
-  email: string;
-  reason: string;
+  name: string; // Nombre del solicitante
+  email: string; // Email de contacto
+  reason: string; // Motivo de adopción
 }
 
 interface Props {
-  animal: Animal;
-  onSubmit: (data: FormData) => void;
+  animal: Animal; // Datos del animal a adoptar
+  onSubmit: (data: FormData) => void; // Callback al enviar formulario
 }
 
+/**
+ * Formulario para solicitar adopción de un animal específico
+ * Recolecta datos del solicitante y motivo de adopción
+ */
 export default function AdoptionForm({ animal, onSubmit }: Props) {
+  // Estado del formulario
   const [form, setForm] = useState<FormData>({
     name: "",
     email: "",
     reason: "",
   });
 
+  // Actualizar campos del formulario
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Enviar solicitud de adopción
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(form); // enviamos datos al padre (Adopcion.tsx)
+    onSubmit(form); // Envía datos al componente padre
   };
 
   return (

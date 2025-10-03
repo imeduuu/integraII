@@ -3,97 +3,221 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  // Crear roles
-  const adminRole = await prisma.rol.upsert({
+  // Roles base
+  await prisma.rol.upsert({
     where: { id_rol: 1 },
     update: {},
-    create: { nombre_rol: 'Admin' },
+    create: { id_rol: 1, nombre_rol: 'Admin' },
   });
-  const userRole = await prisma.rol.upsert({
+  await prisma.rol.upsert({
     where: { id_rol: 2 },
     update: {},
-    create: { nombre_rol: 'Usuario' },
+    create: { id_rol: 2, nombre_rol: 'Usuario' },
+  });
+  await prisma.rol.upsert({
+    where: { id_rol: 3 },
+    update: {},
+    create: { id_rol: 3, nombre_rol: 'Organización' },
+  });
+  await prisma.rol.upsert({
+    where: { id_rol: 4 },
+    update: {},
+    create: { id_rol: 4, nombre_rol: 'Voluntario' },
   });
 
-  // Crear usuarios
-  const user1 = await prisma.usuario.create({
-    data: {
+  // Organización de prueba
+  const org = await prisma.organizacion.upsert({
+    where: { id_organizacion: 1 },
+    update: {},
+    create: {
+      id_organizacion: 1,
+      nombre_organizacion: 'Fundación Animal Demo',
+      telefono_organizacion: '111111111',
+      email_organizacion: 'contacto@fundaciondemo.com',
+      direccion: 'Av. Siempre Viva 123',
+    },
+  });
+
+  // Usuarios de prueba
+  await prisma.usuario.upsert({
+    where: { id_usuario: 1 },
+    update: {},
+    create: {
+      id_usuario: 1,
       nombre_usuario: 'Admin',
       apellido_paterno: 'Demo',
       apellido_materno: 'Test',
       fecha_nacimiento: new Date('1990-01-01'),
-      telefono: '1234567890',
+      telefono: '123456789',
       email: 'admin@demo.com',
       password_hash: 'admin123',
       sexo: 'M',
       activo: true,
-      id_rol: adminRole.id_rol,
+      id_rol: 1,
     },
   });
-  const user2 = await prisma.usuario.create({
-    data: {
+  await prisma.usuario.upsert({
+    where: { id_usuario: 2 },
+    update: {},
+    create: {
+      id_usuario: 2,
       nombre_usuario: 'User',
       apellido_paterno: 'Demo',
       apellido_materno: 'Test',
       fecha_nacimiento: new Date('1995-05-05'),
-      telefono: '0987654321',
+      telefono: '987654321',
       email: 'user@demo.com',
       password_hash: 'user123',
       sexo: 'F',
       activo: true,
-      id_rol: userRole.id_rol,
+      id_rol: 2,
+    },
+  });
+  await prisma.usuario.upsert({
+    where: { id_usuario: 3 },
+    update: {},
+    create: {
+      id_usuario: 3,
+      nombre_usuario: 'Fundación',
+      apellido_paterno: 'Animal',
+      apellido_materno: 'Protectora',
+      fecha_nacimiento: new Date('2000-01-01'),
+      telefono: '222222222',
+      email: 'org@demo.com',
+      password_hash: 'org123',
+      sexo: 'F',
+      activo: true,
+      id_rol: 3,
+      id_organizacion: org.id_organizacion,
+    },
+  });
+  await prisma.usuario.upsert({
+    where: { id_usuario: 4 },
+    update: {},
+    create: {
+      id_usuario: 4,
+      nombre_usuario: 'Juan',
+      apellido_paterno: 'Perez',
+      apellido_materno: 'Ayuda',
+      fecha_nacimiento: new Date('1998-03-15'),
+      telefono: '333333333',
+      email: 'volunt@demo.com',
+      password_hash: 'volunt123',
+      sexo: 'M',
+      activo: true,
+      id_rol: 4,
     },
   });
 
-  // Crear especie, categoría y estado_salud mínimos para animales
+  // Catálogos base
   const especie = await prisma.especie.upsert({
     where: { id_especie: 1 },
     update: {},
-    create: { nombre_especie: 'Perro' },
+    create: { id_especie: 1, nombre_especie: 'Perro' },
   });
   const categoria = await prisma.categoria.upsert({
     where: { id_categoria: 1 },
     update: {},
-    create: { nombre_categoria: 'Doméstico' },
+    create: { id_categoria: 1, nombre_categoria: 'Doméstico' },
   });
   const estadoSalud = await prisma.estado_salud.upsert({
     where: { id_estado_salud: 1 },
     update: {},
-    create: { nombre_estado_salud: 'Sano' },
+    create: { id_estado_salud: 1, nombre_estado_salud: 'Sano' },
   });
 
-  // Crear estados de avistamiento
-  await prisma.estado_avistamiento.createMany({
-    data: [
-      { id_estado_avistamiento: 1, estado_avistamiento: 'Pendiente' },
-      { id_estado_avistamiento: 2, estado_avistamiento: 'En Progreso' },
-      { id_estado_avistamiento: 3, estado_avistamiento: 'Resuelto' },
-    ],
-    skipDuplicates: true, // Evita errores si ya existen
+  // Crear animales de prueba
+  await prisma.animal.upsert({
+    where: { id_animal: 1 },
+    update: {},
+    create: {
+      id_animal: 1,
+      nombre_animal: 'Firulais',
+      edad_animal: '2 años',
+      id_estado_salud: estadoSalud.id_estado_salud,
+      id_categoria: categoria.id_categoria,
+      id_especie: especie.id_especie
+    },
+  });
+  await prisma.animal.upsert({
+    where: { id_animal: 2 },
+    update: {},
+    create: {
+      id_animal: 2,
+      nombre_animal: 'Michi',
+      edad_animal: '1 año',
+      id_estado_salud: estadoSalud.id_estado_salud,
+      id_categoria: categoria.id_categoria,
+      id_especie: especie.id_especie
+    },
   });
 
-  // Crear animales
-  await prisma.animal.createMany({
-    data: [
-      {
-        nombre_animal: 'Firulais',
-        edad_animal: '2 años',
-        id_estado_salud: estadoSalud.id_estado_salud,
-        id_categoria: categoria.id_categoria,
-        id_especie: especie.id_especie,
-      },
-      {
-        nombre_animal: 'Michi',
-        edad_animal: '1 año',
-        id_estado_salud: estadoSalud.id_estado_salud,
-        id_categoria: categoria.id_categoria,
-        id_especie: especie.id_especie,
-      },
-    ],
-    skipDuplicates: true,
+  // Estados de solicitud
+  await prisma.estado_solicitud.upsert({
+    where: { id_estado_solicitud: 2 },
+    update: {},
+    create: { id_estado_solicitud: 2, estado_solicitud: 'Aprobada' },
+  });
+  await prisma.estado_solicitud.upsert({
+    where: { id_estado_solicitud: 3 },
+    update: {},
+    create: { id_estado_solicitud: 3, estado_solicitud: 'Rechazada' },
   });
 
-  // Puedes agregar más datos de prueba aquí
+  //Solicitud de adopción de ejemplo
+  await prisma.solicitud_adopcion.upsert({
+    where: { id_solicitud_adopcion: 1 },
+    update: {},
+    create: {
+      id_solicitud_adopcion: 1,
+      id_usuario: 2, // user
+      id_animal: 1,  // Firulais
+      estado_adopcion: 'Revisión inicial',
+      fecha_ingreso_solicitud: new Date(),
+      estado_solicitud: 1, // Pendiente
+    },
+  });
+
+  //Estados de avistamiento
+  await prisma.estado_avistamiento.upsert({
+    where: { id_estado_avistamiento: 1 },
+    update: {},
+    create: { id_estado_avistamiento: 1, estado_avistamiento: 'Activo' },
+  });
+  await prisma.estado_avistamiento.upsert({
+    where: { id_estado_avistamiento: 2 },
+    update: {},
+    create: { id_estado_avistamiento: 2, estado_avistamiento: 'Resuelto' },
+  });
+
+  //Avistamiento de ejemplo
+  await prisma.avistamiento.upsert({
+    where: { id_avistamiento: 1 },
+    update: {},
+    create: {
+      id_avistamiento: 1,
+      id_usuario: 4, //voluntario
+      id_estado_avistamiento: 1,
+      id_estado_salud: estadoSalud.id_estado_salud,
+      id_especie: especie.id_especie,
+      descripcion: 'Cachorro encontrado en la calle, necesita atención.',
+      direccion: 'Parque Central',
+    },
+  });
+
+  //Google account ficticia
+  await prisma.google_accounts.upsert({
+    where: { id_google_account: 1 },
+    update: {},
+    create: {
+      id_google_account: 1,
+      id_usuario: 2, // user
+      google_account_id: 'fake-google-id',
+      google_email: 'user@demo.com',
+      refresh_token: 'fake-refresh-token',
+      access_token: 'fake-access-token',
+    },
+  });
 }
 
 main()
@@ -103,7 +227,4 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-  });
-
-// Para validar los datos puedes usar Prisma Studio:
-// npx prisma studio
+  }); 

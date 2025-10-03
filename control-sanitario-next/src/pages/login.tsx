@@ -1,14 +1,17 @@
+/**
+ * Página de inicio de sesión con validación de formularios
+ */
 import React from 'react';
-import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
-import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
+import Input from '../components/ui/Input';
+import Button from '../components/ui/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNotification } from '../components/NotificationProvider';
 
 interface LoginFormInputs {
-  email: string;
-  password: string;
+  email: string; // Email del usuario
+  password: string; // Contraseña
 }
 
 const formStyle: React.CSSProperties = {
