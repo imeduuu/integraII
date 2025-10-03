@@ -93,6 +93,7 @@ const Animals = () => {
             filtered.map(animal => (
               <AnimalCard
                 key={animal.id}
+                animalId={animal.id.toString()}
                 nombre={animal.nombre}
                 estado_general={animal.estado_general}
                 zona={animal.zona}
