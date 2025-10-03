@@ -181,3 +181,11 @@ model historial_reporte {
   usuario           usuario  @relation(fields: [id_usuario], references: [id_usuario])
 }
 
+model faq {
+  id_faq          Int      @id @default(autoincrement())
+  pregunta        String   @db.Text
+  respuesta       String   @db.Text
+  fecha_creacion  DateTime @default(now())
+  visible         Boolean  @default(true)
+}
+
