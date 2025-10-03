@@ -55,6 +55,7 @@ model usuario {
   mensajes_enviados   mensaje[] @relation("mensajes_enviados")
   mensajes_recibidos  mensaje[] @relation("mensajes_recibidos")
   historial_reportes  historial_reporte[]
+  comentarios         comentario[]
 }
 
 model animal {
@@ -71,6 +72,7 @@ model animal {
   especie        especie       @relation(fields: [id_especie], references: [id_especie])
   solicitudes    solicitud_adopcion[]
   avistamientos  avistamiento[]
+  comentarios    comentario[]
 }
 
 model especie {
@@ -179,5 +181,18 @@ model historial_reporte {
 
   // Relaciones
   usuario           usuario  @relation(fields: [id_usuario], references: [id_usuario])
+}
+
+model comentario{
+  id_comentario     Int @id  @default(autoincrement())
+  contenido         String   @db.Text
+  fecha_creacion    DateTime @default(now())
+
+  //Relaciones
+  id_usuario        Int
+  id_animal         Int
+
+  usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
+  animal animal @relation(fields: [id_animal], references: [id_animal])
 }
 

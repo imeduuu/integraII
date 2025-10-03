@@ -154,6 +154,11 @@ async function main() {
 
   // Estados de solicitud
   await prisma.estado_solicitud.upsert({
+    where: { id_estado_solicitud: 1 },
+    update: {},
+    create: { id_estado_solicitud: 1, estado_solicitud: 'Pendiente' },
+  });
+  await prisma.estado_solicitud.upsert({
     where: { id_estado_solicitud: 2 },
     update: {},
     create: { id_estado_solicitud: 2, estado_solicitud: 'Aprobada' },
@@ -163,6 +168,7 @@ async function main() {
     update: {},
     create: { id_estado_solicitud: 3, estado_solicitud: 'Rechazada' },
   });
+  
 
   //Solicitud de adopción de ejemplo
   await prisma.solicitud_adopcion.upsert({
@@ -218,6 +224,36 @@ async function main() {
       access_token: 'fake-access-token',
     },
   });
+  
+  await prisma.comentario.upsert({
+    where: { id_comentario: 1 },
+    update: {},
+    create: {
+      contenido: 'Firulais es muy amigable y juguetón.',
+      id_usuario: 2,
+      id_animal: 1,
+    },
+  });
+
+  await prisma.comentario.upsert({
+    where: { id_comentario: 2 },
+    update: {},
+    create: {
+      contenido: 'Michi parece tímido pero saludable.',
+      id_usuario: 3,
+      id_animal: 2,
+    },
+  });
+
+  await prisma.comentario.upsert({
+    where: { id_comentario: 3 },
+    update: {},
+    create: {
+      contenido: 'Encontré al cachorro en buen estado, necesita seguimiento.',
+      id_usuario: 4,
+      id_animal: 1,
+    },
+  });
 }
 
 main()
@@ -228,3 +264,5 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   }); 
+
+  
