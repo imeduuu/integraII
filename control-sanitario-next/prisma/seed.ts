@@ -154,6 +154,11 @@ async function main() {
 
   // Estados de solicitud
   await prisma.estado_solicitud.upsert({
+    where: { id_estado_solicitud: 1 },
+    update: {},
+    create: { id_estado_solicitud: 1, estado_solicitud: 'Pendiente' },
+  });
+  await prisma.estado_solicitud.upsert({
     where: { id_estado_solicitud: 2 },
     update: {},
     create: { id_estado_solicitud: 2, estado_solicitud: 'Aprobada' },
@@ -216,6 +221,26 @@ async function main() {
       google_email: 'user@demo.com',
       refresh_token: 'fake-refresh-token',
       access_token: 'fake-access-token',
+    },
+  });
+
+  // Favoritos de ejemplo
+  await prisma.favorito.upsert({
+    where: { id_favorito: 1 },
+    update: {},
+    create: {
+      id_favorito: 1,
+      id_usuario: 2, // user
+      id_animal: 1,  // Firulais
+    },
+  });
+  await prisma.favorito.upsert({
+    where: { id_favorito: 2 },
+    update: {},
+    create: {
+      id_favorito: 2,
+      id_usuario: 2, // user
+      id_animal: 2,  // Michi
     },
   });
 }
