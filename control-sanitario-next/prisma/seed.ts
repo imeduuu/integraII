@@ -218,6 +218,37 @@ async function main() {
       access_token: 'fake-access-token',
     },
   });
+
+  // NUEVOS DATOS PARA FAQs
+  await prisma.faq.upsert({
+    where: { id_faq: 1 },
+    update: {},
+    create: {
+      pregunta: '¿Cómo puedo reportar un animal en la calle?',
+      respuesta:
+        'Puedes reportar un animal desde la sección "Reportar" en el menú principal. Deberás proporcionar una descripción del animal, su ubicación y, si es posible, una foto.',
+    },
+  });
+
+  await prisma.faq.upsert({
+    where: { id_faq: 2 },
+    update: {},
+    create: {
+      pregunta: '¿Qué necesito para adoptar una mascota?',
+      respuesta:
+        'Para adoptar, debes ir a la sección "Adopciones", elegir una mascota y completar el formulario de solicitud. Se te pedirá información sobre tu experiencia con mascotas y las condiciones de tu hogar.',
+    },
+  });
+
+  await prisma.faq.upsert({
+    where: { id_faq: 3 },
+    update: {},
+    create: {
+      pregunta: '¿Cómo puedo ser voluntario?',
+      respuesta:
+        '¡Gracias por tu interés! Puedes registrarte como voluntario en la sección de "Voluntariado". Una vez registrado, una organización se pondrá en contacto contigo para coordinar actividades.',
+    },
+  });
 }
 
 main()
@@ -227,4 +258,4 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-  }); 
+  });
