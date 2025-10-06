@@ -59,6 +59,10 @@ async function main() {
   await prisma.comentario.upsert({ where: { id_comentario: 2 }, update: {}, create: { contenido: 'Michi parece tímido pero saludable.', id_usuario: 3, id_animal: 2 } });
   await prisma.comentario.upsert({ where: { id_comentario: 3 }, update: {}, create: { contenido: 'Encontré al cachorro en buen estado, necesita seguimiento.', id_usuario: 4, id_animal: 1 } });
 
+  // Favoritos de ejemplo
+  await prisma.favorito.upsert({ where: { id_favorito: 1 }, update: {}, create: { id_favorito: 1, id_usuario: 2, id_animal: 1 } });
+  await prisma.favorito.upsert({ where: { id_favorito: 2 }, update: {}, create: { id_favorito: 2, id_usuario: 2, id_animal: 2 } });
+
   // FAQs
   await prisma.faq.upsert({ where: { id_faq: 1 }, update: {}, create: { pregunta: '¿Cómo puedo reportar un animal en la calle?', respuesta: 'Puedes reportar un animal desde la sección "Reportar" en el menú principal. Deberás proporcionar una descripción del animal, su ubicación y, si es posible, una foto.' } });
   await prisma.faq.upsert({ where: { id_faq: 2 }, update: {}, create: { pregunta: '¿Qué necesito para adoptar una mascota?', respuesta: 'Para adoptar, debes ir a la sección "Adopciones", elegir una mascota y completar el formulario de solicitud. Se te pedirá información sobre tu experiencia con mascotas y las condiciones de tu hogar.' } });

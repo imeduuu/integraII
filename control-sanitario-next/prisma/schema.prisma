@@ -75,6 +75,8 @@ model usuario {
   voluntario voluntario?
   // Relación a comentarios hechos por el usuario
   comentarios         comentario[]
+  // Relación a favoritos del usuario
+  favoritos           favorito[]
 }
 
 
@@ -102,6 +104,7 @@ model animal {
   solicitudes    solicitud_adopcion[]
   avistamientos  avistamiento[]
   comentarios    comentario[]
+  favoritos      favorito[]
 }
 
 model especie {
@@ -231,4 +234,17 @@ model faq {
   respuesta       String   @db.Text
   fecha_creacion  DateTime @default(now())
   visible         Boolean  @default(true)
+}
+
+/// Modelo para favoritos de usuario sobre animales
+model favorito {
+  id_favorito    Int      @id @default(autoincrement())
+  id_usuario     Int
+  id_animal      Int
+  fecha_agregado DateTime @default(now())
+
+  usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
+  animal  animal  @relation(fields: [id_animal], references: [id_animal])
+
+  @@unique([id_usuario, id_animal])
 }
