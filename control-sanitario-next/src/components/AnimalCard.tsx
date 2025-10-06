@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
+import CommentSection from './CommentSection';
 
 
 interface AnimalCardProps {
@@ -9,9 +10,10 @@ interface AnimalCardProps {
   zona: string; // Ubicación geográfica
   age?: string; // Edad opcional
   images?: string[]; // Array de URLs de imágenes
+  animalId: string; // ID del animal
 }
 
-const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, age, images }) => {
+const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, age, images, animalId }) => {
   const router = useRouter();
   const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
 
@@ -40,6 +42,11 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
       >
         Adoptar
       </Button>
+
+      {/* Sección de comentarios usando CommentSection */}
+      <div className="mt-4 w-full">
+        <CommentSection animalId={Number(animalId)} />
+      </div>
     </div>
   );
 };
