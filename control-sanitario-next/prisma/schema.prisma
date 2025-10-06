@@ -1,250 +1,203 @@
-/// Estado posible de un caso
-enum EstadoCaso {
-  Abierto
-  Cerrado
-  EnProceso
-}
-
-/// Modelo para casos reportados en el sistema
-model caso {
-  id_caso        Int        @id @default(autoincrement())
-  titulo         String     @db.VarChar(100)
-  descripcion    String?    @db.Text
-  fecha_creacion DateTime   @default(now())
-  estado         EstadoCaso @default(Abierto)
-  // Puedes agregar relaciones a usuario, animal, etc. según necesidades
-}
-// Prisma schema for PostgreSQL
-
-
 generator client {
   provider = "prisma-client-js"
 }
-
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-enum Estado {
-  Activo
-  Inactivo
-  Pendiente
-}
-
 model organizacion {
-  id_organizacion      Int      @id @default(autoincrement())
-  nombre_organizacion String   @db.VarChar(30)
-  telefono_organizacion String @db.VarChar(20)
-  email_organizacion  String   @db.VarChar(30)
-  direccion           String   @db.VarChar(30)
-  usuarios            usuario[]
+  id_organizacion       Int       @id @default(autoincrement())
+  nombre_organizacion   String    @db.VarChar(30)
+  telefono_organizacion String    @db.VarChar(20)
+  email_organizacion    String    @db.VarChar(30)
+  direccion             String    @db.VarChar(30)
+  usuarios              usuario[]
 }
 
 model rol {
-  id_rol      Int      @id @default(autoincrement())
-  nombre_rol  String   @db.VarChar(30)
-  usuarios    usuario[]
+  id_rol     Int       @id @default(autoincrement())
+  nombre_rol String    @db.VarChar(30)
+  usuarios   usuario[]
 }
 
 model usuario {
-  id_usuario         Int      @id @default(autoincrement())
-  nombre_usuario     String   @db.VarChar(30)
-  apellido_paterno   String   @db.VarChar(20)
-  apellido_materno   String   @db.VarChar(20)
+  id_usuario         Int                  @id @default(autoincrement())
+  nombre_usuario     String               @db.VarChar(30)
+  apellido_paterno   String               @db.VarChar(20)
+  apellido_materno   String               @db.VarChar(20)
   fecha_nacimiento   DateTime
-  telefono           String?  @db.VarChar(20)
-  email              String   @db.VarChar(60)
-  password_hash      String   @db.VarChar(255)
-  sexo               String   @db.Char(1)
-  fecha_creacion     DateTime @default(now())
+  telefono           String?              @db.VarChar(20)
+  email              String               @db.VarChar(60)
+  password_hash      String               @db.VarChar(255)
+  sexo               String               @db.Char(1)
+  fecha_creacion     DateTime             @default(now())
   fecha_ultimo_login DateTime?
   activo             Boolean
   id_organizacion    Int?
   id_rol             Int
-  organizacion       organizacion? @relation(fields: [id_organizacion], references: [id_organizacion])
-  rol                rol           @relation(fields: [id_rol], references: [id_rol])
-  solicitudes        solicitud_adopcion[]
+  aporte             aporte[]
   avistamientos      avistamiento[]
   google_accounts    google_accounts[]
-  mensajes_enviados   mensaje[] @relation("mensajes_enviados")
-  mensajes_recibidos  mensaje[] @relation("mensajes_recibidos")
-  historial_reportes  historial_reporte[]
-  // Relación opcional a voluntario (si el usuario es voluntario)
-  voluntario voluntario?
-  // Relación a comentarios hechos por el usuario
-  comentarios         comentario[]
-  // Relación a favoritos del usuario
-  favoritos           favorito[]
+  historial_reportes historial_reporte[]
+  mensajes_recibidos mensaje[]            @relation("mensajes_recibidos")
+  mensajes_enviados  mensaje[]            @relation("mensajes_enviados")
+  solicitudes        solicitud_adopcion[]
+  organizacion       organizacion?        @relation(fields: [id_organizacion], references: [id_organizacion])
+  rol                rol                  @relation(fields: [id_rol], references: [id_rol])
+  voluntario         voluntario?
 }
-
 
 model voluntario {
   id_voluntario  Int      @id @default(autoincrement())
   fecha_registro DateTime @default(now())
-
-  usuario   usuario @relation(fields: [id_usuario], references: [id_usuario])
-  id_usuario Int   @unique
+  id_usuario     Int      @unique
+  usuario        usuario  @relation(fields: [id_usuario], references: [id_usuario])
 }
 
-
 model animal {
-  id_animal      Int      @id @default(autoincrement())
-  nombre_animal  String   @db.VarChar(30)
-  edad_animal    String   @db.VarChar(12)
+  id_animal       Int                  @id @default(autoincrement())
+  nombre_animal   String               @db.VarChar(30)
+  edad_animal     String               @db.VarChar(12)
   id_estado_salud Int
-  id_categoria   Int
-  id_especie     Int
-  estado_general  Estado    @default(Activo) 
-  zona            String?  @db.VarChar(50)
-  estado_salud   estado_salud @relation(fields: [id_estado_salud], references: [id_estado_salud])
-  categoria      categoria     @relation(fields: [id_categoria], references: [id_categoria])
-  especie        especie       @relation(fields: [id_especie], references: [id_especie])
-  solicitudes    solicitud_adopcion[]
-  avistamientos  avistamiento[]
-  comentarios    comentario[]
-  favoritos      favorito[]
+  id_categoria    Int
+  id_especie      Int
+  estado_general  Estado               @default(Activo)
+  zona            String?              @db.VarChar(50)
+  categoria       categoria            @relation(fields: [id_categoria], references: [id_categoria])
+  especie         especie              @relation(fields: [id_especie], references: [id_especie])
+  estado_salud    estado_salud         @relation(fields: [id_estado_salud], references: [id_estado_salud])
+  avistamientos   avistamiento[]
+  solicitudes     solicitud_adopcion[]
 }
 
 model especie {
-  id_especie      Int      @id @default(autoincrement())
-  nombre_especie  String   @db.VarChar(20)
-  animales        animal[]
-  avistamientos   avistamiento[]
+  id_especie     Int            @id @default(autoincrement())
+  nombre_especie String         @db.VarChar(20)
+  animales       animal[]
+  avistamientos  avistamiento[]
 }
 
 model categoria {
-  id_categoria      Int      @id @default(autoincrement())
-  nombre_categoria  String   @db.VarChar(20)
+  id_categoria     Int      @id @default(autoincrement())
+  nombre_categoria String   @db.VarChar(20)
   animales         animal[]
 }
 
 model estado_salud {
-  id_estado_salud      Int      @id @default(autoincrement())
-  nombre_estado_salud  String   @db.VarChar(20)
-  animales             animal[]
-  avistamientos        avistamiento[]
+  id_estado_salud     Int            @id @default(autoincrement())
+  nombre_estado_salud String         @db.VarChar(20)
+  animales            animal[]
+  avistamientos       avistamiento[]
 }
 
 model solicitud_adopcion {
-  id_solicitud_adopcion Int      @id @default(autoincrement())
-  id_usuario            Int
-  id_animal             Int
-  estado_adopcion       String   @db.VarChar(30)
+  id_solicitud_adopcion   Int              @id @default(autoincrement())
+  id_usuario              Int
+  id_animal               Int
+  estado_adopcion         String           @db.VarChar(30)
   fecha_ingreso_solicitud DateTime
-  fecha_termino_solicitud DateTime @default(now())
-  estado_solicitud      Int
-  usuario               usuario   @relation(fields: [id_usuario], references: [id_usuario])
-  animal                animal    @relation(fields: [id_animal], references: [id_animal])
-  estadoSolicitud       estado_solicitud @relation(fields: [estado_solicitud], references: [id_estado_solicitud])
+  fecha_termino_solicitud DateTime         @default(now())
+  estado_solicitud        Int
+  estadoSolicitud         estado_solicitud @relation(fields: [estado_solicitud], references: [id_estado_solicitud])
+  animal                  animal           @relation(fields: [id_animal], references: [id_animal])
+  usuario                 usuario          @relation(fields: [id_usuario], references: [id_usuario])
 }
 
 model estado_solicitud {
-  id_estado_solicitud   Int      @id @default(autoincrement())
-  estado_solicitud      String   @db.VarChar(20)
-  solicitudes           solicitud_adopcion[]
+  id_estado_solicitud Int                  @id @default(autoincrement())
+  estado_solicitud    String               @db.VarChar(20)
+  solicitudes         solicitud_adopcion[]
 }
 
 model avistamiento {
-  id_avistamiento         Int      @id @default(autoincrement())
-  id_usuario              Int
-  id_estado_avistamiento  Int
-  id_estado_salud         Int
-  id_especie              Int
-  id_animal               Int?
-  latitud                 Float? 
-  longitud                Float? 
-  fecha_creacion          DateTime @default(now())
-  fecha_actualizacion     DateTime @updatedAt
-  descripcion             String?
-  fotos                   Json?
-  ubicacion               String?
-  direccion               String?  @db.VarChar(30)
-  estado_general      Estado?   
-  zona                String?   @db.VarChar(50) 
-  usuario                 usuario  @relation(fields: [id_usuario], references: [id_usuario])
-  estado_avistamiento     estado_avistamiento @relation(fields: [id_estado_avistamiento], references: [id_estado_avistamiento])
-  estado_salud            estado_salud @relation(fields: [id_estado_salud], references: [id_estado_salud])
-  especie                 especie   @relation(fields: [id_especie], references: [id_especie])
-  animal                  animal?   @relation(fields: [id_animal], references: [id_animal])
+  id_avistamiento        Int                 @id @default(autoincrement())
+  id_usuario             Int
+  id_estado_avistamiento Int
+  id_estado_salud        Int
+  id_especie             Int
+  id_animal              Int?
+  fecha_creacion         DateTime            @default(now())
+  fecha_actualizacion    DateTime            @updatedAt
+  descripcion            String?
+  fotos                  Json?
+  direccion              String?             @db.VarChar(30)
+  latitud                Float?
+  longitud               Float?
+  ubicacion              String?
+  estado_general         Estado?
+  zona                   String?             @db.VarChar(50)
+  animal                 animal?             @relation(fields: [id_animal], references: [id_animal])
+  especie                especie             @relation(fields: [id_especie], references: [id_especie])
+  estado_avistamiento    estado_avistamiento @relation(fields: [id_estado_avistamiento], references: [id_estado_avistamiento])
+  estado_salud           estado_salud        @relation(fields: [id_estado_salud], references: [id_estado_salud])
+  usuario                usuario             @relation(fields: [id_usuario], references: [id_usuario])
 }
 
 model estado_avistamiento {
-  id_estado_avistamiento   Int      @id @default(autoincrement())
-  estado_avistamiento      String   @db.VarChar(20)
-  avistamientos            avistamiento[]
+  id_estado_avistamiento Int            @id @default(autoincrement())
+  estado_avistamiento    String         @db.VarChar(20)
+  avistamientos          avistamiento[]
 }
 
 model google_accounts {
-  id_google_account   Int      @id @default(autoincrement())
-  id_usuario          Int
-  google_account_id   String   @db.VarChar(255)
-  google_email        String   @db.VarChar(255)
-  refresh_token       String?
-  access_token        String?
-  token_expiry        DateTime?
-  created_at          DateTime @default(now())
-  updated_at          DateTime @updatedAt
-  usuario             usuario  @relation(fields: [id_usuario], references: [id_usuario])
+  id_google_account Int       @id @default(autoincrement())
+  id_usuario        Int
+  google_account_id String    @db.VarChar(255)
+  google_email      String    @db.VarChar(255)
+  refresh_token     String?
+  access_token      String?
+  token_expiry      DateTime?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  usuario           usuario   @relation(fields: [id_usuario], references: [id_usuario])
 }
 
 model mensaje {
   id_mensaje      Int      @id @default(autoincrement())
-  contenido       String   @db.Text
+  contenido       String
   fecha_envio     DateTime @default(now())
   id_remitente    Int
   id_destinatario Int
-
-  // Relación con el usuario remitente
-  remitente    usuario @relation("mensajes_enviados", fields: [id_remitente], references: [id_usuario])
-  // Relación con el usuario destinatario
-  destinatario usuario @relation("mensajes_recibidos", fields: [id_destinatario], references: [id_usuario])
+  destinatario    usuario  @relation("mensajes_recibidos", fields: [id_destinatario], references: [id_usuario])
+  remitente       usuario  @relation("mensajes_enviados", fields: [id_remitente], references: [id_usuario])
 }
 
 /// Modelo para historial de cambios/eventos en reportes de animales
 model historial_reporte {
-  id_historial      Int      @id @default(autoincrement())
-  id_reporte        Int
-  fecha_evento      DateTime @default(now())
-  id_usuario        Int
-  estado            String   @db.VarChar(30)
-  observaciones     String?  @db.Text
-
-  // Relaciones
-  usuario           usuario  @relation(fields: [id_usuario], references: [id_usuario])
+  id_historial  Int      @id @default(autoincrement())
+  id_reporte    Int
+  fecha_evento  DateTime @default(now())
+  id_usuario    Int
+  estado        String   @db.VarChar(30)
+  observaciones String?
+  usuario       usuario  @relation(fields: [id_usuario], references: [id_usuario])
 }
 
-model comentario {
-  id_comentario     Int      @id  @default(autoincrement())
-  contenido         String   @db.Text
-  fecha_creacion    DateTime @default(now())
-
-  // Relaciones
-  id_usuario        Int
-  id_animal         Int
-
-  usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
-  animal  animal  @relation(fields: [id_animal], references: [id_animal])
+model aporte {
+  id_aporte   Int       @id @default(autoincrement())
+  tipo        String    @db.VarChar(50)
+  descripcion String?   @db.VarChar(255)
+  fecha       DateTime  @default(now())
+  id_usuario  Int
+  id_campania Int?
+  campania    campania? @relation(fields: [id_campania], references: [id_campania])
+  usuario     usuario   @relation(fields: [id_usuario], references: [id_usuario])
 }
 
-model faq {
-  id_faq          Int      @id @default(autoincrement())
-  pregunta        String   @db.Text
-  respuesta       String   @db.Text
-  fecha_creacion  DateTime @default(now())
-  visible         Boolean  @default(true)
+model campania {
+  id_campania  Int       @id @default(autoincrement())
+  titulo       String    @db.VarChar(100)
+  descripcion  String
+  fecha_inicio DateTime
+  fecha_fin    DateTime?
+  activa       Boolean   @default(true)
+  aporte       aporte[]
 }
 
-/// Modelo para favoritos de usuario sobre animales
-model favorito {
-  id_favorito    Int      @id @default(autoincrement())
-  id_usuario     Int
-  id_animal      Int
-  fecha_agregado DateTime @default(now())
-
-  usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
-  animal  animal  @relation(fields: [id_animal], references: [id_animal])
-
-  @@unique([id_usuario, id_animal])
+enum Estado {
+  Activo
+  Inactivo
+  Pendiente
 }
