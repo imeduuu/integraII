@@ -3,6 +3,27 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  // Casos de ejemplo
+  await prisma.caso.createMany({
+    data: [
+      {
+        titulo: 'Caso de rescate animal',
+        descripcion: 'Animal encontrado en situación de calle, requiere atención médica.',
+        estado: 'Abierto',
+      },
+      {
+        titulo: 'Seguimiento post-adopción',
+        descripcion: 'Verificación del estado del animal tras adopción.',
+        estado: 'EnProceso',
+      },
+      {
+        titulo: 'Caso cerrado por recuperación',
+        descripcion: 'El animal fue recuperado y dado de alta.',
+        estado: 'Cerrado',
+      },
+    ],
+    skipDuplicates: true,
+  });
   // Roles base
   await prisma.rol.upsert({
     where: { id_rol: 1 },
