@@ -202,9 +202,9 @@ model mensaje {
 /// Modelo para historial de cambios/eventos en reportes de animales
 model historial_reporte {
   id_historial      Int      @id @default(autoincrement())
-  id_reporte        Int      // ID del reporte relacionado (ajustar si existe modelo de reporte)
+  id_reporte        Int
   fecha_evento      DateTime @default(now())
-  id_usuario        Int      // Usuario responsable
+  id_usuario        Int
   estado            String   @db.VarChar(30)
   observaciones     String?  @db.Text
 
@@ -212,16 +212,23 @@ model historial_reporte {
   usuario           usuario  @relation(fields: [id_usuario], references: [id_usuario])
 }
 
-model comentario{
-  id_comentario     Int @id  @default(autoincrement())
+model comentario {
+  id_comentario     Int      @id  @default(autoincrement())
   contenido         String   @db.Text
   fecha_creacion    DateTime @default(now())
 
-  //Relaciones
+  // Relaciones
   id_usuario        Int
   id_animal         Int
 
   usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
-  animal animal @relation(fields: [id_animal], references: [id_animal])
+  animal  animal  @relation(fields: [id_animal], references: [id_animal])
 }
 
+model faq {
+  id_faq          Int      @id @default(autoincrement())
+  pregunta        String   @db.Text
+  respuesta       String   @db.Text
+  fecha_creacion  DateTime @default(now())
+  visible         Boolean  @default(true)
+}
