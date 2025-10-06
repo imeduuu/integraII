@@ -56,7 +56,37 @@ model usuario {
   mensajes_recibidos  mensaje[] @relation("mensajes_recibidos")
   historial_reportes  historial_reporte[]
     voluntario voluntario?
+    // Relación con donaciones
+  aportes            aporte[]
 }
+
+model campania {
+  id_campania   Int      @id @default(autoincrement())
+  titulo        String   @db.VarChar(100)
+  descripcion   String
+  fecha_inicio  DateTime
+  fecha_fin     DateTime?
+  activa        Boolean  @default(true)
+
+  // Relación con aportes
+  aportes       aporte[]
+}
+
+model aporte {
+  id_aporte     Int      @id @default(autoincrement())
+  tipo          String   @db.VarChar(50)   // Ej: "material"
+  descripcion   String?  @db.VarChar(255)
+  fecha         DateTime @default(now())
+
+  // Relaciones
+  id_usuario    Int
+  usuario       usuario  @relation(fields: [id_usuario], references: [id_usuario])
+
+  id_campania   Int?
+  campania      campania? @relation(fields: [id_campania], references: [id_campania])
+}
+  
+
 
 
 model voluntario {

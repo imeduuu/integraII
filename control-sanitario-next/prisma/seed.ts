@@ -104,7 +104,92 @@ async function main() {
     },
   });
 
+
+
   
+  const usuarios = await prisma.usuario.findMany();
+  if (usuarios.length === 0) {
+    console.log(" Insertando usuarios...");
+    const rolesDb = await prisma.rol.findMany();
+
+    await prisma.usuario.createMany({
+      data: [
+        {
+          nombre_usuario: "Juan",
+          apellido_paterno: "Pérez",
+          apellido_materno: "Gómez",
+          fecha_nacimiento: new Date("1990-01-01"),
+          telefono: "123456789",
+          email: "juan@example.com",
+          password_hash: "123",
+          sexo: "M",
+          activo: true,
+          id_rol: rolesDb[0].id_rol
+        },
+        {
+          nombre_usuario: "Ana",
+          apellido_paterno: "Gómez",
+          apellido_materno: "López",
+          fecha_nacimiento: new Date("1992-05-10"),
+          telefono: "987654321",
+          email: "ana@example.com",
+          password_hash: "456",
+          sexo: "F",
+          activo: true,
+          id_rol: rolesDb[1].id_rol
+        }
+      ],
+    });
+  }
+
+  
+  const campanias = await prisma.campania.findMany();
+  if (campanias.length === 0) {
+    console.log(" Insertando campañas...");
+    await prisma.campania.createMany({
+      data: [
+        {
+          titulo: "Campaña de Alimentos",
+          descripcion: "Recolección de alimentos para mascotas",
+          fecha_inicio: new Date(),
+          fecha_fin: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+          activa: true
+        }
+      ],
+    });
+  }
+
+  
+  const usuariosActuales = await prisma.usuario.findMany();
+  const campaniasActuales = await prisma.campania.findMany();
+
+  if (usuariosActuales.length > 0 && campaniasActuales.length > 0) {
+    console.log(" Insertando datos de aportes...");
+    await prisma.aporte.createMany({
+      data: [
+        {
+          tipo: "material",
+          descripcion: "Donación de alimento para mascotas",
+          id_usuario: usuariosActuales[0].id_usuario,
+          id_campania: campaniasActuales[0].id_campania,
+        },
+        {
+          tipo: "tiempo",
+          descripcion: "Voluntariado de limpieza en refugio",
+          id_usuario: usuariosActuales[0].id_usuario,
+          id_campania: campaniasActuales[0].id_campania,
+        },
+      ],
+    });
+    console.log(" Aportes insertados correctamente");
+  } else {
+    console.warn(" No hay usuarios o campañas para crear aportes.");
+  }
+
+  console.log(" Seed completado");
+
+
+
   await prisma.usuario.upsert({
     where: { id_usuario: 3 },
     update: {},
