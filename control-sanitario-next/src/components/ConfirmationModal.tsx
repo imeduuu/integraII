@@ -39,13 +39,13 @@ export default function ConfirmationModal({
 }: Props) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" role="presentation" aria-modal="true">
-      <div className="bg-white rounded p-6 shadow-lg w-96" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1}>
-        <h2 id="modal-title" className="text-lg font-bold mb-4">{title}</h2>
+      <div className="bg-white dark:bg-gray-900 rounded p-6 shadow-lg w-96" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1}>
+        <h2 id="modal-title" className="text-lg font-bold mb-4 dark:text-white">{title}</h2>
         <p>
           ¿Seguro que quieres enviar la solicitud para adoptar a{" "}
           <strong>{animal.nombre}</strong>?
         </p>
-        <div className="mt-4 text-sm space-y-1">
+  <div className="mt-4 text-sm space-y-1 text-gray-700 dark:text-gray-200">
           <p><strong>Ubicación:</strong> {animal.ubicacion}</p>
           <p><strong>Edad:</strong> {animal.edad}</p>
           <p><strong>Solicitante:</strong> {formData.name} ({formData.email})</p>

@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/profileSettings.module.css';
+import { useTheme } from '../context/ThemeContext';
 
-interface ProfileSettingsProps {
-  onThemeChange?: (theme: 'light' | 'dark') => void;
-}
-
-const ProfileSettings: React.FC<ProfileSettingsProps> = ({ onThemeChange }) => {
+const ProfileSettings: React.FC = () => {
   const router = useRouter();
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const { theme, setTheme } = useTheme();
 
   const handleThemeChange = (newTheme: 'light' | 'dark') => {
     setTheme(newTheme);
-    if (onThemeChange) onThemeChange(newTheme);
   };
 
   return (
