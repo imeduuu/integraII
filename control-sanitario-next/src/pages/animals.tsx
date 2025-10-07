@@ -5,6 +5,8 @@ import AnimalCard from '../components/AnimalCard';
 import Button from '../components/ui/Button';
 import Map from '../components/Map';
 import { animalsData } from '../utils/AnimalsData';
+import styles from '../styles/animals.module.css';
+import { useTheme } from '../context/ThemeContext';
 
 const buttonStyle: React.CSSProperties = {
   width: '100%',
@@ -48,15 +50,16 @@ const Animals = () => {
     (especie ? a.especie === especie : true)
   );
 
+  const { theme } = useTheme();
   return (
     <>
       <Navbar />
-      <main className="container mx-auto p-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Animales en Adopción y Rescatados</h2>
+      <main className={`${styles.root} ${theme === 'dark' ? styles.dark : ''}`}>
+        <h2 className={styles.title}>Animales en Adopción y Rescatados</h2>
 
-        <div className="flex gap-4 mb-6 flex-wrap justify-center">
+        <div className={styles.filters}>
           <select
-            className="border rounded px-2 py-1"
+            className={styles.select}
             value={estado}
             onChange={e => setEstado(e.target.value)}
             aria-label="Filtrar por estado"
@@ -66,7 +69,7 @@ const Animals = () => {
           </select>
 
           <select
-            className="border rounded px-2 py-1"
+            className={styles.select}
             value={ubicacion}
             onChange={e => setUbicacion(e.target.value)}
             aria-label="Filtrar por ubicación"
@@ -76,7 +79,7 @@ const Animals = () => {
           </select>
 
           <select
-            className="border rounded px-2 py-1"
+            className={styles.select}
             value={especie}
             onChange={e => setEspecie(e.target.value)}
             aria-label="Filtrar por especie"
@@ -86,9 +89,9 @@ const Animals = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+        <div className={styles.grid}>
           {filtered.length === 0 ? (
-            <div className="col-span-3 text-center text-gray-500">No hay animales con ese filtro.</div>
+            <div className={styles.noResults}>No hay animales con ese filtro.</div>
           ) : (
             filtered.map(animal => (
               <AnimalCard
@@ -103,8 +106,8 @@ const Animals = () => {
           )}
         </div>
 
-        <h2 className="mt-12 mb-2 text-xl font-bold text-center">Mapa de Temuco</h2>
-        <div className="flex justify-center">
+        <h2 className={styles.mapTitle}>Mapa de Temuco</h2>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Button
             style={{ ...buttonStyle, marginTop: '2rem', width: 'clamp(140px, 40vw, 180px)' }}
             onClick={() => setShowMap(!showMap)}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from '../styles/commentSection.module.css';
 
 interface Comment {
   id: number;
@@ -8,47 +9,40 @@ interface Comment {
 }
 
 interface CommentSectionProps {
-  animalId: number; // Por si luego conectamos con DB
+  animalId: number;
 }
 
 const CommentSection = ({ animalId }: CommentSectionProps) => {
   const [comments, setComments] = useState<Comment[]>([
-    // Mock inicial
     { id: 1, usuario: 'Juan', contenido: 'Firulais es muy amigable!', fecha: '2025-10-03' },
     { id: 2, usuario: 'María', contenido: 'Michi parece tímido pero dulce.', fecha: '2025-10-02' },
   ]);
   const [newComment, setNewComment] = useState('');
-
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editingContent, setEditingContent] = useState('');
 
   const handleAddComment = () => {
     if (!newComment.trim()) return;
-
     const nextId = comments.length ? comments[comments.length - 1].id + 1 : 1;
     const comment: Comment = {
       id: nextId,
-      usuario: 'Usuario Demo', // Más adelante se puede reemplazar por el usuario real
+      usuario: 'Usuario Demo',
       contenido: newComment,
       fecha: new Date().toISOString().split('T')[0],
     };
-
     setComments([...comments, comment]);
     setNewComment('');
   };
-  
-  // ✅ Función para borrar comentario
+
   const handleDelete = (id: number) => {
     setComments(comments.filter(c => c.id !== id));
   };
 
-  // ✅ Función para iniciar edición
   const handleEdit = (comment: Comment) => {
     setEditingCommentId(comment.id);
     setEditingContent(comment.contenido);
   };
 
-  // ✅ Función para guardar edición
   const handleSaveEdit = (id: number) => {
     setComments(
       comments.map(c =>
@@ -60,77 +54,64 @@ const CommentSection = ({ animalId }: CommentSectionProps) => {
   };
 
   return (
-    <div className="comment-section">
-      <h3 className="text-lg font-semibold mb-2">Comentarios</h3>
-
-      {/* Lista de comentarios */}
-      <div className="space-y-2 mb-4">
+    <div className={styles.root}>
+      <h3 className={styles.title}>Comentarios</h3>
+      <div style={{ marginBottom: '1rem' }}>
         {comments.map(c => (
-          <div key={c.id} className="p-2 border rounded">
-            <strong>{c.usuario}</strong> <span className="text-gray-500 text-sm">({c.fecha})</span>
-            {/* ✅ Edición inline */}
+          <div key={c.id} className={styles.comment}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span className={styles.user}>{c.usuario}</span>
+              <span className={styles.date}>({c.fecha})</span>
+            </div>
             {editingCommentId === c.id ? (
-              <>
+              <div>
                 <input
                   type="text"
                   value={editingContent}
                   onChange={(e) => setEditingContent(e.target.value)}
-                  className="border rounded p-1 w-full mt-1 mb-1"
+                  className={styles.input}
                 />
-                <button
-                  onClick={() => handleSaveEdit(c.id)}
-                  className="bg-green-500 text-white px-2 py-1 rounded mr-1"
-                >
-                  Guardar
-                </button>
-                <button
-                  onClick={() => setEditingCommentId(null)}
-                  className="bg-gray-400 text-white px-2 py-1 rounded"
-                >
-                  Cancelar
-                </button>
-              </>
+                <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                  <button
+                    onClick={() => handleSaveEdit(c.id)}
+                    className={styles.button}
+                  >Guardar</button>
+                  <button
+                    onClick={() => setEditingCommentId(null)}
+                    className={styles.editButton}
+                  >Cancelar</button>
+                </div>
+              </div>
             ) : (
-              <p>{c.contenido}</p>
+              <div>
+                <span className={styles.commentContent} style={{ display: 'block', margin: '0.5rem 0' }}>{c.contenido}</span>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button
+                    onClick={() => handleEdit(c)}
+                    className={styles.editButton}
+                  >Editar</button>
+                  <button
+                    onClick={() => handleDelete(c.id)}
+                    className={styles.deleteButton}
+                  >Eliminar</button>
+                </div>
+              </div>
             )}
-
-            {/* ✅ Botones solo para el autor */}
-            {c.usuario === 'Invitado' && editingCommentId !== c.id && (
-              <div className="mt-1">
-                <button
-                  onClick={() => handleEdit(c)}
-                  className="bg-yellow-400 text-white px-2 py-1 rounded mr-1"
-                >
-                  Editar
-                </button>
-                <button
-                  onClick={() => handleDelete(c.id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
-                >
-                  Borrar
-                  </button>
           </div>
-        )}
+        ))}
       </div>
-      ))}
-    </div>
-    
-
-      {/* Formulario de nuevo comentario */}
-      <div className="flex gap-2">
+      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
         <input
           type="text"
-          placeholder="Escribe un comentario..."
           value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          className="flex-1 border rounded p-2"
+          onChange={e => setNewComment(e.target.value)}
+          className={styles.input}
+          placeholder="Escribe un comentario..."
         />
         <button
           onClick={handleAddComment}
-          className="bg-blue-500 tFext-white px-4 py-2 rounded"
-        >
-          Enviar
-        </button>
+          className={styles.button}
+        >Enviar</button>
       </div>
     </div>
   );

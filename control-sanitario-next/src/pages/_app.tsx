@@ -4,6 +4,7 @@
  */
 import '../styles/globals.css';
 import { NotificationProvider } from '../components/NotificationProvider';
+import { ThemeProvider } from '../context/ThemeContext';
 import type { AppProps } from 'next/app';
 
 /**
@@ -12,9 +13,11 @@ import type { AppProps } from 'next/app';
  */
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <NotificationProvider>
-      <Component {...pageProps} />
-    </NotificationProvider>
+    <ThemeProvider>
+      <NotificationProvider>
+        <Component {...pageProps} />
+      </NotificationProvider>
+    </ThemeProvider>
   );
 }
 

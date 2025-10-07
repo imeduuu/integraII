@@ -3,7 +3,7 @@
  * Muestra información básica, estado y permite inscribirse con notificación
  */
 import React from "react";
-import { campaigns } from "../services/mockCampaigns";
+import { campaigns as defaultCampaigns } from "../services/mockCampaigns";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,8 +14,11 @@ interface Campaign {
   date: string; // Fecha de inicio
   active: boolean; // Estado activo/inactivo
 }
+interface CampaignListProps {
+  campaigns?: Campaign[];
+}
 
-const CampaignList: React.FC = () => {
+const CampaignList: React.FC<CampaignListProps> = ({ campaigns = defaultCampaigns }) => {
   const handleRegister = (title: string, active: boolean) => {
     if (!active) {
       toast.error(`La campaña "${title}" está inactiva, no puedes inscribirte.`);
@@ -52,3 +55,5 @@ const CampaignList: React.FC = () => {
     </div>
   );
 };
+
+export default CampaignList;

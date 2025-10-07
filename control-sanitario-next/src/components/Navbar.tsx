@@ -62,7 +62,7 @@ const Navbar = () => {
           alt="Perfil" 
           className={styles.profileImage}
         />
-        <a href="/edit-profile" className={getLinkClasses('/edit-profile')}>Editar perfil</a>
+  <a href="/profile" className={getLinkClasses('/profile')}>Ver perfil</a>
       </div>
     </nav>
   );
