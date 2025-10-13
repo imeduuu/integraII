@@ -50,6 +50,7 @@ const Navbar = () => {
       <span className={styles.navbarTitle}>Huella Segura</span>
       <div className={styles.navbarLinks}>
         <a href="/" className={getLinkClasses('/')}>Inicio</a>
+        <a href="/mapa" className={getLinkClasses('/mapa')}>Mapa</a>
         {links.map(link => (
           <a key={link.href + link.label} href={link.href} className={getLinkClasses(link.href)}>
             {link.label}
