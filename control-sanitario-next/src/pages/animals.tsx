@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AnimalCard from '../components/AnimalCard';
 import Button from '../components/ui/Button';
-import Map from '../components/Map';
+// ...import eliminado: Map...
 import { animalsData } from '../utils/AnimalsData';
 import styles from '../styles/animals.module.css';
 import { useTheme } from '../context/ThemeContext';
@@ -36,7 +36,7 @@ const Animals = () => {
   const [estado, setEstado] = useState('');
   const [ubicacion, setUbicacion] = useState('');
   const [especie, setEspecie] = useState('');
-  const [showMap, setShowMap] = useState(false);
+  // ...eliminado showMap para mapa antiguo...
 
   // Listas únicas para los filtros
   const estados = Array.from(new Set(animals.map(a => a.estado_general)));
@@ -106,18 +106,7 @@ const Animals = () => {
           )}
         </div>
 
-        <h2 className={styles.mapTitle}>Mapa de Temuco</h2>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button
-            style={{ ...buttonStyle, marginTop: '2rem', width: 'clamp(140px, 40vw, 180px)' }}
-            onClick={() => setShowMap(!showMap)}
-            aria-label={showMap ? 'Ocultar Mapa' : 'Mostrar Mapa'}
-          >
-            {showMap ? 'Ocultar Mapa' : 'Mostrar Mapa'}
-          </Button>
-        </div>
-
-        {showMap && <Map />}
+        {/* Mapa eliminado, solo disponible en /mapa */}
       </main>
       <Footer />
     </>
