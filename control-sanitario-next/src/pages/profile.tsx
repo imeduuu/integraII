@@ -1,5 +1,5 @@
 import React from 'react';
-import Map from '../components/Map';
+// ...import eliminado: Map...
 import ProfileSettings from '../components/ProfileSettings';
 import Button from '../components/ui/Button';
 import { useTheme } from '../context/ThemeContext';
@@ -70,15 +70,10 @@ const ProfilePage: React.FC = () => {
             </ul>
           </div>
           <div className="mt-8 w-full max-w-md">
-            <ProfileSettings onThemeChange={setTheme} />
+            <ProfileSettings />
           </div>
         </div>
-        <div className={theme === 'dark' ? 'bg-neutral-900 rounded-3xl shadow-2xl p-8 border border-neutral-800' : 'bg-white rounded-3xl shadow-2xl p-8'}>
-          <h2 className={theme === 'dark' ? 'text-xl font-bold mb-4 text-white' : 'text-xl font-bold mb-4 text-blue-700'}>Mapa</h2>
-          <div className={theme === 'dark' ? 'rounded-xl overflow-hidden border border-neutral-700 shadow' : 'rounded-xl overflow-hidden border border-blue-100 shadow'}>
-            <Map />
-          </div>
-        </div>
+        {/* Mapa eliminado, solo disponible en /mapa */}
       </div>
     </div>
   );
