@@ -4,7 +4,6 @@
  */
 import '../styles/globals.css';
 import { NotificationProvider } from '../components/NotificationProvider';
-import '../styles/theme.css'; // <-- LÍNEA CORRECTA
 import type { AppProps } from 'next/app';
 
 /**

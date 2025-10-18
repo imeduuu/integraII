@@ -101,9 +101,10 @@ export default function AnimalList() {
         {filtered.map((animal, i) => (
           <AnimalCard
             key={i}
-            name={animal.nombre}
-            status={animal.estado}
-            location={animal.ubicacion}
+            animalId={`${i + 1}`}
+            nombre={animal.nombre}
+            estado_general={animal.estado}
+            zona={animal.ubicacion}
             age={animal.edad}
             images={animal.imagenes}
           />

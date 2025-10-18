@@ -1,0 +1,185 @@
+// Prisma schema for PostgreSQL
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Estado {
+  Activo
+  Inactivo
+  Pendiente
+}
+
+model organizacion {
+  id_organizacion      Int      @id @default(autoincrement())
+  nombre_organizacion String   @db.VarChar(30)
+  telefono_organizacion String @db.VarChar(20)
+  email_organizacion  String   @db.VarChar(30)
+  direccion           String   @db.VarChar(30)
+  usuarios            usuario[]
+}
+
+model rol {
+  id_rol      Int      @id @default(autoincrement())
+  nombre_rol  String   @db.VarChar(30)
+  usuarios    usuario[]
+}
+
+model usuario {
+  id_usuario         Int      @id @default(autoincrement())
+  nombre_usuario     String   @db.VarChar(30)
+  apellido_paterno   String   @db.VarChar(20)
+  apellido_materno   String   @db.VarChar(20)
+  fecha_nacimiento   DateTime
+  telefono           String?  @db.VarChar(20)
+  email              String   @db.VarChar(60)
+  password_hash      String   @db.VarChar(255)
+  sexo               String   @db.Char(1)
+  fecha_creacion     DateTime @default(now())
+  fecha_ultimo_login DateTime?
+  activo             Boolean
+  emailVerificado    Boolean  @default(false)
+  tokenVerificacion  String?  @db.VarChar(255)
+  id_organizacion    Int?
+  id_rol             Int
+  organizacion       organizacion? @relation(fields: [id_organizacion], references: [id_organizacion])
+  rol                rol           @relation(fields: [id_rol], references: [id_rol])
+  solicitudes        solicitud_adopcion[]
+  avistamientos      avistamiento[]
+  google_accounts    google_accounts[]
+  mensajes_enviados   mensaje[] @relation("mensajes_enviados")
+  mensajes_recibidos  mensaje[] @relation("mensajes_recibidos")
+  historial_reportes  historial_reporte[]
+}
+
+model animal {
+  id_animal      Int      @id @default(autoincrement())
+  nombre_animal  String   @db.VarChar(30)
+  edad_animal    String   @db.VarChar(12)
+  id_estado_salud Int
+  id_categoria   Int
+  id_especie     Int
+  estado_general  Estado    @default(Activo) 
+  zona            String?  @db.VarChar(50)
+  estado_salud   estado_salud @relation(fields: [id_estado_salud], references: [id_estado_salud])
+  categoria      categoria     @relation(fields: [id_categoria], references: [id_categoria])
+  especie        especie       @relation(fields: [id_especie], references: [id_especie])
+  solicitudes    solicitud_adopcion[]
+  avistamientos  avistamiento[]
+}
+
+model especie {
+  id_especie      Int      @id @default(autoincrement())
+  nombre_especie  String   @db.VarChar(20)
+  animales        animal[]
+  avistamientos   avistamiento[]
+}
+
+model categoria {
+  id_categoria      Int      @id @default(autoincrement())
+  nombre_categoria  String   @db.VarChar(20)
+  animales         animal[]
+}
+
+model estado_salud {
+  id_estado_salud      Int      @id @default(autoincrement())
+  nombre_estado_salud  String   @db.VarChar(20)
+  animales             animal[]
+  avistamientos        avistamiento[]
+}
+
+model solicitud_adopcion {
+  id_solicitud_adopcion Int      @id @default(autoincrement())
+  id_usuario            Int
+  id_animal             Int
+  estado_adopcion       String   @db.VarChar(30)
+  fecha_ingreso_solicitud DateTime
+  fecha_termino_solicitud DateTime @default(now())
+  estado_solicitud      Int
+  usuario               usuario   @relation(fields: [id_usuario], references: [id_usuario])
+  animal                animal    @relation(fields: [id_animal], references: [id_animal])
+  estadoSolicitud       estado_solicitud @relation(fields: [estado_solicitud], references: [id_estado_solicitud])
+}
+
+model estado_solicitud {
+  id_estado_solicitud   Int      @id @default(autoincrement())
+  estado_solicitud      String   @db.VarChar(20)
+  solicitudes           solicitud_adopcion[]
+}
+
+model avistamiento {
+  id_avistamiento         Int      @id @default(autoincrement())
+  id_usuario              Int
+  id_estado_avistamiento  Int
+  id_estado_salud         Int
+  id_especie              Int
+  id_animal               Int?
+  latitud                 Float? 
+  longitud                Float? 
+  fecha_creacion          DateTime @default(now())
+  fecha_actualizacion     DateTime @updatedAt
+  descripcion             String?
+  fotos                   Json?
+  ubicacion               String?
+  direccion               String?  @db.VarChar(30)
+  estado_general      Estado?   
+  zona                String?   @db.VarChar(50) 
+  usuario                 usuario  @relation(fields: [id_usuario], references: [id_usuario])
+  estado_avistamiento     estado_avistamiento @relation(fields: [id_estado_avistamiento], references: [id_estado_avistamiento])
+  estado_salud            estado_salud @relation(fields: [id_estado_salud], references: [id_estado_salud])
+  especie                 especie   @relation(fields: [id_especie], references: [id_especie])
+  animal                  animal?   @relation(fields: [id_animal], references: [id_animal])
+}
+
+model estado_avistamiento {
+  id_estado_avistamiento   Int      @id @default(autoincrement())
+  estado_avistamiento      String   @db.VarChar(20)
+  avistamientos            avistamiento[]
+}
+
+model google_accounts {
+  id_google_account   Int      @id @default(autoincrement())
+  id_usuario          Int
+  google_account_id   String   @db.VarChar(255)
+  google_email        String   @db.VarChar(255)
+  refresh_token       String?
+  access_token        String?
+  token_expiry        DateTime?
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+  usuario             usuario  @relation(fields: [id_usuario], references: [id_usuario])
+}
+
+model mensaje {
+  id_mensaje      Int      @id @default(autoincrement())
+  contenido       String   @db.Text
+  fecha_envio     DateTime @default(now())
+  id_remitente    Int
+  id_destinatario Int
+
+  // Relación con el usuario remitente
+  remitente    usuario @relation("mensajes_enviados", fields: [id_remitente], references: [id_usuario])
+  // Relación con el usuario destinatario
+  destinatario usuario @relation("mensajes_recibidos", fields: [id_destinatario], references: [id_usuario])
+}
+
+/// Modelo para historial de cambios/eventos en reportes de animales
+model historial_reporte {
+  id_historial      Int      @id @default(autoincrement())
+  id_reporte        Int      // ID del reporte relacionado (ajustar si existe modelo de reporte)
+  fecha_evento      DateTime @default(now())
+  id_usuario        Int      // Usuario responsable
+  estado            String   @db.VarChar(30)
+  observaciones     String?  @db.Text
+
+  // Relaciones
+  usuario           usuario  @relation(fields: [id_usuario], references: [id_usuario])
+}
+

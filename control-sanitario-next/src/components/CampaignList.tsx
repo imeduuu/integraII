@@ -3,7 +3,7 @@
  * Muestra información básica, estado y permite inscribirse con notificación
  */
 import React from "react";
-import { campaigns } from "../services/mockCampaigns";
+import { campaigns as defaultCampaigns } from "../services/mockCampaigns";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,8 +14,11 @@ interface Campaign {
   date: string; // Fecha de inicio
   active: boolean; // Estado activo/inactivo
 }
+interface CampaignListProps {
+  campaigns?: Campaign[];
+}
 
-const CampaignList: React.FC = () => {
+const CampaignList: React.FC<CampaignListProps> = ({ campaigns = defaultCampaigns }) => {
   const handleRegister = (title: string, active: boolean) => {
     if (!active) {
       toast.error(`La campaña "${title}" está inactiva, no puedes inscribirte.`);
@@ -29,21 +32,21 @@ const CampaignList: React.FC = () => {
       {campaigns.map((campaign) => (
         <div
           key={campaign.id}
-          className="bg-white rounded-xl shadow-md p-6 border border-blue-300 hover:shadow-lg transition"
+          className="bg-white dark:bg-gray-900 rounded-xl shadow-md p-6 border border-blue-300 dark:border-gray-700 hover:shadow-lg transition"
         >
-          <p className="text-xl font-bold text-blue-800 mb-2">
+          <p className="text-xl font-bold text-blue-800 dark:text-blue-300 mb-2">
             📌 Nombre: {campaign.title}
           </p>
-          <p className="text-gray-700 mb-2">{campaign.description}</p>
-          <p className="text-sm text-gray-600 mb-1">
-            📅 Fecha: <span className="font-semibold text-blue-700">{new Date(campaign.date).toLocaleDateString()}</span>
+          <p className="text-gray-700 dark:text-gray-300 mb-2">{campaign.description}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+            📅 Fecha: <span className="font-semibold text-blue-700 dark:text-blue-200">{new Date(campaign.date).toLocaleDateString()}</span>
           </p>
-          <p className={`mt-2 text-md font-bold ${campaign.active ? "text-green-600" : "text-red-600"}`}>
+          <p className={`mt-2 text-md font-bold ${campaign.active ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
             Estado: {campaign.active ? "Activa ✅" : "Inactiva ❌"}
           </p>
           <button
             onClick={() => handleRegister(campaign.title, campaign.active)}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            className="mt-4 px-4 py-2 bg-blue-600 dark:bg-blue-800 text-white rounded hover:bg-blue-700 dark:hover:bg-blue-900 transition"
           >
             Inscribirse
           </button>
@@ -52,3 +55,5 @@ const CampaignList: React.FC = () => {
     </div>
   );
 };
+
+export default CampaignList;

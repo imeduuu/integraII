@@ -7,12 +7,13 @@ import React from 'react';
  * Componente temporal para el dashboard de organizaciones
  * Será reemplazado por funcionalidades de gestión de campañas y adopciones
  */
+
 const OrgView: React.FC = () => (
-  <div style={{ padding: '2rem', textAlign: 'center' }}>
-    <h2 style={{ color: '#2563eb', fontWeight: 700, fontSize: '2rem' }}>
+  <div className="p-8 text-center bg-white dark:bg-gray-900 rounded-xl shadow-md">
+    <h2 className="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">
       Vista Organización (OrgView)
     </h2>
-    <p>Componente provisional para el rol organización.</p>
+    <p className="text-gray-700 dark:text-gray-300">Componente provisional para el rol organización.</p>
   </div>
 );
 

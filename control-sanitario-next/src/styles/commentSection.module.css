@@ -1,0 +1,79 @@
+/* Estilos para la sección de comentarios en AnimalCard */
+.root {
+  background: #f3f4f6;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+  padding: 1.2rem;
+  margin-top: 1rem;
+}
+.title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 0.7rem;
+}
+.comment {
+  background: #fff;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.user {
+  font-weight: 600;
+  color: #2563eb;
+}
+.date {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-left: 0.5rem;
+}
+.input {
+  border-radius: 0.75rem;
+  border: 1px solid #93c5fd;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background 0.2s;
+}
+.button:hover {
+  background: #1e40af;
+}
+.editButton {
+  background: #fbbf24;
+  color: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background 0.2s;
+}
+.editButton:hover {
+  background: #f59e42;
+}
+.deleteButton {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.deleteButton:hover {
+  background: #b91c1c;
+}

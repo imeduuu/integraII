@@ -46,17 +46,17 @@ const LoginModal = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <Modal isOpen={true} onClose={onClose}>
-      <form className="flex flex-col gap-3" style={{ minWidth: 320 }} onSubmit={handleSubmit} noValidate>
-        <h2 className="font-bold text-xl mb-2">Iniciar Sesión</h2>
-        <label className="font-semibold">Correo electrónico</label>
+      <form className="flex flex-col gap-3 dark:bg-gray-900 dark:text-white" style={{ minWidth: 320 }} onSubmit={handleSubmit} noValidate>
+        <h2 className="font-bold text-xl mb-2 dark:text-white">Iniciar Sesión</h2>
+        <label className="font-semibold dark:text-gray-200">Correo electrónico</label>
         <Input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-        <label className="font-semibold">Contraseña</label>
+        <label className="font-semibold dark:text-gray-200">Contraseña</label>
         <Input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
         <Button type="submit" className="w-full mt-2">Entrar</Button>
         <div className="mt-2 text-center">
-          <a href="/forgot-password" className="text-blue-600 underline text-sm">¿Olvidaste tu contraseña?</a>
+          <a href="/forgot-password" className="text-blue-600 dark:text-blue-300 underline text-sm">¿Olvidaste tu contraseña?</a>
         </div>
-        {mensaje && <p className="mt-2 text-blue-600 font-semibold">{mensaje}</p>}
+        {mensaje && <p className="mt-2 text-blue-600 dark:text-blue-300 font-semibold">{mensaje}</p>}
       </form>
     </Modal>
   );
