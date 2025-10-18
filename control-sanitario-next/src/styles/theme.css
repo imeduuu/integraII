@@ -1,11 +1,25 @@
-/* Variables y colores personalizados */
+/* src/styles/theme.css */
 :root {
-  --color-primary: #2563eb;
-  --color-secondary: #1e293b;
-}
-.bg-primary {
-  background-color: var(--color-primary);
-}
-.bg-secondary {
-  background-color: var(--color-secondary);
+  /* Paleta de Colores Primarios */
+  --primary-color: #00ff15; /* Tu color magenta de prueba */
+  --primary-color-hover: #00ff0d; /* Un magenta más oscuro para hover */
+
+  /* Colores de Acento y Estado */
+  --success-color: #28a745; /* Verde para éxito */
+  --error-color: #ff0019;   /* Rojo para errores */
+
+  /* Colores de Texto */
+  --text-primary: #005fbe;   /* Negro principal para texto */
+  --text-on-primary: #ff0000; /* Texto blanco sobre fondos primarios */
+
+  /* Colores de Fondo */
+  --background-light: #f8f9fa; /* Fondo claro */
+
+  /* Tipografías */
+  --font-family-sans: 'Helvetica Neue', Arial, sans-serif;
+  --font-family-serif: 'Georgia', 'Times New Roman', serif;
+
+  /* Tamaños de Fuente */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;  /* 18px */
 }

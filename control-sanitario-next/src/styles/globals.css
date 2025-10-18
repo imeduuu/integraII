@@ -1,3 +1,7 @@
+@import './variables.css'; /* Añadido al principio */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ... resto de los estilos globales ... */

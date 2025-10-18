@@ -35,7 +35,7 @@ const Navbar = () => {
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
       { href: '/admin-orgs', label: 'Organizaciones' },
-      { href: '/faqs', label: 'FAQs' } // <-- ENLACE AÑADIDO AQUÍ
+      { href: '/faqs', label: 'FAQs' }
     ];
   } else if (userMock.role === 'org') {
     links = [
@@ -50,19 +50,20 @@ const Navbar = () => {
       <span className={styles.navbarTitle}>Huella Segura</span>
       <div className={styles.navbarLinks}>
         <a href="/" className={getLinkClasses('/')}>Inicio</a>
+        <a href="/mapa" className={getLinkClasses('/mapa')}>Mapa</a>
         {links.map(link => (
           <a key={link.href + link.label} href={link.href} className={getLinkClasses(link.href)}>
             {link.label}
           </a>
         ))}
       </div>
-      <div className={styles.profileSection + ' ' + styles.profileSectionRight}>
-        <img 
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=32&h=32" 
-          alt="Perfil" 
+      <div className={styles.profileSection}>
+        <img
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=32&h=32"
+          alt="Perfil"
           className={styles.profileImage}
         />
-        <a href="/edit-profile" className={getLinkClasses('/edit-profile')}>Editar perfil</a>
+        <a href="/profile" className={getLinkClasses('/profile')}>Ver perfil</a>
       </div>
     </nav>
   );

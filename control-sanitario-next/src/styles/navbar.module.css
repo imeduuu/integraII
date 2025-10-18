@@ -7,6 +7,9 @@
   margin-right: auto;
   align-self: flex-start;
 }
+.dark .navbarTitle {
+  color: #fff;
+}
 .profileSectionRight {
   position: absolute;
   top: 1.2rem;
@@ -15,15 +18,29 @@
   align-items: center;
   gap: 0.5rem;
 }
+/* Navbar base */
 .navbar {
-  background-color: hsl(212, 92%, 64%); /* Un negro muy oscuro */
-  color: #43a2f0;
-  padding: 1rem 1.5rem;
+  background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
+  color: #fff;
+  padding: 1.2rem 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #43a2f0; /* Separación sutil */
+  border-bottom: 2px solid #2563eb;
+  box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+  position: relative;
+  z-index: 10;
+  width: 100vw;
+  min-width: 100vw;
+  margin: 0;
+  left: 0;
+  top: 0;
+}
+.dark .navbar {
+  background: linear-gradient(90deg, #111827 60%, #1e293b 100%);
+  color: #fff;
+  border-bottom: 2px solid #334155;
 }
 @media (min-width: 640px) {
   .navbar {
@@ -56,8 +73,11 @@
   color: #000000;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  text-decoration: none; /* Quitamos el subrayado por defecto */
-  transition: background-color 0.3s ease-in-out;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out, color 0.3s;
+}
+.dark .navLink {
+  color: #fff;
 }
 .navLink:hover {
   background-color: #ffffff; /* Un gris oscuro al pasar el cursor */
