@@ -1,41 +1,42 @@
-// src/components/AnimalCard.tsx
 import React from 'react';
-import Button from './ui/Button';
-import { useRouter } from 'next/router';
+import InfoBox from './InfoBox';
+import { FaPaw, FaChartLine, FaHeart } from 'react-icons/fa';
 
-interface AnimalCardProps {
-  nombre: string;
-  estado_general: string;
-  zona: string;
-  age?: string;
-  images?: string[];
-}
-
-// Clases reutilizables para tarjetas
+// Clases reutilizables para las tarjetas de métricas
 const cardClasses = {
-  container: 'bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center transition-shadow hover:shadow-lg',
-  thumbnail: 'w-24 h-24 object-cover rounded-full mb-3 border-2 border-green-200',
-  name: 'text-xl font-bold mb-2 text-green-700',
-  text: 'text-sm text-gray-600 mb-1',
-  button: 'bg-blue-600 hover:bg-blue-700 mt-2'
+  container: 'grid grid-cols-1 md:grid-cols-3 gap-4 mb-8',
+  box: 'bg-white rounded-xl shadow-md p-6 flex items-center transition-shadow hover:shadow-lg',
+  icon: 'text-2xl text-green-700 mr-3',
+  title: 'text-sm text-gray-600 mb-1',
+  value: 'text-xl font-bold text-gray-900'
 };
 
-const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, age, images }) => {
-  const router = useRouter();
-  const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
-
+const UserMetricsCards = () => {
   return (
     <div className={cardClasses.container}>
-      <img src={thumbnail} alt={nombre} className={cardClasses.thumbnail} />
-      <h2 className={cardClasses.name}>{nombre}</h2>
-      <p className={cardClasses.text}><span className="font-semibold">Estado:</span> {estado_general}</p>
-      <p className={cardClasses.text}><span className="font-semibold">Ubicación:</span> {zona}</p>
-      {age && <p className={cardClasses.text}><span className="font-semibold">Edad:</span> {age}</p>}
-      <Button className={cardClasses.button} onClick={() => router.push('/adopcion')}>
-        Adoptar
-      </Button>
+      <div className={cardClasses.box}>
+        <FaPaw className={cardClasses.icon} />
+        <div>
+          <p className={cardClasses.title}>Animales registrados</p>
+          <p className={cardClasses.value}>42</p>
+        </div>
+      </div>
+      <div className={cardClasses.box}>
+        <FaChartLine className={cardClasses.icon} />
+        <div>
+          <p className={cardClasses.title}>Reportes enviados</p>
+          <p className={cardClasses.value}>15</p>
+        </div>
+      </div>
+      <div className={cardClasses.box}>
+        <FaHeart className={cardClasses.icon} />
+        <div>
+          <p className={cardClasses.title}>Adopciones completadas</p>
+          <p className={cardClasses.value}>8</p>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default AnimalCard;
+export default UserMetricsCards;
