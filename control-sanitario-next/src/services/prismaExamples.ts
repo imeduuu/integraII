@@ -29,3 +29,5 @@ export async function getSolicitudesAdopcionEjemplo() {
 }
 
 // Puedes agregar más queries de ejemplo según lo que necesites consultar
+
+export default prisma;

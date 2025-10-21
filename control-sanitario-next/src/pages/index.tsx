@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Button from '../components/ui/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import Map from '../components/Map';
+// ...import eliminado: Map...
 import UserMetricsCards from '../components/UserMetricsCards';
 import styles from '../styles/infoBox.module.css';
 import { useNotification } from '../components/NotificationProvider';
@@ -33,7 +33,7 @@ const buttonStyle: React.CSSProperties = {
  * Accesible a todos los usuarios sin autenticación
  */
 const Home = () => {
-  const [showMap, setShowMap] = useState(false); // Control de visibilidad del mapa
+  // ...eliminado showMap para mapa antiguo...
   const { addToast } = useNotification(); // Hook de notificaciones
 
   return (
@@ -194,19 +194,7 @@ const Home = () => {
             </Button>
           </div>
         </div>
-        <h2>Mapa de Temuco</h2>
-        {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
-        <Button
-          style={{
-            ...buttonStyle,
-            marginTop: '2rem',
-            background: 'linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)',
-          }}
-          onClick={() => setShowMap(!showMap)}
-        >
-          {showMap ? 'Ocultar Mapa' : 'Mostrar Mapa'}
-        </Button>
-        {showMap && <Map />}
+        {/* Mapa eliminado, solo disponible en /mapa */}
       </main>
       <Footer />
       <style>

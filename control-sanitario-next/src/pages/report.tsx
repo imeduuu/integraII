@@ -4,7 +4,7 @@ import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import Map from '../components/Map';
+// ...import eliminado: Map...
 
 import styles from '../styles/report.module.css';
 
@@ -15,7 +15,7 @@ const Report = () => {
   const [longitud, setLongitud] = useState('');
   const [direccion, setDireccion] = useState(''); // ← nuevo estado
   const [mensaje, setMensaje] = useState('');
-  const [showMap, setShowMap] = useState(false);
+  // ...eliminado showMap para mapa antiguo...
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
