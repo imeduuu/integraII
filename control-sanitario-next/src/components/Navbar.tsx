@@ -35,7 +35,7 @@ const Navbar = () => {
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
       { href: '/admin-orgs', label: 'Organizaciones' },
-      { href: '/faqs', label: 'FAQs' } // <-- ENLACE AÑADIDO AQUÍ
+      { href: '/faqs', label: 'FAQs' }
     ];
   } else if (userMock.role === 'org') {
     links = [
@@ -57,13 +57,13 @@ const Navbar = () => {
           </a>
         ))}
       </div>
-      <div className={styles.profileSection + ' ' + styles.profileSectionRight}>
-        <img 
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=32&h=32" 
-          alt="Perfil" 
+      <div className={styles.profileSection}>
+        <img
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=32&h=32"
+          alt="Perfil"
           className={styles.profileImage}
         />
-  <a href="/profile" className={getLinkClasses('/profile')}>Ver perfil</a>
+        <a href="/profile" className={getLinkClasses('/profile')}>Ver perfil</a>
       </div>
     </nav>
   );

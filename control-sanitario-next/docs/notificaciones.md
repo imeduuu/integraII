@@ -83,4 +83,4 @@ Actualmente el sistema muestra una notificación a la vez. Si disparas otra, ree
 
 Se puede extender para permitir múltiples notificaciones en cola.
 
-Se recomienda mejorar la UX con animaciones (ej. framer-motion o transiciones de Tailwind).ola
+Se recomienda mejorar la UX con animaciones (ej. framer-motion o transiciones de Tailwind).

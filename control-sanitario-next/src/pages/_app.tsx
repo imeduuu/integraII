@@ -3,10 +3,7 @@
  * Configura providers globales y estilos base
  */
 import '../styles/globals.css';
-// Leaflet styles deben cargarse a nivel global para evitar problemas SSR
-import 'leaflet/dist/leaflet.css';
 import { NotificationProvider } from '../components/NotificationProvider';
-import { ThemeProvider } from '../context/ThemeContext';
 import type { AppProps } from 'next/app';
 
 /**
@@ -15,11 +12,9 @@ import type { AppProps } from 'next/app';
  */
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider>
-      <NotificationProvider>
-        <Component {...pageProps} />
-      </NotificationProvider>
-    </ThemeProvider>
+    <NotificationProvider>
+      <Component {...pageProps} />
+    </NotificationProvider>
   );
 }
 

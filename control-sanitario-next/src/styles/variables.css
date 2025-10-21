@@ -1,0 +1,35 @@
+:root {
+  /* Paleta de Colores Primarios */
+  --primary-color: #007bff; /* Azul primario */
+  --primary-color-hover: #0056b3; /* Azul más oscuro para hover */
+
+  /* Paleta de Colores Secundarios */
+  --secondary-color: #6c757d; /* Gris secundario */
+  --secondary-color-hover: #5a6268;
+
+  /* Colores de Acento y Estado */
+  --accent-color: #ffc107; /* Amarillo para acentos */
+  --success-color: #28a745; /* Verde para éxito */
+  --error-color: #dc3545;   /* Rojo para errores */
+  --warning-color: #ffc107; /* Amarillo para advertencias */
+
+  /* Colores de Texto */
+  --text-primary: #212529;   /* Negro principal para texto */
+  --text-secondary: #6c757d; /* Gris para texto secundario */
+  --text-on-primary: #ffffff; /* Texto blanco sobre fondos primarios */
+
+  /* Colores de Fondo */
+  --background-light: #f8f9fa; /* Fondo claro */
+  --background-dark: #343a40;   /* Fondo oscuro */
+
+  /* Tipografías */
+  --font-family-sans: 'Helvetica Neue', Arial, sans-serif;
+  --font-family-serif: 'Georgia', 'Times New Roman', serif;
+
+  /* Tamaños de Fuente */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;  /* 18px */
+  --font-size-xl: 1.25rem;   /* 20px */
+  --font-size-2xl: 1.5rem;   /* 24px */
+}

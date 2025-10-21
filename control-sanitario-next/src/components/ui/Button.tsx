@@ -32,3 +32,8 @@ const Button: React.FC<ButtonProps> = ({
 };
 
 export default Button;
+// En cualquier componente, por ejemplo: src/components/ui/Button.tsx
+
+<button className="bg-primary text-text-on-primary font-sans rounded px-4 py-2 hover:bg-primary-hover">
+  Click Me
+</button>
