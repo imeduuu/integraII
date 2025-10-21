@@ -6,6 +6,44 @@
 .bg-primary { background-color: var(--color-primary); }
 .bg-secondary { background-color: var(--color-secondary); }
 
+/* Paleta accesible (contrastes pensados para WCAG AA) */
+:root {
+  --bg: #ffffff;
+  --text: #0f172a; /* slate-900 */
+  --muted: #6b7280; /* gray-500 */
+  --primary: #2563eb; /* azul */
+  --primary-contrast: #ffffff;
+  --focus: #2563eb;
+}
+
+html { font-size: 16px; }
+body { color: var(--text); background: var(--bg); font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+
+/* focus visible para accesibilidad de teclado */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Asegurar focus visible para elementos interactivos */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Asegurar tamaño legible por defecto */
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+p, input, button, label { font-size: 1rem; line-height: 1.4; }
+
 /* Utilities para reducir movimiento cuando el usuario lo prefiere */
 @media (prefers-reduced-motion: reduce) {
   .motion-safe-transition,

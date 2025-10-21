@@ -116,23 +116,28 @@ const UserTable: React.FC<Props> = ({ users, usersPerPage = 5 }) => {
       {/* 🔹 Controles de Paginación */}
       <div className={styles.pagination}>
         {/* Botón anterior */}
-        <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>Anterior</button>
+        <button
+          onClick={() => goToPage(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={`${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:brightness-95'}`}
+        >Anterior</button>
         
         {/* Números de páginas */}
         {Array.from({ length: totalPages }, (_, i) => (
-          <button 
-            key={i + 1} 
-            onClick={() => goToPage(i + 1)} 
-            className={currentPage === i + 1 ? styles.activePage : ""}
+          <button
+            key={i + 1}
+            onClick={() => goToPage(i + 1)}
+            className={`${currentPage === i + 1 ? styles.activePage : ""} px-3 py-1 rounded-md hover:brightness-95`}
           >
             {i + 1}
           </button>
         ))}
 
         {/* Botón siguiente */}
-        <button 
-          onClick={() => goToPage(currentPage + 1)} 
+        <button
+          onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage === totalPages || totalPages === 0}
+          className={`${currentPage === totalPages || totalPages === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:brightness-95'}`}
         >
           Siguiente
         </button>

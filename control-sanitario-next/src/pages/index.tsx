@@ -187,7 +187,7 @@ const Home = () => {
               Notificación Error
             </Button>
             <Button
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg"
+              className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg"
               onClick={() => addToast('Revisa los datos.', 'warning')}
             >
               Notificación Advertencia

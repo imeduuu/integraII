@@ -17,7 +17,7 @@ export default function PublishAdoptionDesign() {
           {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
           <Input
             type="text"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-300"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--focus)]"
             placeholder="Ejemplo: Luna"
           />
         </div>
@@ -29,7 +29,7 @@ export default function PublishAdoptionDesign() {
           <Input
             type="number"
             min="0"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--focus)]"
             placeholder="Ejemplo: 2"
           />
         </div>
@@ -38,7 +38,7 @@ export default function PublishAdoptionDesign() {
           <label className="block text-gray-700 font-semibold mb-2">
             Tipo
           </label>
-          <select className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-300">
+          <select className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--focus)]">
             <option value="">Selecciona una opción</option>
             <option value="perro">Perro</option>
             <option value="gato">Gato</option>
