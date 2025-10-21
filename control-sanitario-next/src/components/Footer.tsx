@@ -2,7 +2,7 @@
  * Footer principal con información de contacto y modal de feedback
  */
 import React, { useState } from "react";
-import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import Icon from './ui/Icon';
 import Button from "./ui/Button";
 import Input from "./ui/Input";
 import Modal from "./ui/Modal";
@@ -53,13 +53,13 @@ const Footer: React.FC = () => {
 
           <div className="mt-3 flex justify-center gap-6 text-2xl">
             <a href="#" className="hover:text-blue-300 dark:hover:text-blue-400 transition" aria-label="Facebook">
-              <FaFacebook />
+              <Icon name="facebook" className="inline" aria-label="facebook" />
             </a>
             <a href="#" className="hover:text-blue-300 dark:hover:text-blue-400 transition" aria-label="Twitter">
-              <FaTwitter />
+              <Icon name="twitter" className="inline" aria-label="twitter" />
             </a>
             <a href="#" className="hover:text-blue-300 dark:hover:text-blue-400 transition" aria-label="Instagram">
-              <FaInstagram />
+              <Icon name="instagram" className="inline" aria-label="instagram" />
             </a>
           </div>
 

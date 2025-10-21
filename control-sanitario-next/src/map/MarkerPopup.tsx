@@ -1,7 +1,7 @@
 "use client";
 
 import L from 'leaflet';
-import { FaPaw, FaMapMarkerAlt, FaHeart } from 'react-icons/fa';
+import Icon from '../components/ui/Icon';
 
 type Marker = {
   type: 'report' | 'adoption' | 'want_adopt' | string;
@@ -12,9 +12,9 @@ export default function MarkerPopup({ marker }: { marker: Marker }) {
   return (
     <div>
       <div className="flex items-center gap-2">
-        {marker.type === 'report' && <FaMapMarkerAlt className="text-red-500" />}
-        {marker.type === 'adoption' && <FaPaw className="text-blue-500" />}
-        {marker.type === 'want_adopt' && <FaHeart className="text-green-500" />}
+        {marker.type === 'report' && <Icon name="map-marker" className="text-red-500" aria-label="report-icon" />}
+        {marker.type === 'adoption' && <Icon name="paw" className="text-blue-500" aria-label="adoption-icon" />}
+        {marker.type === 'want_adopt' && <Icon name="heart" className="text-green-500" aria-label="want-adopt-icon" />}
         <span className="font-semibold capitalize">{marker.type.replace('_', ' ')}</span>
       </div>
       <div className="mt-1 text-sm text-gray-700 dark:text-gray-200">{marker.description}</div>
