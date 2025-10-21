@@ -3,9 +3,26 @@
   --color-primary: #2563eb;
   --color-secondary: #1e293b;
 }
-.bg-primary {
-  background-color: var(--color-primary);
+.bg-primary { background-color: var(--color-primary); }
+.bg-secondary { background-color: var(--color-secondary); }
+
+/* Utilities para reducir movimiento cuando el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe-transition,
+  .motion-safe\:transition-opacity,
+  .motion-safe\:transform,
+  .motion-safe\:transform-none {
+    transition: none !important;
+    animation: none !important;
+  }
 }
-.bg-secondary {
-  background-color: var(--color-secondary);
+
+/* Helper: aplicar transiciones sólo si el usuario no ha pedido reducir movimiento */
+.motion-safe-transition {
+  transition: all 200ms ease-in-out;
+}
+
+/* Pequeña transición para thumbnails de react-image-gallery */
+.image-gallery-thumbnail .image-gallery-thumbnail-inner {
+  transition: transform 200ms ease, opacity 200ms ease;
 }

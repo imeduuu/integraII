@@ -18,11 +18,11 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
   const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center">
+    <div className="bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center transform transition-transform duration-200 hover:scale-105 hover:shadow-lg motion-safe-transition">
       <img
         src={thumbnail}
         alt={nombre}
-        className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-green-200"
+        className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-green-200 transition-transform duration-300 transform hover:scale-110 motion-safe-transition"
       />
       <h2 className="text-xl font-bold mb-2 text-green-700">{nombre}</h2>
       <p className="text-sm text-gray-600 mb-1">
@@ -36,10 +36,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
           <span className="font-semibold">Edad:</span> {age}
         </p>
       )}
-      <Button
-        className="bg-blue-600 hover:bg-blue-700 mt-2"
-        onClick={() => router.push('/adopcion')}
-      >
+      <Button className="mt-2" onClick={() => router.push('/adopcion')}>
         Adoptar
       </Button>
 

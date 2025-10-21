@@ -29,6 +29,9 @@ const AnimalGallery: React.FC<AnimalGalleryProps> = ({ images }) => {
         slideOnThumbnailOver={true}
         showNav={true}
         useBrowserFullscreen={true}
+        lazyLoad={true}
+        slideDuration={300}
+        slideInterval={4000}
       />
     </div>
   );
