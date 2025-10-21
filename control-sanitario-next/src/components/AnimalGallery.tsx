@@ -7,6 +7,8 @@
 import React from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import styles from "../styles/AnimalGallery.module.css";
+
 
 interface AnimalGalleryProps {
   images: string[];
@@ -20,7 +22,7 @@ const AnimalGallery: React.FC<AnimalGalleryProps> = ({ images }) => {
   }));
 
   return (
-    <div className="w-full max-w-lg mx-auto">
+    <div className="animal-gallery-container">
       <ImageGallery
         items={galleryImages}
         showThumbnails={true}

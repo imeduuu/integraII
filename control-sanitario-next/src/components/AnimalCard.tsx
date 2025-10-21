@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
 import CommentSection from './CommentSection';
+import Image from "next/image";
 
 
 interface AnimalCardProps {
@@ -20,14 +21,17 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
   const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
   return (
     <div className="bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center hover:shadow-lg transition-shadow duration-300 motion-safe-transition">
-      {/* Imagen del animal con tooltip y click para ver detalles */}
+      {/* Imagen del animal con tooltip y click para ver detalles usando Next/Image */}
       <Tooltip text={`Ver detalles de ${nombre}`}>
-        <img
-          src={thumbnail}
-          alt={nombre}
-          className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-blue-300 cursor-pointer hover:scale-105 transition-transform"
-          onClick={() => router.push(`/animals/${animalId}`)}
-        />
+        <div onClick={() => router.push(`/animals/${animalId}`)} style={{ cursor: 'pointer' }}>
+          <Image
+            src={thumbnail}
+            alt={nombre}
+            width={96}
+            height={96}
+            className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-blue-300 hover:scale-105 transition-transform"
+          />
+        </div>
       </Tooltip>
       <h2 className="text-xl font-bold mb-2 text-blue-700">{nombre}</h2>
       <p className="text-sm text-gray-600 mb-1">
