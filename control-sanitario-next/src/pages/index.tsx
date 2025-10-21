@@ -10,7 +10,7 @@ import UserMetricsCards from '../components/UserMetricsCards';
 import styles from '../styles/infoBox.module.css';
 import { useNotification } from '../components/NotificationProvider';
 
-const backgroundUrl = '/perrito.png';
+const backgroundUrl = '/backgrounds/perrito.webp';
 
 const buttonStyle: React.CSSProperties = {
   padding: '12px',
@@ -88,7 +88,7 @@ const Home = () => {
             Bienvenido a Control Sanitario
           </h1>
           <img
-            src="/perrito.png"
+            src="/backgrounds/perrito.webp"
             alt="Cachorro decorativo"
             style={{
               width: '140px',

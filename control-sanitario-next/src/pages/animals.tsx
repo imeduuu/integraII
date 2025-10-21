@@ -60,9 +60,9 @@
           
           <AnimalGallery
             images={[
-              "https://images.unsplash.com/photo-1568572933382-74d440642117",
-              "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb",
-              "https://images.unsplash.com/photo-1518791841217-8f162f1e1131",
+              "/animals/dog4.webp",
+              "/animals/cat3.webp",
+              "/animals/cat4.webp",
             ]}
           />
 
@@ -110,7 +110,7 @@
                   nombre={animal.nombre}
                   estado_general={animal.estado_general}
                   zona={animal.zona}
-                  images={animal.images || []}
+                  images={Array.isArray(animal.images) ? animal.images : animal.images ? [animal.images] : ["/animals/dog1.webp"]}
                 />
               ))
             )}

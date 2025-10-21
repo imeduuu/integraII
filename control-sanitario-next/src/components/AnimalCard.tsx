@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
 import CommentSection from './CommentSection';
+import Image from "next/image";
 
 
 interface AnimalCardProps {
@@ -19,9 +20,11 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center">
-      <img
+      <Image
         src={thumbnail}
         alt={nombre}
+        width={250}           // ancho en píxeles
+        height={250}
         className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-green-200"
       />
       <h2 className="text-xl font-bold mb-2 text-green-700">{nombre}</h2>
