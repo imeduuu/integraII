@@ -35,6 +35,7 @@ const Navbar = () => {
       { href: '/report', label: 'Reportar' },
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
+      { href: '/user-directory', label: 'Usuarios' },
       { href: '/admin-orgs', label: 'Organizaciones' },
       { href: '/faqs', label: 'FAQs' }
     ];

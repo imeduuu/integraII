@@ -7,6 +7,7 @@ import Button from '../components/ui/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AnimalCard from '../components/AnimalCard';
+import { useNotification } from '../components/NotificationProvider';
 import styles from '../styles/adopcion.module.css';
 import AdoptionForm from '../components/AdoptionForm';
 import ConfirmationModal from '../components/ConfirmationModal';
@@ -49,6 +50,7 @@ export default function Adopcion() {
   const [selectedAnimal, setSelectedAnimal] = useState<any | null>(null);
   const [formData, setFormData] = useState<any | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const { addToast } = useNotification();
   
   const handleAdoptClick = (animal: any) => {
     setSelectedAnimal(animal);
@@ -61,9 +63,18 @@ export default function Adopcion() {
 
   const handleConfirm = () => {
     console.log("Solicitud enviada:", { animal: selectedAnimal, ...formData });
-    setShowModal(false);
-    setSelectedAnimal(null);
-    setFormData(null);
+    
+    try {
+      // Simulación: En producción, aquí harías la llamada a la API
+      addToast(`✅ Solicitud de adopción de ${selectedAnimal?.nombre} enviada exitosamente`, 'success');
+      addToast('Recibirás una respuesta en las próximas 48 horas.', 'info');
+      
+      setShowModal(false);
+      setSelectedAnimal(null);
+      setFormData(null);
+    } catch (error) {
+      addToast('Error al enviar la solicitud. Por favor intenta de nuevo.', 'error');
+    }
   };
   
   return (

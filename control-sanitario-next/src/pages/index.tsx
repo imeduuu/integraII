@@ -170,30 +170,58 @@ const Home = () => {
           Reporta animales en situación de calle, consulta focos sanitarios y participa en la comunidad.
         </p>
         <UserMetricsCards />
-        <div className="my-8 p-6 border rounded-lg bg-gray-50 text-center">
-          <h3 className="text-lg font-bold mb-4">Prueba de Notificaciones</h3>
-          <div className="flex justify-center gap-4">
+        
+        {/* Sección de Prueba de Notificaciones - MÁS VISIBLE */}
+        <div className="my-12 p-8 border-4 border-teal-500 rounded-2xl bg-gradient-to-br from-teal-50 to-cyan-50 shadow-xl">
+          <div className="text-center mb-6">
+            <h3 className="text-3xl font-bold mb-2 text-teal-700">
+              🔔 Prueba las Notificaciones Toast
+            </h3>
+            <p className="text-gray-600 text-lg">
+              Haz clic en los botones para ver las notificaciones con fondo verde aqua ⬆️
+            </p>
+            <div className="mt-2 inline-block px-4 py-2 bg-teal-100 rounded-lg">
+              <span className="text-sm font-semibold text-teal-800">
+                Las notificaciones aparecerán en la esquina superior derecha →
+              </span>
+            </div>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
             {/* Migración: Se reemplazan los botones nativos por el componente Button UI estándar. */}
             <Button
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
-              onClick={() => addToast('¡Operación exitosa!', 'success')}
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+              onClick={() => addToast('¡Operación exitosa! ✅', 'success')}
             >
-              Notificación Éxito
+              ✅ Éxito
             </Button>
             <Button
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg"
-              onClick={() => addToast('Ocurrió un error.', 'error')}
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+              onClick={() => addToast('❌ Ocurrió un error. Intenta de nuevo.', 'error')}
             >
-              Notificación Error
+              ❌ Error
             </Button>
             <Button
-              className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg"
-              onClick={() => addToast('Revisa los datos.', 'warning')}
+              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+              onClick={() => addToast('⚠️ Advertencia: Revisa los datos.', 'warning')}
             >
-              Notificación Advertencia
+              ⚠️ Advertencia
+            </Button>
+            <Button
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+              onClick={() => addToast('ℹ️ Esta es información importante.', 'info')}
+            >
+              ℹ️ Información
             </Button>
           </div>
+          
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-500">
+              👆 Haz clic en cualquier botón y mira la esquina superior derecha de la pantalla
+            </p>
+          </div>
         </div>
+        
         {/* Mapa eliminado, solo disponible en /mapa */}
       </main>
       <Footer />

@@ -95,8 +95,8 @@ const UserTable: React.FC<Props> = ({ users, usersPerPage = 5 }) => {
             currentUsers.map((user) => (
               <tr key={user.id}>
                 <td>
-                  {/* Cada nombre es un enlace a la página del usuario */}
-                  <Link href={`/admin-users/${user.id}`}>
+                  {/* Cada nombre es un enlace al perfil público del usuario */}
+                  <Link href={`/user/${user.id}`} className={styles.userLink}>
                     {user.nombre}
                   </Link>
                 </td>

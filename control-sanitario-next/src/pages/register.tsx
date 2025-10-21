@@ -7,6 +7,7 @@ import Button from '../components/ui/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNotification } from '../components/NotificationProvider';
 
 interface RegisterFormInputs {
   nombre: string; // Nombre completo del usuario
@@ -56,12 +57,24 @@ const buttonStyle: React.CSSProperties = {
 
 const Register = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<RegisterFormInputs>();
+  const { addToast } = useNotification();
   const [mensaje, setMensaje] = React.useState('');
   const password = watch('password', '');
 
   const onSubmit: SubmitHandler<RegisterFormInputs> = (data) => {
     console.log('Datos del formulario:', data);
-    setMensaje('Registro simulado (sin backend)');
+    
+    // Simulación: En producción, aquí harías la llamada a la API
+    try {
+      // Simular éxito
+      addToast('¡Registro exitoso! Bienvenido a la plataforma.', 'success');
+      setMensaje('');
+      
+      // Opcional: Redireccionar al login después de un delay
+      // setTimeout(() => router.push('/login'), 2000);
+    } catch (error) {
+      addToast('Error al registrar usuario. Por favor intenta de nuevo.', 'error');
+    }
   };
 
   return (

@@ -58,10 +58,26 @@ const Login = () => {
   const { addToast } = useNotification();
   const [mensaje, setMensaje] = React.useState('');
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
-    console.log('Datos del formulario:', data);
-    setMensaje('Login simulado (sin backend)');
-    addToast('Inicio de sesión exitoso', 'success');
+  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
+    try {
+      console.log('Datos del formulario:', data);
+      
+      // Simulación de validación (reemplazar con API real)
+      if (data.email === 'error@test.com') {
+        addToast('Credenciales incorrectas. Verifica tu correo y contraseña.', 'error');
+        return;
+      }
+      
+      // Simulación de login exitoso
+      setMensaje('Login simulado (sin backend)');
+      addToast('¡Bienvenido! Inicio de sesión exitoso.', 'success');
+      
+      // Aquí iría la redirección después del login
+      // router.push('/dashboard');
+    } catch (error) {
+      console.error('Error en login:', error);
+      addToast('Error al iniciar sesión. Por favor, intenta nuevamente.', 'error');
+    }
   };
 
   return (
