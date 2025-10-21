@@ -1,0 +1,290 @@
+/**
+ * Estilos para componentes Modal
+ * Incluye animaciones suaves, transiciones y mejoras visuales
+ */
+
+/* Overlay de fondo */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+  backdrop-filter: blur(2px);
+}
+
+.overlay.closing {
+  animation: fadeOut 0.2s ease-out;
+}
+
+/* Contenedor del modal */
+.modalContainer {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+              0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 1.5rem;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+  transform-origin: center;
+}
+
+.modalContainer.closing {
+  animation: slideOut 0.2s ease-out;
+}
+
+/* Botón de cierre */
+.closeButton {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.closeButton:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.closeButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.closeButton:active {
+  transform: scale(0.95);
+}
+
+/* Contenido del modal */
+.modalContent {
+  margin-top: 0.5rem;
+}
+
+/* Header del modal */
+.modalHeader {
+  margin-bottom: 1rem;
+  padding-right: 2rem; /* Espacio para el botón de cierre */
+}
+
+.modalTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Body del modal */
+.modalBody {
+  color: #4b5563;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* Footer del modal (para botones) */
+.modalFooter {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.modalFooter.centered {
+  justify-content: center;
+}
+
+/* Variantes de tamaño */
+.modalContainer.small {
+  width: 400px;
+}
+
+.modalContainer.medium {
+  width: 600px;
+}
+
+.modalContainer.large {
+  width: 800px;
+}
+
+/* AdminActionModal específico */
+.adminModal {
+  text-align: center;
+  min-width: 320px;
+  max-width: 450px;
+  padding: 2rem;
+}
+
+.adminModal .modalTitle {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.adminModal .modalBody {
+  margin-bottom: 1.5rem;
+}
+
+.adminModal .modalFooter {
+  gap: 0.75rem;
+}
+
+.adminModal .modalFooter > * {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* Icono de alerta/advertencia */
+.iconWarning {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  background-color: #fef3c7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.iconDanger {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  background-color: #fee2e2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.iconSuccess {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  background-color: #dcfce7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.iconInfo {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  background-color: #dbeafe;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .modalContainer {
+    width: calc(100vw - 2rem);
+    max-width: none;
+    margin: 1rem;
+  }
+
+  .modalContainer.small,
+  .modalContainer.medium,
+  .modalContainer.large {
+    width: calc(100vw - 2rem);
+  }
+
+  .adminModal {
+    min-width: auto;
+    padding: 1.5rem;
+  }
+
+  .modalFooter {
+    flex-direction: column;
+  }
+
+  .adminModal .modalFooter > * {
+    width: 100%;
+  }
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .modalContainer,
+  .closeButton {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Focus visible para navegación por teclado */
+.modalContainer:focus {
+  outline: none;
+}
+
+.modalContainer:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 4px;
+}
