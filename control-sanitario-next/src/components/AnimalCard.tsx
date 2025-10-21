@@ -1,3 +1,5 @@
+import Tooltip from './Tooltip';
+
 import React, { useState } from 'react';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
@@ -16,15 +18,18 @@ interface AnimalCardProps {
 const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, age, images, animalId }) => {
   const router = useRouter();
   const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
-
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center transform transition-transform duration-200 hover:scale-105 hover:shadow-lg motion-safe-transition">
-      <img
-        src={thumbnail}
-        alt={nombre}
-        className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-green-200 transition-transform duration-300 transform hover:scale-110 motion-safe-transition"
-      />
-      <h2 className="text-xl font-bold mb-2 text-green-700">{nombre}</h2>
+    <div className="bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center hover:shadow-lg transition-shadow duration-300 motion-safe-transition">
+      {/* Imagen del animal con tooltip y click para ver detalles */}
+      <Tooltip text={`Ver detalles de ${nombre}`}>
+        <img
+          src={thumbnail}
+          alt={nombre}
+          className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-blue-300 cursor-pointer hover:scale-105 transition-transform"
+          onClick={() => router.push(`/animals/${animalId}`)}
+        />
+      </Tooltip>
+      <h2 className="text-xl font-bold mb-2 text-blue-700">{nombre}</h2>
       <p className="text-sm text-gray-600 mb-1">
         <span className="font-semibold">Estado:</span> {estado_general}
       </p>
@@ -36,11 +41,16 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
           <span className="font-semibold">Edad:</span> {age}
         </p>
       )}
-      <Button className="mt-2" onClick={() => router.push('/adopcion')}>
-        Adoptar
-      </Button>
-
-      {/* Sección de comentarios usando CommentSection */}
+      {/* Botón Adoptar con tooltip */}
+      <Tooltip text={`Adoptar a ${nombre}`}>
+        <Button
+          className="bg-blue-600 hover:bg-blue-700 mt-2"
+          onClick={() => router.push('/adopcion')}
+        >
+          Adoptar
+        </Button>
+      </Tooltip>
+      {/* Sección de comentarios */}
       <div className="mt-4 w-full">
         <CommentSection animalId={Number(animalId)} />
       </div>

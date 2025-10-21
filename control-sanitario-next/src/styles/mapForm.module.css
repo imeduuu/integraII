@@ -1,0 +1,56 @@
+/* Contenedor de filtros */
+.map-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.map-filters:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+
+.map-filters select {
+  flex: 1 1 150px;
+  padding: 12px 40px 12px 14px; 
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #f9fafb;
+  appearance: none; 
+  background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.map-filters select:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+  background-color: #ffffff;
+}
+
+.map-filters select:hover {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .map-filters {
+    flex-direction: column;
+  }
+
+  .map-filters select {
+    width: 100%;
+  }
+}
