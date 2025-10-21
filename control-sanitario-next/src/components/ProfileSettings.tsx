@@ -2,13 +2,17 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/profileSettings.module.css';
 import { useTheme } from '../context/ThemeContext';
+import { useNotification } from './NotificationProvider';
 
 const ProfileSettings: React.FC = () => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
+  const { addToast } = useNotification();
 
   const handleThemeChange = (newTheme: 'light' | 'dark') => {
     setTheme(newTheme);
+    const themeName = newTheme === 'dark' ? 'oscuro' : 'claro';
+    addToast(`Tema cambiado a modo ${themeName}.`, 'success');
   };
 
   return (

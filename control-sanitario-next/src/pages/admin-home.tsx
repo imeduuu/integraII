@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import InfoBox from "../components/InfoBox";
 import AdminActionModal from "../components/AdminActionModal";
 import ProtectedRoute from "../components/ProtectedRoute";
+import { useNotification } from "../components/NotificationProvider";
 import { HiUserGroup, HiSpeakerphone, HiChartBar, HiCog } from "react-icons/hi";
 
 const backgroundUrl = "/admin-bg.png";
@@ -20,6 +21,7 @@ const backgroundUrl = "/admin-bg.png";
 const AdminHome: React.FC = () => {
   const [showStats, setShowStats] = useState(false); // Control de visibilidad de estadísticas
   const [showModal, setShowModal] = useState(false); // Control del modal de confirmación
+  const { addToast } = useNotification();
   // Configuración dinámica del modal
   const [modalContent, setModalContent] = useState<{
     title: string;
@@ -69,7 +71,7 @@ const AdminHome: React.FC = () => {
                     "Editar Usuario",
                     "¿Estás seguro que deseas editar este usuario?",
                     () => {
-                      alert("Usuario editado");
+                      addToast('✓ Usuario editado correctamente.', 'success');
                       setShowModal(false);
                     },
                     "Sí, editar"
@@ -87,7 +89,7 @@ const AdminHome: React.FC = () => {
                     "Aprobar Campaña",
                     "¿Deseas aprobar esta campaña?",
                     () => {
-                      alert("Campaña aprobada");
+                      addToast('✓ Campaña aprobada exitosamente.', 'success');
                       setShowModal(false);
                     },
                     "Sí, aprobar"

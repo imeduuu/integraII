@@ -4,6 +4,7 @@ import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useNotification } from '../components/NotificationProvider';
 // ...import eliminado: Map...
 
 import styles from '../styles/report.module.css';
@@ -15,11 +16,29 @@ const Report = () => {
   const [longitud, setLongitud] = useState('');
   const [direccion, setDireccion] = useState(''); // ← nuevo estado
   const [mensaje, setMensaje] = useState('');
+  const { addToast } = useNotification();
   // ...eliminado showMap para mapa antiguo...
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMensaje('');
+    
+    // Validación de campos
+    if (!descripcion.trim()) {
+      addToast('Por favor ingresa una descripción del animal.', 'warning');
+      return;
+    }
+    
+    if (!ubicacion.trim()) {
+      addToast('Por favor ingresa la ubicación donde se encuentra el animal.', 'warning');
+      return;
+    }
+    
+    if (!latitud || !longitud) {
+      addToast('Por favor ingresa las coordenadas o busca por dirección.', 'warning');
+      return;
+    }
+    
     try {
       const res = await fetch('/api/report', {
         method: 'POST',
@@ -31,40 +50,53 @@ const Report = () => {
           longitud: parseFloat(longitud)
         })
       });
+      
       if (res.ok) {
         setMensaje('Reporte enviado correctamente');
+        addToast('✓ Reporte enviado exitosamente. Gracias por ayudar a los animales.', 'success');
         setDescripcion('');
         setUbicacion('');
         setLatitud('');
         setLongitud('');
         setDireccion('');
       } else {
+        const errorData = await res.json().catch(() => ({}));
         setMensaje('Error al enviar el reporte');
+        addToast(errorData.message || 'Error al enviar el reporte. Intenta nuevamente.', 'error');
       }
-    } catch {
+    } catch (error) {
+      console.error('Error de conexión:', error);
       setMensaje('Error de conexión');
+      addToast('Error de conexión con el servidor. Verifica tu internet.', 'error');
     }
   };
 
   // Nueva función: buscar coordenadas desde dirección
   const buscarCoordenadas = async () => {
-    if (!direccion) return;
+    if (!direccion.trim()) {
+      addToast('Por favor ingresa una dirección para buscar.', 'warning');
+      return;
+    }
+    
     try {
+      addToast('Buscando coordenadas...', 'info');
       const resp = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}`,
         { headers: { "User-Agent": "MiApp/1.0 (tuemail@ejemplo.com)" } }
       );
       const data = await resp.json();
+      
       if (data.length > 0) {
         setLatitud(data[0].lat);
         setLongitud(data[0].lon);
         setUbicacion(direccion); // opcional: rellenar ubicación también
+        addToast('✓ Coordenadas encontradas correctamente.', 'success');
       } else {
-        alert('No se encontraron coordenadas para esa dirección');
+        addToast('No se encontraron coordenadas para esa dirección. Intenta con otra.', 'warning');
       }
     } catch (err) {
       console.error(err);
-      alert('Error al buscar coordenadas');
+      addToast('Error al buscar coordenadas. Verifica tu conexión.', 'error');
     }
   };
 

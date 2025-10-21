@@ -4,8 +4,7 @@
  */
 import React from "react";
 import { campaigns as defaultCampaigns } from "../services/mockCampaigns";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useNotification } from "./NotificationProvider";
 
 interface Campaign {
   id: number;
@@ -19,12 +18,14 @@ interface CampaignListProps {
 }
 
 const CampaignList: React.FC<CampaignListProps> = ({ campaigns = defaultCampaigns }) => {
+  const { addToast } = useNotification();
+  
   const handleRegister = (title: string, active: boolean) => {
     if (!active) {
-      toast.error(`La campaña "${title}" está inactiva, no puedes inscribirte.`);
+      addToast(`La campaña "${title}" está inactiva, no puedes inscribirte.`, 'error');
       return;
     }
-    toast.success(`Te has inscrito en la campaña "${title}" con éxito.`);
+    addToast(`Te has inscrito en la campaña "${title}" con éxito.`, 'success');
   };
 
   return (

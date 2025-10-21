@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // Obtener el usuario y su rol
   const userEmail = session.user.email;
-  const usuario = await prisma.user.findUnique({ where: { email: userEmail } });
+  const usuario = await prisma.usuario.findUnique({ where: { email: userEmail } });
 
   if (!usuario) {
     return res.status(403).json({ error: 'Usuario no encontrado' });

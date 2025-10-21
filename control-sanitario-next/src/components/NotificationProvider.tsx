@@ -1,50 +1,40 @@
 /**
- * Provider de notificaciones usando react-toastify
+ * Provider de notificaciones usando el nuevo sistema Toast
+ * Este es un wrapper sobre ToastProvider para mantener compatibilidad
+ * con el código existente que usa useNotification()
  */
-import React, { createContext, useContext } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-interface NotificationContextProps {
-  addToast: (message: string, type: 'success' | 'error' | 'warning') => void;
-}
-
-const NotificationContext = createContext<NotificationContextProps | undefined>(undefined);
+import React from 'react';
+import { ToastProvider, useToastContext } from './ToastContainer';
 
 /**
  * Provider que maneja notificaciones toast en toda la aplicación
- * Utilizado para mostrar mensajes de éxito, error y advertencia
+ * Utilizado para mostrar mensajes de éxito, error, advertencia e información
  */
 export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Función para mostrar diferentes tipos de notificaciones
-  const addToast = (message: string, type: 'success' | 'error' | 'warning') => {
-    switch (type) {
-      case 'success':
-        toast.success(message);
-        break;
-      case 'error':
-        toast.error(message);
-        break;
-      case 'warning':
-        toast.warning(message);
-        break;
-      default:
-        toast(message);
-    }
-  };
-
   return (
-    <NotificationContext.Provider value={{ addToast }}>
+    <ToastProvider position="top-right">
       {children}
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
-    </NotificationContext.Provider>
+    </ToastProvider>
   );
 };
 
+/**
+ * Hook compatible con el sistema anterior
+ * Wrapper sobre useToastContext para proporcionar la API addToast
+ */
 export const useNotification = () => {
-  const context = useContext(NotificationContext);
-  if (!context) {
-    throw new Error('useNotification must be used within a NotificationProvider');
-  }
-  return context;
+  const { addToast: contextAddToast } = useToastContext();
+  
+  const addToast = (message: string, type: 'success' | 'error' | 'warning' | 'info') => {
+    const durations = {
+      success: 5000,
+      error: 7000,
+      warning: 6000,
+      info: 5000
+    };
+    
+    contextAddToast(message, type, durations[type], true);
+  };
+
+  return { addToast };
 };
