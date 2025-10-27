@@ -47,7 +47,7 @@ const PoliticaPrivacidad: React.FC = () => {
 
       <p className="mt-6">
         Volver a los formularios principales:{" "}
-        <Link href="/registro" className="text-blue-600 underline">
+        <Link href="/register" className="text-blue-600 underline">
           Registro
         </Link>{" "}
         |{" "}
@@ -55,7 +55,7 @@ const PoliticaPrivacidad: React.FC = () => {
           Login
         </Link>{" "}
         |{" "}
-        <Link href="/reportes" className="text-blue-600 underline">
+        <Link href="/report" className="text-blue-600 underline">
           Reportes
         </Link>
       </p>

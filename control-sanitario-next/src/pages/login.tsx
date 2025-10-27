@@ -57,6 +57,8 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
   const { addToast } = useNotification();
   const [mensaje, setMensaje] = React.useState('');
+  const [acceptedPolicy, setAcceptedPolicy] = React.useState(false);
+
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
@@ -114,9 +116,33 @@ const Login = () => {
           })}
         />
         {errors.password && <span style={errorStyle}>{errors.password.message}</span>}
+      <div style={{ marginTop: 12, display: 'flex', alignItems: 'center' }}>
+  <input
+    type="checkbox"
+    id="acceptPolicy"
+    checked={acceptedPolicy}
+    onChange={(e) => setAcceptedPolicy(e.target.checked)}
+    style={{ marginRight: 8 }}
+  />
+  <label htmlFor="acceptPolicy" style={{ fontSize: '0.9rem', color: '#4b5563' }}>
+    Acepto la{' '}
+    <a
+      href="/politica-privacidad"
+      style={{ color: '#2563eb', textDecoration: 'underline' }}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      política de privacidad
+    </a>
+  </label>
+</div>
+
 
   {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
-  <Button type="submit" style={{ width: '100%', marginTop: 8 }}>Entrar</Button>
+  <Button type="submit" style={{ width: '100%', marginTop: 8 }} disabled={!acceptedPolicy}>
+  Entrar
+</Button>
+
         
         <div style={{ marginTop: 12 }}>
           <a href="/forgot-password" style={{ color: '#2563eb', textDecoration: 'underline', fontSize: '0.95rem' }}>

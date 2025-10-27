@@ -60,6 +60,8 @@ const Register = () => {
   const { addToast } = useNotification();
   const [mensaje, setMensaje] = React.useState('');
   const password = watch('password', '');
+  const [acceptedPolicy, setAcceptedPolicy] = React.useState(false);
+
 
   const onSubmit: SubmitHandler<RegisterFormInputs> = (data) => {
     console.log('Datos del formulario:', data);
@@ -130,9 +132,33 @@ const Register = () => {
           })}
         />
         {errors.confirm && <span style={errorStyle}>{errors.confirm.message}</span>}
+        {/* Checkbox de aceptación de política de privacidad */}
+<div style={{ marginTop: 12, display: 'flex', alignItems: 'center' }}>
+  <input
+    type="checkbox"
+    id="acceptPolicy"
+    checked={acceptedPolicy}
+    onChange={(e) => setAcceptedPolicy(e.target.checked)}
+    style={{ marginRight: 8 }}
+  />
+  <label htmlFor="acceptPolicy" style={{ fontSize: '0.9rem', color: '#4b5563' }}>
+    Acepto la{' '}
+    <a
+      href="/politica-privacidad"
+      style={{ color: '#2563eb', textDecoration: 'underline' }}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      política de privacidad
+    </a>
+  </label>
+</div>
+
 
   {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
-    <Button type="submit" style={{ width: '100%', marginTop: 8 }}>Registrarse</Button>
+<Button type="submit" style={{ width: '100%', marginTop: 8 }} disabled={!acceptedPolicy}>
+  Registrarse
+</Button>
 
   {/* Texto con enlace a la política de privacidad */}
   <p style={{ fontSize: '0.9rem', color: '#4b5563', marginTop: 12 }}>
