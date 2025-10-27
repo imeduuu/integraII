@@ -84,7 +84,9 @@ export default function AnimalList() {
     <div className={listClasses.container}>
       {/* Filtros de búsqueda */}
       <div className={listClasses.filters}>
+        <label htmlFor="filter-estado" className="sr-only">Filtrar por estado</label>
         <select
+          id="filter-estado"
           className={listClasses.select}
           value={estado}
           onChange={e => setEstado(e.target.value)}
@@ -94,7 +96,10 @@ export default function AnimalList() {
           <option value="Adoptado">Adoptado</option>
           <option value="En tratamiento">En tratamiento</option>
         </select>
+
+        <label htmlFor="filter-ubicacion" className="sr-only">Filtrar por ubicación</label>
         <select
+          id="filter-ubicacion"
           className={listClasses.select}
           value={ubicacion}
           onChange={e => setUbicacion(e.target.value)}
@@ -107,18 +112,23 @@ export default function AnimalList() {
       </div>
 
       {/* Grid de animales */}
-      <div className={listClasses.grid}>
+      <ul
+        className={listClasses.grid}
+        role="list"
+        aria-label="Lista de animales disponibles"
+      >
         {filtered.map((animal, i) => (
-          <AnimalCard
-            key={i}
-            nombre={animal.nombre}
-            estado_general={animal.estado}
-            zona={animal.ubicacion}
-            age={animal.edad}
-            images={animal.imagenes}
-          />
+          <li key={i} role="listitem" style={{ listStyle: 'none' }}>
+            <AnimalCard
+              nombre={animal.nombre}
+              estado_general={animal.estado}
+              zona={animal.ubicacion}
+              age={animal.edad}
+              images={animal.imagenes}
+            />
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
