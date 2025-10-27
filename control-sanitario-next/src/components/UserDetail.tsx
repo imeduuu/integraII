@@ -4,6 +4,7 @@
  */
 import React, { useState } from "react";
 import styles from "../styles/admin-users.module.css";
+import { sanitizeFormData } from "../utils/sanitize";
 
 // Estructura de datos de usuario
 type User = {

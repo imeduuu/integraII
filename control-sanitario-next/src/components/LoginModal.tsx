@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import Button from './ui/Button';
 import Input from './ui/Input';
 import Modal from './ui/Modal';
+import { sanitizeFormData } from "../utils/sanitize";
 
 /**
  * Modal de login con validación de email y contraseña

@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
+import { sanitizeFormData } from "../utils/sanitize";
 
 interface Animal {
   nombre: string;

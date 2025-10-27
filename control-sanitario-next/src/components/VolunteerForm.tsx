@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "../styles/volunteer-form.module.css";
+import { sanitizeFormData } from "../utils/sanitize";
 
 const VolunteerForm = () => {
   const [formData, setFormData] = useState({
