@@ -123,7 +123,19 @@ const Login = () => {
             ¿Olvidaste tu contraseña?
           </a>
         </div>
+         {}
+        <p style={{ fontSize: '0.9rem', color: '#4b5563', marginTop: 10 }}>
+          Al iniciar sesión aceptas nuestra{' '}
+          <a
+            href="/politica-privacidad"
+            style={{ color: '#2563eb', textDecoration: 'underline' }}
+          >
+            Política de Privacidad
+          </a>.
+        </p>
+        {}
         {mensaje && <p style={{ marginTop: 16, color: '#2563eb', fontWeight: 600 }}>{mensaje}</p>}
+        
       </form>
       <Footer />
     </>

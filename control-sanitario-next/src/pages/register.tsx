@@ -132,7 +132,20 @@ const Register = () => {
         {errors.confirm && <span style={errorStyle}>{errors.confirm.message}</span>}
 
   {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
-  <Button type="submit" style={{ width: '100%', marginTop: 8 }}>Registrarse</Button>
+    <Button type="submit" style={{ width: '100%', marginTop: 8 }}>Registrarse</Button>
+
+  {/* Texto con enlace a la política de privacidad */}
+  <p style={{ fontSize: '0.9rem', color: '#4b5563', marginTop: 12 }}>
+    Al registrarte aceptas nuestra{' '}
+    <a
+      href="/politica-privacidad"
+      style={{ color: '#2563eb', textDecoration: 'underline' }}
+    >
+      Política de Privacidad
+    </a>.
+  </p>
+
+
         {mensaje && <p style={{ marginTop: 16, color: '#2563eb', fontWeight: 600 }}>{mensaje}</p>}
       </form>
       <Footer />

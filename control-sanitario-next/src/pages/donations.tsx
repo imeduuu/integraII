@@ -124,6 +124,17 @@ const Donations = () => {
               />
             </div>
             <div className={styles.actions}>
+              {}
+<p style={{ fontSize: '0.9rem', color: '#4b5563', marginTop: '12px' }}>
+  Al registrar tu donación aceptas nuestra{' '}
+  <a
+    href="/politica-privacidad"
+    style={{ color: '#2563eb', textDecoration: 'underline' }}
+  >
+    Política de Privacidad
+  </a>.
+</p>
+
               {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
               <Button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>Registrar Donación</Button>
             </div>
