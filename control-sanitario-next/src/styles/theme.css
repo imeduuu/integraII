@@ -1,11 +1,55 @@
-/* Variables y colores personalizados */
+/* src/styles/theme.css */
 :root {
   --color-primary: #2563eb;
   --color-secondary: #1e293b;
+  --primary-color: #00ff15;
+  --primary-color-hover: #00ff0d;
+  --success-color: #28a745;
+  --error-color: #ff0019;
+  --text-primary: #005fbe;
+  --text-on-primary: #ff0000;
+  --background-light: #f8f9fa;
+  --bg: #ffffff;
+  --text: #0f172a;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-contrast: #ffffff;
+  --focus: #2563eb;
+  --font-family-sans: 'Helvetica Neue', Arial, sans-serif;
+  --font-family-serif: 'Georgia', 'Times New Roman', serif;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
 }
-.bg-primary {
-  background-color: var(--color-primary);
+.bg-primary { background-color: var(--color-primary); }
+.bg-secondary { background-color: var(--color-secondary); }
+html { font-size: 16px; }
+body { color: var(--text); background: var(--bg); font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+:focus { outline: none; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
 }
-.bg-secondary {
-  background-color: var(--color-secondary);
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+p, input, button, label { font-size: 1rem; line-height: 1.4; }
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe-transition,
+  .motion-safe\:transition-opacity,
+  .motion-safe\:transform,
+  .motion-safe\:transform-none {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+.motion-safe-transition {
+  transition: all 200ms ease-in-out;
+}
+.image-gallery-thumbnail .image-gallery-thumbnail-inner {
+  transition: transform 200ms ease, opacity 200ms ease;
 }

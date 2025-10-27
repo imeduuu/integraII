@@ -3,6 +3,7 @@ import Input from '../components/ui/Input'; // Migración: Usar input UI estánd
 import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useNotification } from '../components/NotificationProvider';
 import styles from '../styles/donations.module.css';
 
 const Donations = () => {
@@ -13,6 +14,7 @@ const Donations = () => {
   quantity: '',
     message: '',
   });
+  const { addToast } = useNotification();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -23,8 +25,31 @@ const Donations = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validaciones
+    if (!formData.name.trim()) {
+      addToast('Por favor ingresa tu nombre.', 'warning');
+      return;
+    }
+    
+    if (!formData.type) {
+      addToast('Por favor selecciona el tipo de donación.', 'warning');
+      return;
+    }
+    
+    if (!formData.quantity.trim()) {
+      addToast('Por favor ingresa la cantidad que deseas donar.', 'warning');
+      return;
+    }
+    
+    // Si hay email, validar formato
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      addToast('Por favor ingresa un correo electrónico válido.', 'warning');
+      return;
+    }
+    
     console.log('Donación registrada:', formData);
-  alert('¡Gracias por tu donación! (Prueba sin guardar en la base de datos)');
+    addToast('¡Gracias por tu generosa donación! Nos pondremos en contacto pronto.', 'success');
     setFormData({ name: '', email: '', type: '', quantity: '', message: '' });
   };
 

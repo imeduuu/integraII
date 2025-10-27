@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import Link from "next/link"; // Importamos Link para navegación
 import Button from "../../components/ui/Button"; // Migración: Usar botón UI estándar
 
-const backgroundUrl = "/perrito.png";
+const backgroundUrl = "/backgrounds/perrito.webp";
 
 // Mock de organizaciones (reemplazar con datos reales de API/BD)
 const mockOrgs = [

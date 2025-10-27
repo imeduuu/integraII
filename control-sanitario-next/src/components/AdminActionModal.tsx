@@ -6,6 +6,8 @@ import Button from "./ui/Button";
 import Modal from "./ui/Modal";
 import { sanitizeFormData } from "../utils/sanitize";
 
+import styles from "../styles/modal.module.css";
+
 interface AdminActionModalProps {
   isOpen: boolean; // controla si se muestra o no
   title: string; // título del modal
@@ -14,6 +16,7 @@ interface AdminActionModalProps {
   onCancel: () => void; // función al cancelar
   confirmText?: string; // texto del botón confirmar
   cancelText?: string; // texto del botón cancelar
+  variant?: "warning" | "danger" | "info" | "success"; // tipo de acción
 }
 
 /**
@@ -28,19 +31,62 @@ const AdminActionModal: React.FC<AdminActionModalProps> = ({
   onCancel,
   confirmText = "Confirmar",
   cancelText = "Cancelar",
+  variant = "warning",
 }) => {
   // No renderizar si el modal está cerrado
   if (!isOpen) return null;
 
+  // Iconos según la variante
+  const icons = {
+    warning: "⚠️",
+    danger: "🗑️",
+    info: "ℹ️",
+    success: "✓",
+  };
+
+  // Clase del icono según la variante
+  const iconClass = {
+    warning: styles.iconWarning,
+    danger: styles.iconDanger,
+    info: styles.iconInfo,
+    success: styles.iconSuccess,
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onCancel}>
-      <div className="text-center min-w-[320px] max-w-[400px]">
-        <h2 className="text-xl font-bold mb-3">{title}</h2>
-        <p className="mb-6 text-gray-700">{message}</p>
+    <Modal isOpen={isOpen} onClose={onCancel} size="small" showCloseButton={false}>
+      <div className={styles.adminModal}>
+        {/* Icono de la variante */}
+        <div className={iconClass[variant]}>
+          {icons[variant]}
+        </div>
+
+        {/* Título */}
+        <div className={styles.modalHeader}>
+          <h2 id="modal-title" className={styles.modalTitle}>
+            {title}
+          </h2>
+        </div>
+
+        {/* Mensaje */}
+        <div className={styles.modalBody}>
+          <p>{message}</p>
+        </div>
+
         {/* Botones de acción: cancelar (secundario) y confirmar (primario) */}
-        <div className="flex gap-3">
-          <Button variant="secondary" className="flex-1" onClick={onCancel}>{cancelText}</Button>
-          <Button className="flex-1" onClick={onConfirm}>{confirmText}</Button>
+        <div className={styles.modalFooter}>
+          <Button 
+            variant="secondary" 
+            onClick={onCancel}
+            aria-label="Cancelar acción"
+          >
+            {cancelText}
+          </Button>
+          <Button 
+            onClick={onConfirm}
+            aria-label="Confirmar acción"
+          >
+            {confirmText}
+          </Button>
         </div>
       </div>
     </Modal>

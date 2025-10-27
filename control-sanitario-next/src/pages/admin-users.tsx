@@ -172,7 +172,13 @@ const UserList = () => {
                     <td className={styles.td}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <HiUser className="w-5 h-5" style={{ color: '#3b82f6' }} />
-                        {user.nombre}
+                        <a 
+                          href={`/user/${user.id}`}
+                          className={styles.userLink}
+                          title={`Ver perfil de ${user.nombre}`}
+                        >
+                          {user.nombre}
+                        </a>
                       </div>
                     </td>
                     <td className={styles.td}>{user.email}</td>
