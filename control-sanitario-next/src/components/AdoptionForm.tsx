@@ -4,6 +4,8 @@
 import React, { useState } from "react";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
+import Loader from "./ui/Loader";
+import { useNotification } from "../components/NotificationProvider";
 
 interface Animal {
   nombre: string;
@@ -35,6 +37,8 @@ export default function AdoptionForm({ animal, onSubmit }: Props) {
     email: "",
     reason: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { addToast } = useNotification();
 
   // Actualizar campos del formulario
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -44,7 +48,18 @@ export default function AdoptionForm({ animal, onSubmit }: Props) {
   // Enviar solicitud de adopción
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(form); // Envía datos al componente padre
+    // Mostrar loader y deshabilitar formulario
+    setIsSubmitting(true);
+    // Simular llamada asíncrona si onSubmit no es async
+    Promise.resolve()
+      .then(() => onSubmit(form))
+      .then(() => {
+        addToast('Solicitud enviada con éxito', 'success');
+      })
+      .catch(() => {
+        addToast('Ocurrió un error al enviar la solicitud', 'error');
+      })
+      .finally(() => setIsSubmitting(false));
   };
 
   return (
@@ -116,8 +131,15 @@ export default function AdoptionForm({ animal, onSubmit }: Props) {
         variant="primary"
         className="bg-green-600 hover:bg-green-700 focus:outline-green-600"
         aria-label="Enviar solicitud de adopción"
+        disabled={isSubmitting}
       >
-        Enviar solicitud
+        {isSubmitting ? (
+          <span className="inline-flex items-center gap-2">
+            <Loader size={16} /> Enviando...
+          </span>
+        ) : (
+          'Enviar solicitud'
+        )}
       </Button>
     </form>
   );

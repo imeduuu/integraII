@@ -330,6 +330,27 @@
   }
 }
 
+/* Enlace al perfil de usuario */
+.userLink {
+  color: #1e40af;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.userLink:hover {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+  transform: translateX(2px);
+}
+
+.userLink:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 @media (max-width: 480px) {
   .title {
     font-size: 1.75rem;

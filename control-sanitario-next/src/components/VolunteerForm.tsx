@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styles from "../styles/volunteer-form.module.css";
+import Loader from './ui/Loader';
+import { useNotification } from '../components/NotificationProvider';
 
 const VolunteerForm = () => {
   const [formData, setFormData] = useState({
@@ -55,11 +57,22 @@ const VolunteerForm = () => {
       setMessage("");
     } else {
       setErrors({});
-      setMessage("✅ Registro exitoso. ¡Gracias por ser voluntario!");
-      console.log("Datos enviados:", formData);
-      setFormData({ nombre: "", correo: "", telefono: "" });
+      setIsSubmitting(true);
+      // Simular envío asíncrono
+      Promise.resolve()
+        .then(() => {
+          setMessage("✅ Registro exitoso. ¡Gracias por ser voluntario!");
+          console.log("Datos enviados:", formData);
+          setFormData({ nombre: "", correo: "", telefono: "" });
+          addToast('Registro de voluntario exitoso', 'success');
+        })
+        .catch(() => addToast('Error al registrar voluntario', 'error'))
+        .finally(() => setIsSubmitting(false));
     }
   };
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { addToast } = useNotification();
 
   return (
     <div className={styles.formContainer}>
@@ -95,7 +108,9 @@ const VolunteerForm = () => {
         />
         {errors.telefono && <p className={styles.error}>{errors.telefono}</p>}
 
-        <button type="submit">Registrarse</button>
+        <button type="submit" disabled={isSubmitting} className="inline-flex items-center gap-2">
+          {isSubmitting ? <><Loader size={16} /> Registrando...</> : 'Registrarse'}
+        </button>
       </form>
 
       {message && <p className={styles.message}>{message}</p>}

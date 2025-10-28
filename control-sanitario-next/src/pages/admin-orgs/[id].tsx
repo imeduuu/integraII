@@ -34,7 +34,7 @@ const AdminOrgDetail = () => {
   });
   const [message, setMessage] = useState(""); // Mensaje de confirmación
 
-  const backgroundUrl = "/perrito.png";
+  const backgroundUrl = "/backgrounds/perrito.webp";
 
   useEffect(() => {
     // Verificar permisos de administrador

@@ -1,3 +1,4 @@
+import Tooltip from './Tooltip';
 /**
  * Barra de navegación principal con menús dinámicos por rol
  */
@@ -34,6 +35,7 @@ const Navbar = () => {
       { href: '/report', label: 'Reportar' },
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
+      { href: '/user-directory', label: 'Usuarios' },
       { href: '/admin-orgs', label: 'Organizaciones' },
       { href: '/faqs', label: 'FAQs' }
     ];
@@ -45,28 +47,40 @@ const Navbar = () => {
     ];
   }
 
-  return (
-    <nav className={styles.navbar}>
-      <span className={styles.navbarTitle}>Huella Segura</span>
-      <div className={styles.navbarLinks}>
+return (
+  <nav className={styles.navbar}>
+    <span className={styles.navbarTitle}>Huella Segura</span>
+    <div className={styles.navbarLinks}>
+      <Tooltip text="Ir al inicio 🏠">
         <a href="/" className={getLinkClasses('/')}>Inicio</a>
+      </Tooltip>
+      <Tooltip text="Ver mapa interactivo 🗺️">
         <a href="/mapa" className={getLinkClasses('/mapa')}>Mapa</a>
-        {links.map(link => (
-          <a key={link.href + link.label} href={link.href} className={getLinkClasses(link.href)}>
+      </Tooltip>
+
+      {links.map(link => (
+        <Tooltip key={link.href} text={`Ir a ${link.label}`}>
+          <a href={link.href} className={getLinkClasses(link.href)}>
             {link.label}
           </a>
-        ))}
-      </div>
-      <div className={styles.profileSection}>
-        <img
+        </Tooltip>
+      ))}
+    </div>
+
+    <div className={styles.profileSection + ' ' + styles.profileSectionRight}>
+      <Tooltip text="Ver tu perfil 🐾">
+        <img 
           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=32&h=32"
           alt="Perfil"
           className={styles.profileImage}
         />
+      </Tooltip>
+      <Tooltip text="Abrir configuración del perfil ⚙️">
         <a href="/profile" className={getLinkClasses('/profile')}>Ver perfil</a>
-      </div>
-    </nav>
-  );
+      </Tooltip>
+    </div>
+  </nav>
+);
 };
 
 export default Navbar;

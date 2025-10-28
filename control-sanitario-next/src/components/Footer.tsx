@@ -2,7 +2,7 @@
  * Footer principal con información de contacto y modal de feedback
  */
 import React, { useState } from "react";
-import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import Icon from './ui/Icon';
 import Button from "./ui/Button";
 import Input from "./ui/Input";
 import Modal from "./ui/Modal";
@@ -35,9 +35,9 @@ const Footer: React.FC = () => {
               <svg xmlns='http://www.w3.org/2000/svg' className='inline w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M3 5h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A2 2 0 007.48 19h9.04a2 2 0 001.83-1.3L17 13M7 13V6a1 1 0 011-1h5a1 1 0 011 1v7' /></svg>
               +56 9 1234 5678
             </span>
-            <span className="hidden sm:inline text-blue-100 dark:text-gray-500">|</span>
+            <span className="hidden sm:inline text-blue-200 dark:text-gray-400">|</span>
             <span className="flex items-center gap-2">
-              <svg xmlns='http://www.w3.org/2000/svg' className='inline w-5 h-5 text-blue-200 dark:text-blue-300' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M16 12H8m8 0a8 8 0 11-16 0 8 8 0 0116 0z' /></svg>
+              <svg xmlns='http://www.w3.org/2000/svg' className='inline w-5 h-5 text-blue-300 dark:text-blue-300' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M16 12H8m8 0a8 8 0 11-16 0 8 8 0 0116 0z' /></svg>
               <span
                 onClick={() => setShowModal(true)}
                 className="underline cursor-pointer hover:text-blue-200 dark:hover:text-blue-400 transition"
@@ -53,17 +53,17 @@ const Footer: React.FC = () => {
 
           <div className="mt-3 flex justify-center gap-6 text-2xl">
             <a href="#" className="hover:text-blue-300 dark:hover:text-blue-400 transition" aria-label="Facebook">
-              <FaFacebook />
+              <Icon name="facebook" className="inline" aria-label="facebook" />
             </a>
             <a href="#" className="hover:text-blue-300 dark:hover:text-blue-400 transition" aria-label="Twitter">
-              <FaTwitter />
+              <Icon name="twitter" className="inline" aria-label="twitter" />
             </a>
             <a href="#" className="hover:text-blue-300 dark:hover:text-blue-400 transition" aria-label="Instagram">
-              <FaInstagram />
+              <Icon name="instagram" className="inline" aria-label="instagram" />
             </a>
           </div>
 
-          <p className="mt-4 text-xs text-white/80 dark:text-gray-200">
+          <p className="mt-4 text-xs text-white dark:text-gray-200">
             © {new Date().getFullYear()} Huella Segura - Todos los derechos reservados
           </p>
         </div>

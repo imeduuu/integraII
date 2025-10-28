@@ -1,9 +1,10 @@
+import Tooltip from './Tooltip';
+
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
 import CommentSection from './CommentSection';
-
 
 interface AnimalCardProps {
   nombre: string; // Nombre del animal

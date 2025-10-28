@@ -4,6 +4,7 @@ import Button from '../components/ui/Button'; // Migración: Usar botón UI est�
 import { useForm } from 'react-hook-form';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useNotification } from '../components/NotificationProvider';
 import styles from '../styles/edit-profile.module.css';
 
 interface FormData {
@@ -20,11 +21,18 @@ const EditProfile = () => {
     formState: { errors },
     reset
   } = useForm<FormData>();
+  const { addToast } = useNotification();
 
   const onSubmit = (data: FormData) => {
     console.log('Datos del formulario:', data);
-    alert('Perfil actualizado correctamente');
-    reset();
+    
+    try {
+      // Simulación: En producción, aquí harías la llamada a la API
+      addToast('✅ Perfil actualizado correctamente', 'success');
+      // reset(); // Opcional: descomentar si quieres limpiar el formulario
+    } catch (error) {
+      addToast('Error al actualizar el perfil. Por favor intenta de nuevo.', 'error');
+    }
   };
 
   return (

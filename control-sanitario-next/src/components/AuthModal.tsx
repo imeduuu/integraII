@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 import Button from './ui/Button';
 import Input from './ui/Input';
 import Modal from './ui/Modal';
+import Loader from './ui/Loader';
+import { useNotification } from '../components/NotificationProvider';
 
 interface AuthModalProps {
   open: boolean;
@@ -28,6 +30,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, mode, setMode }) =
   const [mensaje, setMensaje] = useState('');
   const [touched, setTouched] = useState(false);
 
+  const { addToast } = useNotification();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
   // Manejo de envío con validaciones
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,10 +45,18 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, mode, setMode }) =
       setMensaje('La contraseña debe tener al menos 6 caracteres.');
       return;
     }
-    setMensaje(mode === 'login'
-      ? 'Inicio de sesión simulado (sin backend)'
-      : 'Registro simulado (sin backend)'
-    );
+
+    setIsSubmitting(true);
+    Promise.resolve()
+      .then(() => {
+        const successMessage = mode === 'login'
+          ? 'Inicio de sesión exitoso (simulado)'
+          : 'Registro exitoso (simulado)';
+        setMensaje(successMessage);
+        addToast(successMessage, 'success');
+      })
+      .catch(() => addToast('Error en la operación', 'error'))
+      .finally(() => setIsSubmitting(false));
   };
 
   React.useEffect(() => {
@@ -104,8 +117,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, mode, setMode }) =
           {touched && password.length > 0 && password.length < 6 && (
             <span className="text-pink-600 text-xs">Mínimo 6 caracteres</span>
           )}
-          <Button type="submit" className="w-full mt-2">
-            {mode === 'login' ? 'Entrar' : 'Crear cuenta'}
+          <Button type="submit" className="w-full mt-2" disabled={isSubmitting}>
+            {isSubmitting ? <span className="inline-flex items-center gap-2"><Loader size={16} />{mode === 'login' ? 'Entrando...' : 'Creando...'}</span> : (mode === 'login' ? 'Entrar' : 'Crear cuenta')}
           </Button>
         </form>
         {mensaje && <p className="mt-4 text-blue-600 font-semibold">{mensaje}</p>}

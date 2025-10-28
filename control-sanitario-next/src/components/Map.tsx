@@ -1,3 +1,5 @@
+import "../styles/mapForm.module.css";
+import Tooltip from "./Tooltip";
 
 import React, { useState } from "react";
 
@@ -50,80 +52,76 @@ const Map: React.FC = () => {
   });
 
   return (
-    <div>
-      {/* Filtros */}
-      <div className="flex gap-4 mb-4">
-        <select
-          value={filtroEspecie}
-          onChange={(e) => setFiltroEspecie(e.target.value)}
-        >
-          <option value="">Todas las especies</option>
-          {getUniqueValues("especie").map((especie) => (
-            <option key={String(especie)} value={String(especie)}>
-              {especie}
-            </option>
-          ))}
-        </select>
+   <div>
+  {/* Filtros */}
+  <div className="map-filters">
+    <select
+      value={filtroEspecie}
+      onChange={(e) => setFiltroEspecie(e.target.value)}
+    >
+      <option value="">Todas las especies</option>
+      {getUniqueValues("especie").map((especie) => (
+        <option key={String(especie)} value={String(especie)}>
+          {especie}
+        </option>
+      ))}
+    </select>
 
-        <select
-          value={filtroEstado}
-          onChange={(e) => setFiltroEstado(e.target.value)}
-        >
-          <option value="">Todos los estados</option>
-          {getUniqueValues("estado").map((estado) => (
-            <option key={String(estado)} value={String(estado)}>
-              {estado}
-            </option>
-          ))}
-        </select>
+    <select
+      value={filtroEstado}
+      onChange={(e) => setFiltroEstado(e.target.value)}
+    >
+      <option value="">Todos los estados</option>
+      {getUniqueValues("estado").map((estado) => (
+        <option key={String(estado)} value={String(estado)}>
+          {estado}
+        </option>
+      ))}
+    </select>
 
-        <select
-          value={filtroZona}
-          onChange={(e) => setFiltroZona(e.target.value)}
-        >
-          <option value="">Todas las zonas</option>
-          {getUniqueValues("zona").map((zona) => (
-            <option key={String(zona)} value={String(zona)}>
-              {zona}
-            </option>
-          ))}
-        </select>
-      </div>
+    <select
+      value={filtroZona}
+      onChange={(e) => setFiltroZona(e.target.value)}
+    >
+      <option value="">Todas las zonas</option>
+      {getUniqueValues("zona").map((zona) => (
+        <option key={String(zona)} value={String(zona)}>
+          {zona}
+        </option>
+      ))}
+    </select>
+  </div>
 
-      {/* Mapa */}
-      <div style={mapContainerStyle}>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105642.40346423266!2d-72.695372!3d-38.7396505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9614c7d0b94bcd6f%3A0x44e62a1db2d4bb51!2sTemuco%2C%20Araucan%C3%ADa!5e0!3m2!1ses-419!2scl!4v1693000000000!5m2!1ses-419!2scl"
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          title="Mapa de Temuco"
-        ></iframe>
-      </div>
+  {/* Mapa */}
+  <div className="map-container">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105642.40346423266!2d-72.695372!3d-38.7396505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9614c7d0b94bcd6f%3A0x44e62a1db2d4bb51!2sTemuco%2C%20Araucan%C3%ADa!5e0!3m2!1ses-419!2scl!4v1693000000000!5m2!1ses-419!2scl"
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      allowFullScreen
+      loading="lazy"
+      title="Mapa de Temuco"
+    ></iframe>
+  </div>
 
-      {/* Lista de resultados */}
-      <div className="mt-4">
-        {elementosFiltrados.length > 0 ? (
-          <ul className="space-y-2">
-            {elementosFiltrados.map((el) => (
-              <li
-                key={el.id}
-                className="border p-2 rounded shadow-sm bg-gray-50"
-              >
-                <strong>{el.especie}</strong> | {el.estado} | {el.zona} <br />
-                Coordenadas: {el.coords[0]}, {el.coords[1]}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-red-500 font-semibold">
-            No hay resultados para los filtros seleccionados
-          </p>
-        )}
-      </div>
-    </div>
+  {/* Lista de resultados */}
+  <div className="map-results">
+    {elementosFiltrados.length > 0 ? (
+      <ul>
+        {elementosFiltrados.map((el) => (
+          <li key={el.id}>
+            <strong>{el.especie}</strong> | {el.estado} | {el.zona} <br />
+            Coordenadas: {el.coords[0]}, {el.coords[1]}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>No hay resultados para los filtros seleccionados</p>
+    )}
+  </div>
+</div>
+
   );
 };
 
