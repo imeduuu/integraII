@@ -7,6 +7,7 @@ import { NotificationProvider } from '../components/NotificationProvider';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ThemeProvider } from '../context/ThemeContext';
 
 const MotionDiv: any = motion.div;
 
@@ -17,19 +18,21 @@ const MotionDiv: any = motion.div;
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   return (
-    <NotificationProvider>
-      <AnimatePresence mode="wait">
-        <MotionDiv
-          key={router.route}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.24 }}
-        >
-          <Component {...pageProps} />
-        </MotionDiv>
-      </AnimatePresence>
-    </NotificationProvider>
+    <ThemeProvider>
+      <NotificationProvider>
+        <AnimatePresence mode="wait">
+          <MotionDiv
+            key={router.route}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.24 }}
+          >
+            <Component {...pageProps} />
+          </MotionDiv>
+        </AnimatePresence>
+      </NotificationProvider>
+    </ThemeProvider>
   );
 }
 

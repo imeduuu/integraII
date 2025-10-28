@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
+import Head from 'next/head';
 import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import { useForm } from 'react-hook-form';
 import Navbar from '../components/Navbar';
@@ -37,6 +38,25 @@ const EditProfile = () => {
 
   return (
     <>
+    <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Editar Perfil - Control Sanitario",
+              "url": "https://HuellaSegura.vercel.app/perfil",
+              "description": "Página para que los usuarios puedan actualizar su información personal dentro de la plataforma Control Sanitario.",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Control Sanitario",
+                "logo": "https://HuellaSegura.vercel.app/logo.png"
+              }
+            })
+          }}
+        />
+      </Head>
       <Navbar />
       <main className="min-h-screen bg-gray-50 py-8">
         <div className={styles.container}>

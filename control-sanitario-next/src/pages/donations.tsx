@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
+import Head from 'next/head';
 import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -56,6 +57,30 @@ const [acceptedPolicy, setAcceptedPolicy] = React.useState(false);
 
   return (
     <>
+    <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Control Sanitario",
+              "url": "https://HuellaSegura.vercel.app",
+              "logo": "https://HuellaSegura.vercel.app/logo.png",
+              "sameAs": [
+                "https://www.facebook.com/HuellaSegura",
+                "https://www.instagram.com/HuellaSegura"
+              ],
+              "potentialAction": {
+                "@type": "DonateAction",
+                "target": "https://HuellaSegura.vercel.app/donaciones",
+                "name": "Donar a Control Sanitario"
+              }
+            })
+          }}
+        />
+      </Head>
+      
       <Navbar />
       <main className={styles.wrapper}>
         <section className={styles.card}>

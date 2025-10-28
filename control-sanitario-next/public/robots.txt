@@ -1,0 +1,6 @@
+# Permitir que todos los motores de búsqueda rastreen el sitio
+User-agent: *
+Allow: /
+
+# Sitemap temporal 
+Sitemap: https://www.ejemplo-prueba.com/sitemap.xml

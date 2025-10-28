@@ -3,6 +3,7 @@
  * Página de adopción de animales con formulario y proceso de confirmación
  */
 import React, { useState } from 'react';
+import Head from 'next/head';
 import Button from '../components/ui/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -79,6 +80,38 @@ export default function Adopcion() {
   
   return (
     <>
+    <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CollectionPage",
+              "name": "Animales en Adopción - Control Sanitario",
+              "url": "https://HuellaSegura.vercel.app/adopciones",
+              "description": "Listado de animales disponibles para adopción en Control Sanitario.",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Control Sanitario",
+                "logo": "https://HuellaSegura.vercel.app/logo.png"
+              },
+              "mainEntity": animales.map((animal, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "name": animal.nombre,
+                "url": `https://HuellaSegura.vercel.app/adopciones#${animal.nombre.toLowerCase()}`,
+                "image": `https://HuellaSegura.vercel.app${animal.imagen}`,
+                "additionalProperty": [
+                  { "@type": "PropertyValue", "name": "Estado", "value": animal.estado },
+                  { "@type": "PropertyValue", "name": "Ubicación", "value": animal.ubicacion },
+                  { "@type": "PropertyValue", "name": "Edad", "value": animal.edad }
+                ]
+              }))
+            })
+          }}
+        />
+      </Head>
+      
       <Navbar />
       <main className="min-h-screen bg-gray-50 py-8">
         <h1 className="text-3xl font-bold text-center mb-8">Animales en Adopción</h1>

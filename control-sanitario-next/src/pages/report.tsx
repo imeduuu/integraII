@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Head from 'next/head';
 // Migración: Se reemplazaron todos los inputs y botones nativos por componentes UI estándar
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
@@ -102,6 +103,37 @@ const Report = () => {
 
   return (
     <>
+    <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Reportar Animal - Control Sanitario",
+              "url": "https://HuellaSegura.vercel.app/reportar-animales",
+              "description": "Formulario para reportar animales en situación de calle, con ubicación y coordenadas.",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Control Sanitario",
+                "logo": "https://HuellaSegura.vercel.app/logo.png"
+              },
+              "mainEntity": {
+                "@type": "Thing",
+                "name": "Reporte de Animal",
+                "description": "Animal reportado en situación de calle",
+                "additionalProperty": [
+                  { "@type": "PropertyValue", "name": "Ubicación", "value": ubicacion || "No especificada" },
+                  { "@type": "PropertyValue", "name": "Latitud", "value": latitud || "No especificada" },
+                  { "@type": "PropertyValue", "name": "Longitud", "value": longitud || "No especificada" },
+                  { "@type": "PropertyValue", "name": "Descripción", "value": descripcion || "No especificada" }
+                ]
+              }
+            })
+          }}
+        />
+      </Head>
+      
       <Navbar />
       <main>
         <div className={styles.container}>
