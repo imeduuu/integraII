@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from '../styles/commentSection.module.css';
+import { sanitizeFormData } from "../utils/sanitize";
 
 interface Comment {
   id: number;

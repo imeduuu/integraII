@@ -61,6 +61,7 @@ export default function AdoptionForm({ animal, onSubmit }: Props) {
       })
       .finally(() => setIsSubmitting(false));
   };
+const [acceptedPolicy, setAcceptedPolicy] = useState(false);
 
   return (
     <form
@@ -124,21 +125,42 @@ export default function AdoptionForm({ animal, onSubmit }: Props) {
         />
         <span id="reason-help" className="text-xs text-gray-500">Explica por qué quieres adoptar.</span>
       </div>
+{}
+      <div className="flex items-center mt-4">
+        <input
+          type="checkbox"
+          id="acceptPolicy"
+          checked={acceptedPolicy}
+          onChange={(e) => setAcceptedPolicy(e.target.checked)}
+          className="mr-2"
+        />
+        <label htmlFor="acceptPolicy" className="text-sm text-gray-700">
+          Acepto la{" "}
+          <a
+            href="/politica-privacidad"
+            className="text-green-700 underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            política de privacidad
+          </a>
+        </label>
+      </div>
 
-      {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. Se mantiene la lógica y accesibilidad. */}
+      {/* Botón deshabilitado hasta aceptar la política */}
       <Button
         type="submit"
         variant="primary"
-        className="bg-green-600 hover:bg-green-700 focus:outline-green-600"
+        className="bg-green-600 hover:bg-green-700 focus:outline-green-600 mt-4"
         aria-label="Enviar solicitud de adopción"
-        disabled={isSubmitting}
+        disabled={isSubmitting || !acceptedPolicy}
       >
         {isSubmitting ? (
           <span className="inline-flex items-center gap-2">
             <Loader size={16} /> Enviando...
           </span>
         ) : (
-          'Enviar solicitud'
+          "Enviar solicitud"
         )}
       </Button>
     </form>

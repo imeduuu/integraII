@@ -52,6 +52,7 @@ const Donations = () => {
     addToast('¡Gracias por tu generosa donación! Nos pondremos en contacto pronto.', 'success');
     setFormData({ name: '', email: '', type: '', quantity: '', message: '' });
   };
+const [acceptedPolicy, setAcceptedPolicy] = React.useState(false);
 
   return (
     <>
@@ -124,8 +125,40 @@ const Donations = () => {
               />
             </div>
             <div className={styles.actions}>
+              {}
+<p style={{ fontSize: '0.9rem', color: '#4b5563', marginTop: '12px' }}>
+  Al registrar tu donación aceptas nuestra{' '}
+  <a
+    href="/politica-privacidad"
+    style={{ color: '#2563eb', textDecoration: 'underline' }}
+  >
+    Política de Privacidad
+  </a>.
+</p>
+
               {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
-              <Button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>Registrar Donación</Button>
+              <Button type="submit" className={`${styles.btn} ${styles.btnPrimary}`} disabled={!acceptedPolicy}>
+  Registrar Donación
+</Button>
+
+              <p style={{ fontSize: '0.9rem', color: '#4b5563', marginTop: '12px' }}>
+  Acepto la{' '}
+  <a
+    href="/politica-privacidad"
+    style={{ color: '#2563eb', textDecoration: 'underline' }}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    política de privacidad
+  </a>.
+  <input
+    type="checkbox"
+    checked={acceptedPolicy}
+    onChange={(e) => setAcceptedPolicy(e.target.checked)}
+    style={{ marginLeft: 8 }}
+  />
+</p>
+
             </div>
           </form>
         </section>
