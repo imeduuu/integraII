@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import Navbar from '../components/Navbar';
+import Head from 'next/head';
 
 // Carga dinámica para evitar problemas SSR con Leaflet
 const MapView = dynamic(() => import('../map/MapView'), { ssr: false });
@@ -7,6 +8,26 @@ const MapView = dynamic(() => import('../map/MapView'), { ssr: false });
 export default function MapaPage() {
   return (
     <>
+    <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Mapa Interactivo - Control Sanitario",
+              "url": "https://HuellaSegura.vercel.app/mapa",
+              "description": "Mapa interactivo para reportar y consultar animales en situación de calle y focos sanitarios.",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Control Sanitario",
+                "logo": "https://HuellaSegura.vercel.app/logo.png"
+              }
+            })
+          }}
+        />
+      </Head>
+      
       <Navbar />
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-start py-8 px-2">
         <div className="w-full max-w-4xl mx-auto">

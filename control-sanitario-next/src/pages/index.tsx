@@ -9,6 +9,8 @@ import Footer from '../components/Footer';
 import UserMetricsCards from '../components/UserMetricsCards';
 import styles from '../styles/infoBox.module.css';
 import { useNotification } from '../components/NotificationProvider';
+import Head from 'next/head';
+
 
 const backgroundUrl = '/backgrounds/perrito.webp';
 
@@ -37,7 +39,34 @@ const Home = () => {
   const { addToast } = useNotification(); // Hook de notificaciones
 
   return (
+    
     <>
+    <Head>
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Control Sanitario",
+        "url": "https://HuellaSegura.vercel.app",
+        "logo": "https://HuellaSegura.vercel.app/logo.png",
+        "sameAs": [
+          "https://www.facebook.com/HuellaSegura",
+          "https://www.instagram.com/HuellaSegura"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+56-9-1234-5678",
+          "contactType": "customer service",
+          "areaServed": "CL",
+          "availableLanguage": "Spanish"
+        }
+      })
+    }}
+  />
+</Head>
+
       <Navbar />
       <div
         style={{

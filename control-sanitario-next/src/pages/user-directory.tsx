@@ -3,6 +3,7 @@
  */
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
+import Head from "next/head";
 import Footer from "../components/Footer";
 import { HiUser, HiSearch, HiLocationMarker } from "react-icons/hi";
 import styles from "../styles/user-directory.module.css";
@@ -86,6 +87,36 @@ const UserDirectory = () => {
 
   return (
     <>
+    <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Control Sanitario",
+              "url": "https://HuellaSegura.vercel.app",
+              "logo": "https://HuellaSegura.vercel.app/logo.png",
+              "sameAs": [
+                "https://www.facebook.com/HuellaSegura",
+                "https://www.instagram.com/HuellaSegura"
+              ],
+              "member": publicUsersData.map(user => ({
+                "@type": user.rol === "org" ? "Organization" : "Person",
+                "name": user.nombre,
+                "url": `https://HuellaSegura.vercel.app/user/${user.id}`,
+                "image": user.foto,
+                "jobTitle": user.rol === "admin" ? "Administrador" : "Voluntario",
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressLocality": user.ubicacion
+                }
+              }))
+            })
+          }}
+        />
+      </Head>
+      
       <Navbar />
       <main className={styles.container}>
         <div className={styles.header}>
