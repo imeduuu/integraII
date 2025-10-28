@@ -2,9 +2,14 @@ import Tooltip from './Tooltip';
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
-import CommentSection from './CommentSection';
+
+const CommentSection = dynamic(() => import('./CommentSection'), {
+  ssr: false,
+  loading: () => <div className="py-4 text-center text-sm text-gray-500">Cargando comentarios...</div>,
+});
 
 interface AnimalCardProps {
   nombre: string; // Nombre del animal
