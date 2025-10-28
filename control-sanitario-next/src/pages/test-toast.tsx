@@ -9,7 +9,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const TestToastPage: React.FC = () => {
-  const { toasts, success, error, info, warning, removeToast } = useToast();
+  const { success, error, info, warning, clearAll } = useToast();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
@@ -230,7 +230,7 @@ const TestToastPage: React.FC = () => {
         {/* Stats */}
         <div className="mt-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg p-6 text-white">
           <h3 className="text-xl font-semibold mb-2">📊 Toasts Activos</h3>
-          <p className="text-3xl font-bold">{toasts.length} / 5</p>
+          {/* <p className="text-3xl font-bold">{toasts.length} / 5</p> */}
           <p className="text-sm opacity-90 mt-2">Máximo 5 toasts simultáneos permitidos</p>
         </div>
       </main>
@@ -238,12 +238,6 @@ const TestToastPage: React.FC = () => {
       <Footer />
 
       {/* Contenedor de Toasts */}
-      <ToastContainer
-        toasts={toasts}
-        onDismiss={removeToast}
-        position="top-right"
-        maxToasts={5}
-      />
     </div>
   );
 };

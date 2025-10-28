@@ -17,7 +17,7 @@ export async function createUser(
   id_rol: number,
   activo: boolean,
   telefono?: string,
-  sexo?: string,
+  id_sexo?: number,
   fecha_nacimiento?: Date,
   id_organizacion?: number
 ) {
@@ -30,20 +30,11 @@ export async function createUser(
       password_hash,
       rol: { connect: { id_rol } },
       activo,
-      telefono,
-      sexo,
-      fecha_nacimiento,
-      ...(id_organizacion !== undefined ? { organizacion: { connect: { id_organizacion } } } : {})
+  telefono,
+  ...(id_sexo !== undefined ? { sexo: { connect: { id_sexo } } } : {}),
+  fecha_nacimiento,
+  ...(id_organizacion !== undefined ? { organizacion: { connect: { id_organizacion } } } : {})
     },
   });
 }
 
-// Puedes agregar más funciones según los campos y relaciones del modelo Usuario
-
-// Ejemplo de uso (puedes borrar esto en producción)
-// (async () => {
-//   const user = await createUser('test@email.com', 'Test', 'User', 'password123', 1, '123456789');
-//   console.log(user);
-//   const users = await getUsers();
-//   console.log(users);
-// })();

@@ -7,7 +7,6 @@ export async function getAvistamientosEjemplo() {
   return await prisma.avistamiento.findMany({
     include: {
       usuario: true,
-      animal: true,
       especie: true,
       estado_avistamiento: true,
       estado_salud: true,
@@ -21,7 +20,11 @@ export async function getSolicitudesAdopcionEjemplo() {
   return await prisma.solicitud_adopcion.findMany({
     include: {
       usuario: true,
-      animal: true,
+      adopcion: {
+        include: {
+          animal: true
+        }
+      },
       estadoSolicitud: true,
     },
     take: 5,
