@@ -2,12 +2,14 @@ import React from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary";
+  isLoading?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
   children,
   variant = "primary",
   className = "",
+  isLoading = false,
   ...props
 }) => {
   const baseStyles =
@@ -23,17 +25,23 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       {...props}
-      className={`${baseStyles} ${variants[variant]} ${className}`}
+      disabled={isLoading || props.disabled}
+      className={`${baseStyles} ${variants[variant]} ${className} ${isLoading ? 'opacity-70 cursor-wait' : ''}`}
       // focus-visible handled globally in theme.css
     >
-      {children}
+      {isLoading ? (
+        <span className="inline-flex items-center gap-2">
+          <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" opacity="0.25" />
+            <path d="M22 12a10 10 0 00-10-10" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+          </svg>
+          <span>{children}</span>
+        </span>
+      ) : (
+        children
+      )}
     </button>
   );
 };
 
 export default Button;
-// En cualquier componente, por ejemplo: src/components/ui/Button.tsx
-
-<button className="bg-primary text-text-on-primary font-sans rounded px-4 py-2 hover:bg-primary-hover">
-  Click Me
-</button>
