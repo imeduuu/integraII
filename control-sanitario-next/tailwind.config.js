@@ -7,6 +7,20 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    extend: {
+      // Breakpoints personalizados para tablets
+      screens: {
+        'xs': '480px',      // móviles grandes
+        'sm': '640px',      // tablets pequeñas (vertical)
+        'md': '768px',      // tablets estándar (vertical)
+        'tablet': '834px',  // tablets comunes como iPad
+        'lg': '1024px',     // tablets grandes (horizontal) / laptops
+        'xl': '1280px',     // desktop
+        '2xl': '1536px',    // desktop grande
+        // Breakpoints personalizados para orientación
+        'tablet-portrait': {'raw': '(min-width: 768px) and (max-width: 1024px) and (orientation: portrait)'},
+        'tablet-landscape': {'raw': '(min-width: 768px) and (max-width: 1366px) and (orientation: landscape)'},
+      },
       // Colores personalizados
       colors: {
         primary: 'var(--primary-color)',

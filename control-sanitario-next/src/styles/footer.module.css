@@ -10,6 +10,49 @@
   z-index: 10;
 }
 
+/* Tablet optimizations */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .footer {
+    padding: 3rem 2rem;
+  }
+  .footerContainer {
+    gap: 1.5rem;
+  }
+  .footerTitle {
+    font-size: 2.25rem;
+  }
+  .footerContact {
+    font-size: 1.125rem;
+    gap: 0.75rem;
+  }
+  .footerLinkButton a {
+    padding: 0.875rem 2rem;
+    font-size: 1.125rem;
+    min-height: 48px;
+  }
+  .footerSocial {
+    gap: 2rem;
+    font-size: 1.75rem;
+    margin-top: 1.5rem;
+  }
+  .footerCopyright {
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+  }
+  .footerModalTitle {
+    font-size: 1.25rem;
+  }
+  .footerTextarea {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.0625rem;
+    min-height: 120px;
+  }
+  .svgIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
 .footerContainer {
   width: 100%;
   max-width: 1200px;

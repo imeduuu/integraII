@@ -82,3 +82,5 @@
 
 /* Importar helpers móviles globales (añadido automáticamente) */
 @import './mobile-helpers.css';
+/* Importar estilos para tablets */
+@import './tablet-layout.css';

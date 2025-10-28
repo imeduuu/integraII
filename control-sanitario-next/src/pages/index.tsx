@@ -40,6 +40,7 @@ const Home = () => {
     <>
       <Navbar />
       <div
+        className="hero-section"
         style={{
           minHeight: '75vh',
           width: '100%',
@@ -53,6 +54,7 @@ const Home = () => {
         }}
       >
         <div
+          className="hero-content tablet-fade-in"
           style={{
             background: 'rgba(255,255,255,0.75)',
             borderRadius: 24,
@@ -99,6 +101,7 @@ const Home = () => {
             }}
           />
           <p
+            className="tablet:text-lg"
             style={{
               color: '#334155',
               fontSize: '1.08rem',
@@ -109,6 +112,7 @@ const Home = () => {
             Gestiona tu salud y bienestar de forma sencilla y segura.
           </p>
           <div
+            className="tablet:gap-6"
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -118,6 +122,7 @@ const Home = () => {
           >
             <a
               href="/login"
+              className="tablet-button touch-feedback"
               style={{
                 ...buttonStyle,
                 background: 'linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)',
@@ -127,6 +132,7 @@ const Home = () => {
             </a>
             <a
               href="/register"
+              className="tablet-button touch-feedback"
               style={{
                 ...buttonStyle,
                 background: 'linear-gradient(90deg,#60a5fa 60%,#2563eb 100%)',
@@ -138,6 +144,7 @@ const Home = () => {
         </div>
       </div>
       <main
+        className="tablet-container"
         style={{
           padding: '2rem',
           maxWidth: '1200px',

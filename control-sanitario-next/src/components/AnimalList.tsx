@@ -73,11 +73,11 @@ export default function AnimalList() {
   );
 
   return (
-    <div className="p-4">
+    <div className="p-4 tablet:p-6 tablet-container">
       {/* Filtros de búsqueda */}
-      <div className="flex gap-4 mb-6 flex-wrap">
+      <div className="flex gap-4 mb-6 flex-wrap tablet:justify-center">
         <select
-          className="border rounded px-2 py-1"
+          className="border rounded px-2 py-1 tablet:px-4 tablet:py-2 tablet:text-base"
           value={estado}
           onChange={e => setEstado(e.target.value)}
         >
@@ -87,7 +87,7 @@ export default function AnimalList() {
           <option value="En tratamiento">En tratamiento</option>
         </select>
         <select
-          className="border rounded px-2 py-1"
+          className="border rounded px-2 py-1 tablet:px-4 tablet:py-2 tablet:text-base"
           value={ubicacion}
           onChange={e => setUbicacion(e.target.value)}
         >
@@ -97,7 +97,7 @@ export default function AnimalList() {
           <option value="Centro">Centro</option>
         </select>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 tablet-portrait:grid-cols-2 tablet-landscape:grid-cols-3 gap-6 justify-center animal-grid">
         {filtered.map((animal, i) => (
           <AnimalCard
             key={i}

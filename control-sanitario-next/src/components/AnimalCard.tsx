@@ -20,7 +20,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
   const router = useRouter();
   const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 w-full max-w-xs sm:w-72 flex flex-col items-center hover:shadow-lg transition-shadow duration-300 motion-safe-transition">
+    <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 tablet:p-5 w-full max-w-xs sm:w-72 tablet:w-80 flex flex-col items-center hover:shadow-lg transition-shadow duration-300 motion-safe-transition tablet-card">
       {/* Imagen del animal con tooltip y click para ver detalles usando Next/Image */}
       <Tooltip text={`Ver detalles de ${nombre}`}>
         <div onClick={() => router.push(`/animals/${animalId}`)} style={{ cursor: 'pointer' }}>
@@ -29,26 +29,26 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
             alt={nombre}
             width={96}
             height={96}
-            className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-blue-300 hover:scale-105 transition-transform"
+            className="w-24 h-24 tablet:w-28 tablet:h-28 object-cover rounded-full mb-3 border-2 border-blue-300 hover:scale-105 transition-transform"
           />
         </div>
       </Tooltip>
-      <h2 className="text-xl font-bold mb-2 text-blue-700">{nombre}</h2>
-      <p className="text-sm text-gray-600 mb-1">
+      <h2 className="text-xl tablet:text-2xl font-bold mb-2 text-blue-700">{nombre}</h2>
+      <p className="text-sm tablet:text-base text-gray-600 mb-1">
         <span className="font-semibold">Estado:</span> {estado_general}
       </p>
-      <p className="text-sm text-gray-600 mb-1">
+      <p className="text-sm tablet:text-base text-gray-600 mb-1">
         <span className="font-semibold">Ubicación:</span> {zona}
       </p>
       {age && (
-        <p className="text-sm text-gray-600 mb-2">
+        <p className="text-sm tablet:text-base text-gray-600 mb-2">
           <span className="font-semibold">Edad:</span> {age}
         </p>
       )}
       {/* Botón Adoptar con tooltip */}
       <Tooltip text={`Adoptar a ${nombre}`}>
         <Button
-          className="bg-blue-600 hover:bg-blue-700 mt-2"
+          className="bg-blue-600 hover:bg-blue-700 mt-2 tablet-button"
           onClick={() => router.push('/adopcion')}
         >
           Adoptar
