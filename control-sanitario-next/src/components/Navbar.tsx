@@ -1,11 +1,11 @@
-import Tooltip from './Tooltip';
 /**
  * Barra de navegación principal con menús dinámicos por rol
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/navbar.module.css';
 import { userMock } from '../context/userMock';
+import Tooltip from './Tooltip';
 
 /**
  * Componente de navegación que renderiza menús específicos según el rol del usuario
@@ -13,6 +13,7 @@ import { userMock } from '../context/userMock';
  */
 const Navbar = () => {
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Aplica estilos activos al enlace de la página actual
   const getLinkClasses = (path: string) => {
@@ -49,34 +50,40 @@ const Navbar = () => {
 
 return (
   <nav className={styles.navbar}>
-    <span className={styles.navbarTitle}>Huella Segura</span>
-    <div className={styles.navbarLinks}>
+    <div className={styles.navbarHeader}>
+      <span className={styles.navbarTitle}>Huella Segura</span>
+      
+      {/* Botón hamburguesa para móviles */}
+      <button 
+        className={styles.menuToggle}
+        onClick={() => setMenuOpen(!menuOpen)}
+        aria-label="Toggle menu"
+        aria-expanded={menuOpen}
+      >
+        <span className={styles.hamburger}></span>
+        <span className={styles.hamburger}></span>
+        <span className={styles.hamburger}></span>
+      </button>
+    </div>
+
+    <div className={`${styles.navbarLinks} ${menuOpen ? styles.navbarLinksOpen : ''}`}>
       <Tooltip text="Ir al inicio 🏠">
-        <a href="/" className={getLinkClasses('/')}>Inicio</a>
+        <a href="/" className={getLinkClasses('/')} onClick={() => setMenuOpen(false)}>Inicio</a>
       </Tooltip>
       <Tooltip text="Ver mapa interactivo 🗺️">
-        <a href="/mapa" className={getLinkClasses('/mapa')}>Mapa</a>
+        <a href="/mapa" className={getLinkClasses('/mapa')} onClick={() => setMenuOpen(false)}>Mapa</a>
       </Tooltip>
 
       {links.map(link => (
         <Tooltip key={link.href} text={`Ir a ${link.label}`}>
-          <a href={link.href} className={getLinkClasses(link.href)}>
+          <a href={link.href} className={getLinkClasses(link.href)} onClick={() => setMenuOpen(false)}>
             {link.label}
           </a>
         </Tooltip>
       ))}
-    </div>
 
-    <div className={styles.profileSection + ' ' + styles.profileSectionRight}>
-      <Tooltip text="Ver tu perfil 🐾">
-        <img 
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=32&h=32"
-          alt="Perfil"
-          className={styles.profileImage}
-        />
-      </Tooltip>
       <Tooltip text="Abrir configuración del perfil ⚙️">
-        <a href="/profile" className={getLinkClasses('/profile')}>Ver perfil</a>
+        <a href="/profile" className={getLinkClasses('/profile')} onClick={() => setMenuOpen(false)}>Ver perfil</a>
       </Tooltip>
     </div>
   </nav>

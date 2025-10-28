@@ -1,11 +1,37 @@
 /* styles/faqs.module.css */
 
 .container {
+  width: 100%;
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
   background-color: #f9fafb;
   border-radius: 12px;
+}
+
+/* Tablet optimizations */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .container {
+    max-width: 960px;
+    padding: 3rem;
+  }
+  .title {
+    font-size: 3rem;
+    margin-bottom: 2.5rem;
+  }
+  .faqList {
+    gap: 1.5rem;
+  }
+  .question {
+    padding: 1.25rem 2rem;
+    font-size: 1.125rem;
+    min-height: 48px;
+  }
+  .answer {
+    padding: 0 2rem 2rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
 }
 
 .title {
@@ -43,4 +69,21 @@
   padding: 0 1.5rem 1.5rem;
   color: #4b5563;
   line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 8px;
+  }
+
+  .title {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .question, .answer {
+    padding: 0.75rem 1rem;
+  }
 }

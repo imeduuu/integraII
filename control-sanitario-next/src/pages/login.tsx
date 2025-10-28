@@ -16,12 +16,15 @@ interface LoginFormInputs {
 
 const formStyle: React.CSSProperties = {
   maxWidth: '400px',
-  margin: '60px auto',
+  margin: '20px auto',
   padding: '32px',
   background: '#f3f4f6',
   borderRadius: '12px',
-  boxShadow: '0 2px 12px rgba(0,0,0,0.08)'
+  boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+  width: '90%'
 };
+
+// Media query para tablets se maneja con clase CSS
 const labelStyle: React.CSSProperties = {
   display: 'block',
   marginBottom: '8px',
@@ -85,14 +88,21 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <form style={formStyle} onSubmit={handleSubmit(onSubmit)} noValidate>
-        <h2 style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 20 }}>Iniciar Sesión</h2>
+      <div className="min-h-[calc(100vh-200px)] flex items-center justify-center tablet:min-h-[calc(100vh-250px)]">
+        <form 
+          style={formStyle} 
+          onSubmit={handleSubmit(onSubmit)} 
+          noValidate
+          className="tablet:max-w-xl tablet:p-10"
+        >
+        <h2 className="text-responsive-h2 font-bold leading-snug" style={{ marginBottom: 20 }}>Iniciar Sesión</h2>
         
-        <label style={labelStyle}>Correo electrónico</label>
+        <label className="text-responsive-body font-semibold" style={labelStyle}>Correo electrónico</label>
         {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
         <Input
           type="email"
           placeholder="correo@ejemplo.com"
+          className="tablet:text-lg tablet:py-3 tablet:min-h-[48px]"
           {...register('email', {
             required: 'El correo es obligatorio',
             pattern: {
@@ -103,10 +113,11 @@ const Login = () => {
         />
         {errors.email && <span style={errorStyle}>{errors.email.message}</span>}
 
-        <label style={labelStyle}>Contraseña</label>
+        <label className="text-responsive-body font-semibold" style={labelStyle}>Contraseña</label>
         <Input
           type="password"
           placeholder="Mínimo 6 caracteres"
+          className="tablet:text-lg tablet:py-3 tablet:min-h-[48px]"
           {...register('password', { 
             required: 'La contraseña es obligatoria',
             minLength: {
@@ -139,13 +150,17 @@ const Login = () => {
 
 
   {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
-  <Button type="submit" style={{ width: '100%', marginTop: 8 }} disabled={!acceptedPolicy}>
-  Entrar
-</Button>
-
+  <Button 
+    type="submit" 
+    style={{ width: '100%', marginTop: 8 }}
+    className="tablet-button tablet:text-lg touch-feedback"
+    disabled={!acceptedPolicy}
+  >
+    Entrar
+  </Button>
         
         <div style={{ marginTop: 12 }}>
-          <a href="/forgot-password" style={{ color: '#2563eb', textDecoration: 'underline', fontSize: '0.95rem' }}>
+          <a href="/forgot-password" className="text-responsive-small font-medium hover:underline" style={{ color: '#2563eb' }}>
             ¿Olvidaste tu contraseña?
           </a>
         </div>
@@ -163,6 +178,7 @@ const Login = () => {
         {mensaje && <p style={{ marginTop: 16, color: '#2563eb', fontWeight: 600 }}>{mensaje}</p>}
         
       </form>
+      </div>
       <Footer />
     </>
   );

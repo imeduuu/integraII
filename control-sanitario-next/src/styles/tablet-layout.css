@@ -1,0 +1,406 @@
+/**
+ * Estilos específicos para tablets
+ * Optimizado para tablets de 768px a 1024px
+ */
+
+/* ============================================
+   BREAKPOINTS DE REFERENCIA:
+   - Tablets verticales: 768px - 834px
+   - Tablets horizontales: 1024px - 1366px
+   - iPad: 768px x 1024px
+   - iPad Pro: 834px x 1194px, 1024px x 1366px
+   ============================================ */
+
+/* Contenedores principales en tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Contenedor principal con padding optimizado para tablet */
+  .tablet-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 100%;
+  }
+
+  /* Grid de 2 columnas para contenido en tablet */
+  .tablet-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Grid de 3 columnas para tablet horizontal */
+  .tablet-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* Tarjetas optimizadas para tablet */
+  .tablet-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  /* Imágenes responsivas en tablets */
+  .tablet-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+  }
+}
+
+/* Tablets en orientación vertical (portrait) */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  /* Hero section ajustado para tablet vertical */
+  .hero-section {
+    min-height: 60vh;
+    padding: 3rem 2rem;
+  }
+
+  .hero-content {
+    max-width: 600px;
+    padding: 2rem;
+  }
+
+  /* Navegación optimizada */
+  .nav-menu {
+    gap: 1.5rem;
+    font-size: 1rem;
+  }
+
+  /* Formularios más anchos */
+  .form-container {
+    max-width: 600px;
+    padding: 2rem;
+  }
+
+  .form-input {
+    font-size: 1rem;
+    padding: 0.875rem;
+  }
+
+  /* Botones táctiles para tablet */
+  .tablet-button {
+    padding: 0.875rem 1.75rem;
+    font-size: 1.0625rem;
+    min-height: 48px;
+    min-width: 120px;
+  }
+
+  /* Grid de tarjetas en 2 columnas */
+  .animal-grid,
+  .campaign-grid,
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Métricas en 2 columnas */
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Tablets en orientación horizontal (landscape) */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+  /* Hero más amplio en horizontal */
+  .hero-section {
+    min-height: 70vh;
+    padding: 2rem 3rem;
+  }
+
+  .hero-content {
+    max-width: 700px;
+    padding: 2.5rem;
+  }
+
+  /* Grid de 3 columnas en horizontal */
+  .animal-grid,
+  .campaign-grid,
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* Métricas en 4 columnas */
+  .metrics-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* Sidebar visible en tablets horizontales */
+  .sidebar {
+    display: block;
+    width: 240px;
+    position: relative;
+  }
+
+  /* Layout con sidebar */
+  .layout-with-sidebar {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Optimizaciones generales para tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  /* Tipografía mejorada */
+  h1 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.3;
+  }
+
+  body {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Espaciado consistente */
+  .section-spacing {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Modales centrados */
+  .modal-content {
+    max-width: 600px;
+    width: 90%;
+    padding: 2rem;
+    margin: 2rem auto;
+  }
+
+  /* Tooltips más grandes */
+  .tooltip {
+    font-size: 0.9375rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Notificaciones/Toasts */
+  .toast-container {
+    top: 1.5rem;
+    right: 1.5rem;
+    max-width: 400px;
+  }
+
+  .toast-item {
+    padding: 1rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  /* Navegación sticky */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+
+  /* Footer optimizado */
+  .footer {
+    padding: 2rem;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  /* Tablas responsivas */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    font-size: 0.9375rem;
+  }
+
+  th, td {
+    padding: 0.875rem;
+  }
+
+  /* Mejora de interacciones táctiles */
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 44px;
+    padding: 0.75rem 1.5rem;
+  }
+
+  /* Checkbox y radio más grandes */
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Select mejorados */
+  select {
+    padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+    font-size: 1rem;
+    background-size: 20px;
+  }
+
+  /* Mejora de scroll */
+  .scrollable-content {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Imágenes de galería */
+  .image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .image-gallery-item {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+}
+
+/* Clases de utilidad para tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tablet-only {
+    display: block !important;
+  }
+
+  .tablet-hidden {
+    display: none !important;
+  }
+
+  .tablet-flex {
+    display: flex !important;
+  }
+
+  .tablet-grid {
+    display: grid !important;
+  }
+
+  .tablet-text-center {
+    text-align: center !important;
+  }
+
+  .tablet-mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .tablet-w-full {
+    width: 100% !important;
+  }
+
+  .tablet-px-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .tablet-py-3 {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+}
+
+/* Animaciones optimizadas para tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tablet-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .tablet-slide-up {
+      animation: slideUp 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+/* Soporte para gestos táctiles en tablets */
+@media (min-width: 768px) and (max-width: 1366px) and (hover: none) {
+  /* Eliminar hover effects en tablets táctiles */
+  .hover-effect:hover {
+    transform: none !important;
+  }
+
+  /* Añadir feedback táctil */
+  .touch-feedback:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+  }
+
+  /* Áreas táctiles más grandes */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* iPad específico (768px x 1024px) */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .ipad-optimized {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Aprovechar viewport completo */
+  .ipad-fullwidth {
+    width: 100vw;
+    max-width: 100vw;
+  }
+}
+
+/* iPad Pro específico (834px x 1194px, 1024px x 1366px) */
+@media only screen 
+  and (min-device-width: 834px) 
+  and (max-device-width: 1366px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .ipad-pro-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .ipad-pro-text {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+}

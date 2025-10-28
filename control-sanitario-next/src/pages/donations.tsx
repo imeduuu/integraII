@@ -86,59 +86,66 @@ const [acceptedPolicy, setAcceptedPolicy] = React.useState(false);
         <section className={styles.card}>
           <h2 className={styles.title}>Donaciones y Voluntariado</h2>
           <form onSubmit={handleSubmit} className={styles.formGrid}>
-            <div className={styles.group}>
-              <label className={styles.label}>Nombre</label>
-              {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
-              <Input
-                className={styles.input}
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                placeholder="Tu nombre"
-              />
+            {/* Grid de 2 columnas en tablets */}
+            <div className={styles.gridRow}>
+              <div className={styles.group}>
+                <label className={styles.label}>Nombre</label>
+                {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
+                <Input
+                  className={styles.input}
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="Tu nombre"
+                />
+              </div>
+              <div className={styles.group}>
+                <label className={styles.label}>Correo electrónico</label>
+                <Input
+                  className={styles.input}
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="tucorreo@ejemplo.com"
+                />
+                <span className={styles.helper}>Opcional, por si necesitamos contactarte.</span>
+              </div>
             </div>
-            <div className={styles.group}>
-              <label className={styles.label}>Correo electrónico</label>
-              <Input
-                className={styles.input}
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="tucorreo@ejemplo.com"
-              />
-              <span className={styles.helper}>Opcional, por si necesitamos contactarte.</span>
+            
+            <div className={styles.gridRow}>
+              <div className={styles.group}>
+                <label className={styles.label}>Tipo de donación</label>
+                <select
+                  className={styles.select}
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Selecciona...</option>
+                  <option value="alimento">Alimento</option>
+                  <option value="medicinas">Medicinas</option>
+                  <option value="ropa">Ropa</option>
+                  <option value="otros">Otros</option>
+                </select>
+              </div>
+              <div className={styles.group}>
+                <label className={styles.label}>Cantidad</label>
+                <Input
+                  className={styles.input}
+                  type="text"
+                  name="quantity"
+                  value={formData.quantity}
+                  onChange={handleChange}
+                  required
+                  placeholder="Ej: 5 cajas, 10 sacos"
+                />
+              </div>
             </div>
-            <div className={styles.group}>
-              <label className={styles.label}>Tipo de donación</label>
-              <select
-                className={styles.select}
-                name="type"
-                value={formData.type}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Selecciona...</option>
-                <option value="alimento">Alimento</option>
-                <option value="medicinas">Medicinas</option>
-                <option value="ropa">Ropa</option>
-                <option value="otros">Otros</option>
-              </select>
-            </div>
-            <div className={styles.group}>
-              <label className={styles.label}>Cantidad</label>
-              <Input
-                className={styles.input}
-                type="text"
-                name="quantity"
-                value={formData.quantity}
-                onChange={handleChange}
-                required
-                placeholder="Ej: 5 cajas, 10 sacos"
-              />
-            </div>
+            
             <div className={styles.group}>
               <label className={styles.label}>Mensaje (opcional)</label>
               <textarea

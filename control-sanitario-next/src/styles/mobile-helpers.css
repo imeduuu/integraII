@@ -1,0 +1,119 @@
+/* Mobile helpers: reglas globales para mejorar visualización en pantallas pequeñas.
+   Usa breakpoints adicionales y evita !important excesivo. */
+
+/* Base: asegurar box-sizing en todo */
+* {
+  box-sizing: border-box;
+}
+
+/* Mobile First: <= 640px (sm breakpoint de Tailwind) */
+@media (max-width: 640px) {
+  /* Reset body y html para evitar overflow horizontal */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  body {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* Contenedores: asegurar que no excedan el viewport */
+  [class*="container"],
+  [class*="wrapper"],
+  [class*="content"],
+  [class*="section"],
+  [class*="panel"],
+  [class*="box"],
+  [class*="card"] {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Títulos: reducir tamaños para legibilidad */
+  h1 { font-size: 1.75rem; line-height: 1.2; }
+  h2 { font-size: 1.5rem; line-height: 1.25; }
+  h3 { font-size: 1.25rem; line-height: 1.3; }
+  h4 { font-size: 1.125rem; line-height: 1.35; }
+
+  /* Botones: tamaño táctil mínimo */
+  button,
+  [type="button"],
+  [type="submit"],
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.65rem 1rem;
+  }
+
+  /* Contenedores de botones: apilar verticalmente */
+  [class*="buttonContainer"],
+  [class*="actionButtons"],
+  [class*="actions"],
+  [class*="filterButtons"] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  /* Inputs: tamaño táctil adecuado */
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    font-size: 16px; /* Evita zoom en iOS */
+    width: 100%;
+  }
+
+  /* Imágenes: siempre responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Tablas: scroll horizontal si necesario */
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Grillas: forzar una columna */
+  [class*="grid"] {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Extra pequeños: <= 480px */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.35rem; }
+  h3 { font-size: 1.2rem; }
+
+  [class*="container"],
+  [class*="wrapper"] {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  /* Reducir padding en tarjetas y modales */
+  [class*="card"],
+  [class*="modal"] {
+    padding: 1rem;
+  }
+}

@@ -69,6 +69,7 @@ const Home = () => {
 
       <Navbar />
       <div
+        className="hero-section"
         style={{
           minHeight: '75vh',
           width: '100%',
@@ -82,6 +83,7 @@ const Home = () => {
         }}
       >
         <div
+          className="hero-content tablet-fade-in"
           style={{
             background: 'rgba(255,255,255,0.75)',
             borderRadius: 24,
@@ -106,12 +108,10 @@ const Home = () => {
             }}
           />
           <h1
+            className="text-responsive-h1 font-extrabold tracking-tight"
             style={{
-              fontWeight: 800,
-              fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
               color: '#2563eb',
               marginBottom: 10,
-              letterSpacing: '1px',
             }}
           >
             Bienvenido a Control Sanitario
@@ -128,16 +128,16 @@ const Home = () => {
             }}
           />
           <p
+            className="text-responsive-lead leading-relaxed font-medium"
             style={{
               color: '#334155',
-              fontSize: '1.08rem',
               marginBottom: 32,
-              fontWeight: 500,
             }}
           >
             Gestiona tu salud y bienestar de forma sencilla y segura.
           </p>
           <div
+            className="tablet:gap-6"
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -147,6 +147,7 @@ const Home = () => {
           >
             <a
               href="/login"
+              className="tablet-button touch-feedback"
               style={{
                 ...buttonStyle,
                 background: 'linear-gradient(90deg,#2563eb 60%,#60a5fa 100%)',
@@ -156,6 +157,7 @@ const Home = () => {
             </a>
             <a
               href="/register"
+              className="tablet-button touch-feedback"
               style={{
                 ...buttonStyle,
                 background: 'linear-gradient(90deg,#60a5fa 60%,#2563eb 100%)',
@@ -167,6 +169,7 @@ const Home = () => {
         </div>
       </div>
       <main
+        className="tablet-container"
         style={{
           padding: '2rem',
           maxWidth: '1200px',
@@ -177,9 +180,8 @@ const Home = () => {
         }}
       >
         <h1
+          className="text-responsive-h1 font-extrabold leading-tight"
           style={{
-            fontSize: '2.5rem',
-            fontWeight: 800,
             color: '#2563eb',
             marginBottom: '1rem',
             textAlign: 'center',
@@ -188,12 +190,11 @@ const Home = () => {
           Bienvenido a la Plataforma de Control Sanitario
         </h1>
         <p
+          className="text-responsive-lead leading-relaxed measure-normal"
           style={{
-            fontSize: '1.125rem',
             color: '#334155',
             marginBottom: '2rem',
             textAlign: 'center',
-            maxWidth: '800px',
           }}
         >
           Reporta animales en situación de calle, consulta focos sanitarios y participa en la comunidad.
@@ -203,10 +204,10 @@ const Home = () => {
         {/* Sección de Prueba de Notificaciones - MÁS VISIBLE */}
         <div className="my-12 p-8 border-4 border-teal-500 rounded-2xl bg-gradient-to-br from-teal-50 to-cyan-50 shadow-xl">
           <div className="text-center mb-6">
-            <h3 className="text-3xl font-bold mb-2 text-teal-700">
+            <h3 className="text-responsive-h3 font-bold leading-snug mb-2 text-teal-700">
               🔔 Prueba las Notificaciones Toast
             </h3>
-            <p className="text-gray-600 text-lg">
+            <p className="text-responsive-body leading-relaxed text-gray-600">
               Haz clic en los botones para ver las notificaciones con fondo verde aqua ⬆️
             </p>
             <div className="mt-2 inline-block px-4 py-2 bg-teal-100 rounded-lg">

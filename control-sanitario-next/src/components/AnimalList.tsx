@@ -69,19 +69,20 @@ export default function AnimalList({ isLoading }: { isLoading?: boolean }) {
   const [ubicacion, setUbicacion] = useState('');
 
   // Aplicar filtros de búsqueda
-  const filtered = animals.filter(a =>
-    (estado ? a.estado === estado : true) &&
-    (ubicacion ? a.ubicacion === ubicacion : true)
+  const filtered = animals.filter(
+    (a) =>
+      (estado ? a.estado === estado : true) &&
+      (ubicacion ? a.ubicacion === ubicacion : true)
   );
 
   return (
-    <div className="p-4">
+    <div className="p-4 tablet:p-6 tablet-container">
       {/* Filtros de búsqueda */}
-      <div className="flex gap-4 mb-6 flex-wrap">
+      <div className="flex gap-4 mb-6 flex-wrap tablet:justify-center">
         <select
-          className="border rounded px-2 py-1"
+          className="border rounded px-2 py-1 tablet:px-4 tablet:py-2 tablet:text-base"
           value={estado}
-          onChange={e => setEstado(e.target.value)}
+          onChange={(e) => setEstado(e.target.value)}
         >
           <option value="">Todos los estados</option>
           <option value="Disponible">Disponible</option>
@@ -89,9 +90,9 @@ export default function AnimalList({ isLoading }: { isLoading?: boolean }) {
           <option value="En tratamiento">En tratamiento</option>
         </select>
         <select
-          className="border rounded px-2 py-1"
+          className="border rounded px-2 py-1 tablet:px-4 tablet:py-2 tablet:text-base"
           value={ubicacion}
-          onChange={e => setUbicacion(e.target.value)}
+          onChange={(e) => setUbicacion(e.target.value)}
         >
           <option value="">Todas las ubicaciones</option>
           <option value="Norte">Norte</option>
@@ -99,10 +100,12 @@ export default function AnimalList({ isLoading }: { isLoading?: boolean }) {
           <option value="Centro">Centro</option>
         </select>
       </div>
+
+      {/* Lista o skeleton según el estado de carga */}
       {isLoading ? (
         <SkeletonList count={6} />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 tablet-portrait:grid-cols-2 tablet-landscape:grid-cols-3 gap-6 justify-center animal-grid">
           {filtered.map((animal, i) => (
             <motion.div
               key={i}

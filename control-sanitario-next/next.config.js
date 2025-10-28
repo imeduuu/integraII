@@ -4,48 +4,71 @@ const nextConfig = {
   swcMinify: true,
   productionBrowserSourceMaps: false,
 
-  // Añadir headers de seguridad incluyendo CSP
   async headers() {
-    // Ajusta estas directivas a los orígenes que tu app realmente usa:
+    // --- Cabeceras de seguridad y CSP ---
     const cspDirectives = [
       "default-src 'self'",
-      // Scripts: permitir analytics/CDN según sea necesario. Evitar 'unsafe-eval'/'unsafe-inline' en producción si es posible.
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
-      // Estilos: permitir Google Fonts u otros CDNs si se usan
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      // Imágenes: self, data, blob y dominios de imágenes/CDN que uses
       "img-src 'self' data: blob: https://images.unsplash.com",
-      // Conexiones (APIs, websockets): ajustar a tus endpoints
       "connect-src 'self' https://api.example.com wss:",
-      // Fuentes: Google fonts u otros
       "font-src 'self' https://fonts.gstatic.com data:",
-      // Evita que la app sea embebida en frames externos
       "frame-ancestors 'none'",
-      // Base URI y form actions
       "base-uri 'self'",
-      "form-action 'self'"
+      "form-action 'self'",
     ];
 
-    // Construir header como string
-    const contentSecurityPolicy = cspDirectives.join('; ');
+    const contentSecurityPolicy = cspDirectives.join("; ");
 
     return [
+      // 🔒 Aplicar headers globales de seguridad
       {
-        source: '/(.*)',
+        source: "/(.*)",
         headers: [
           {
-            key: 'Content-Security-Policy',
-            value: contentSecurityPolicy
+            key: "Content-Security-Policy",
+            value: contentSecurityPolicy,
           },
-          // Otros headers de seguridad opcionales
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'Permissions-Policy', value: 'geolocation=(self), microphone=()' }
-        ]
-      }
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "geolocation=(self), microphone=()",
+          },
+        ],
+      },
+      // ⚙️ Headers para Service Worker
+      {
+        source: "/sw.js",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+          {
+            key: "Service-Worker-Allowed",
+            value: "/",
+          },
+        ],
+      },
+      // 📱 Headers para manifest.json
+      {
+        source: "/manifest.json",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/manifest+json",
+          },
+        ],
+      },
     ];
-  }
+  },
+
+  // 🔧 Archivos estáticos
+  publicRuntimeConfig: {
+    staticFolder: "/public",
+  },
 };
 
 module.exports = nextConfig;
