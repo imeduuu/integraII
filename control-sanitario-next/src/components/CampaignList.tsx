@@ -5,6 +5,7 @@
 import React from "react";
 import { campaigns as defaultCampaigns } from "../services/mockCampaigns";
 import { useNotification } from "./NotificationProvider";
+import { SkeletonList, SkeletonCard } from './ui/Skeleton';
 
 interface Campaign {
   id: number;
@@ -15,18 +16,35 @@ interface Campaign {
 }
 interface CampaignListProps {
   campaigns?: Campaign[];
+  isLoading?: boolean;
 }
 
-const CampaignList: React.FC<CampaignListProps> = ({ campaigns = defaultCampaigns }) => {
+const CampaignList: React.FC<CampaignListProps> = ({ campaigns = defaultCampaigns, isLoading = false }) => {
   const { addToast } = useNotification();
+  const [registeringId, setRegisteringId] = React.useState<number | null>(null);
   
-  const handleRegister = (title: string, active: boolean) => {
+  const handleRegister = (id: number, title: string, active: boolean) => {
     if (!active) {
       addToast(`La campaña "${title}" está inactiva, no puedes inscribirte.`, 'error');
       return;
     }
-    addToast(`Te has inscrito en la campaña "${title}" con éxito.`, 'success');
+    setRegisteringId(id);
+    // Simular registro asincrónico
+    setTimeout(() => {
+      setRegisteringId(null);
+      addToast(`Te has inscrito en la campaña "${title}" con éxito.`, 'success');
+    }, 500);
   };
+
+  if (isLoading) {
+    return (
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <SkeletonCard />
+        <SkeletonCard />
+        <SkeletonCard />
+      </div>
+    );
+  }
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -46,10 +64,11 @@ const CampaignList: React.FC<CampaignListProps> = ({ campaigns = defaultCampaign
             Estado: {campaign.active ? "Activa ✅" : "Inactiva ❌"}
           </p>
           <button
-            onClick={() => handleRegister(campaign.title, campaign.active)}
+            onClick={() => handleRegister(campaign.id, campaign.title, campaign.active)}
             className="mt-4 px-4 py-2 bg-blue-600 dark:bg-blue-800 text-white rounded hover:bg-blue-700 dark:hover:bg-blue-900 transition"
+            disabled={registeringId === campaign.id}
           >
-            Inscribirse
+            {registeringId === campaign.id ? 'Inscribiendo...' : 'Inscribirse'}
           </button>
         </div>
       ))}

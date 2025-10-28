@@ -4,6 +4,9 @@
  */
 import React, { useState } from "react";
 import styles from "../styles/admin-users.module.css";
+import Button from './ui/Button';
+import { useNotification } from './NotificationProvider';
+import { isEmail } from '../utils/validators';
 
 // Estructura de datos de usuario
 type User = {
@@ -27,6 +30,8 @@ const UserDetail: React.FC<Props> = ({ user }) => {
   const [formData, setFormData] = useState<User>(user);
   // Mensajes de validación y confirmación
   const [message, setMessage] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const { addToast } = useNotification();
 
   // Validaciones de campos requeridos
   const validateForm = (): boolean => {
@@ -34,7 +39,7 @@ const UserDetail: React.FC<Props> = ({ user }) => {
       setMessage("El nombre no puede estar vacío");
       return false;
     }
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    if (!isEmail(formData.email)) {
       setMessage("El email no es válido");
       return false;
     }
@@ -46,8 +51,14 @@ const UserDetail: React.FC<Props> = ({ user }) => {
     if (!validateForm()) return;
 
     // En el futuro aquí se conectará con la API
-    console.log("Datos guardados (mock):", formData);
-    setMessage("Cambios guardados correctamente ✅");
+    setIsSaving(true);
+    // Simular llamada async
+    setTimeout(() => {
+      console.log("Datos guardados (mock):", formData);
+      setMessage("Cambios guardados correctamente ✅");
+      addToast('Cambios guardados correctamente', 'success');
+      setIsSaving(false);
+    }, 400);
   };
 
   return (
@@ -100,9 +111,9 @@ const UserDetail: React.FC<Props> = ({ user }) => {
       </div>
 
       {/* Botón para guardar cambios */}
-      <button className={styles.saveButton} onClick={handleSave}>
+      <Button className={styles.saveButton} onClick={handleSave} isLoading={isSaving}>
         Guardar cambios
-      </button>
+      </Button>
 
       {/* Mensaje de validación o confirmación */}
       {message && <p className={styles.feedback}>{message}</p>}

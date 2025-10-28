@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import { useToast } from '../hooks/useToast';
+import { useToastContext } from '../components/ToastContainer';
 import ToastContainer from '../components/ToastContainer';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -237,7 +238,7 @@ const TestToastPage: React.FC = () => {
 
       <Footer />
 
-      {/* Contenedor de Toasts */}
+  {/* Contenedor de Toasts gestionado por ToastProvider en _app */}
     </div>
   );
 };
