@@ -20,7 +20,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
   const router = useRouter();
   const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center hover:shadow-lg transition-shadow duration-300 motion-safe-transition">
+    <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 w-full max-w-xs sm:w-72 flex flex-col items-center hover:shadow-lg transition-shadow duration-300 motion-safe-transition">
       {/* Imagen del animal con tooltip y click para ver detalles usando Next/Image */}
       <Tooltip text={`Ver detalles de ${nombre}`}>
         <div onClick={() => router.push(`/animals/${animalId}`)} style={{ cursor: 'pointer' }}>

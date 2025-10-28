@@ -1,5 +1,6 @@
 /* Estilos mejorados para la administración de usuarios */
 .container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
@@ -352,9 +353,9 @@
 }
 
 @media (max-width: 480px) {
-  .title {
-    font-size: 1.75rem;
-  }
+  .container { padding: 1rem; }
+  .title { font-size: 1.6rem; }
+  .filterButtons { max-width: 100%; gap: 0.5rem; }
   
   .filterButtons {
     flex-direction: column;

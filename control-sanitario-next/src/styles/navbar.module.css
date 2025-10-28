@@ -1,114 +1,131 @@
-/* Título alineado a la izquierda */
+﻿/* Navbar responsive con menú hamburguesa en móviles */
+.navbar {
+  background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-bottom: 2px solid #2563eb;
+  box-shadow: 0 2px 12px rgba(37,99,235,0.08);
+  position: relative;
+  z-index: 1000;
+  width: 100%;
+}
+
+.dark .navbar {
+  background: linear-gradient(90deg, #111827 60%, #1e293b 100%);
+  border-bottom: 2px solid #334155;
+}
+
+.navbarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 .navbarTitle {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: bold;
   color: #000000;
   letter-spacing: 0.05em;
-  margin-right: auto;
-  align-self: flex-start;
 }
+
 .dark .navbarTitle {
   color: #fff;
 }
-.profileSectionRight {
-  position: absolute;
-  top: 1.2rem;
-  right: 2.5vw;
+
+.menuToggle {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.hamburger {
+  width: 25px;
+  height: 3px;
+  background-color: #000000;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.dark .hamburger {
+  background-color: #fff;
+}
+
+.navbarLinks {
+  display: none;
+  flex-direction: column;
   gap: 0.5rem;
-}
-/* Navbar base */
-.navbar {
-  background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
-  color: #fff;
-  padding: 1.2rem 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #2563eb;
-  box-shadow: 0 2px 12px rgba(37,99,235,0.08);
-  position: relative;
-  z-index: 10;
-  width: 100vw;
-  min-width: 100vw;
-  margin: 0;
-  left: 0;
-  top: 0;
-}
-.dark .navbar {
-  background: linear-gradient(90deg, #111827 60%, #1e293b 100%);
-  color: #fff;
-  border-bottom: 2px solid #334155;
-}
-@media (min-width: 640px) {
-  .navbar {
-    flex-direction: row;
-  }
+  width: 100%;
+  padding: 1rem 0;
 }
 
-/* Navbar ocupa todo el ancho, sin bordes blancos laterales */
-.navbar {
-  width: 100vw;
-  min-width: 100vw;
-  margin: 0;
-  left: 0;
-  top: 0;
-  background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
-  color: #fff;
-  padding: 1.2rem 0;
+.navbarLinksOpen {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #2563eb;
-  box-shadow: 0 2px 12px rgba(37,99,235,0.08);
-  position: relative;
-  z-index: 10;
 }
-
 
 .navLink {
   color: #000000;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   border-radius: 0.5rem;
   text-decoration: none;
   transition: background-color 0.3s ease-in-out, color 0.3s;
+  display: block;
+  text-align: left;
 }
+
 .dark .navLink {
   color: #fff;
 }
+
 .navLink:hover {
-  background-color: #ffffff; /* Un gris oscuro al pasar el cursor */
+  background-color: rgba(255, 255, 255, 0.2);
 }
+
 .navLinkActive {
-  background-color: #43a2f0; /* Un gris oscuro para el enlace activo */
+  background-color: #43a2f0;
   font-weight: bold;
   position: relative;
-  overflow: hidden;
 }
+
 .navLinkActive::after {
-  content: '';
+  content: "";
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   bottom: 0.25rem;
-  width: 70%;
-  height: 2px;
+  width: 4px;
+  height: 70%;
   background-color: #000000;
 }
+
+.dark .navLinkActive::after {
+  background-color: #fff;
+}
+
 .profileSection {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  padding: 0.75rem 1rem;
 }
-.profileImage {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #000000;
+
+.profileSection a {
+  color: #ffffff !important;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.profileSection a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
 }
 
 .profileImage {
@@ -116,5 +133,60 @@
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #000000;
+  border: 2px solid #ffffff;
+  cursor: pointer;
+}
+
+.dark .profileImage {
+  border-color: #fff;
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem 2rem;
+  }
+
+  .navbarHeader {
+    width: auto;
+  }
+
+  .navbarTitle {
+    font-size: 1.5rem;
+    margin-right: 2rem;
+  }
+
+  .menuToggle {
+    display: none;
+  }
+
+  .navbarLinks {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    flex: 1;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navLink {
+    padding: 0.5rem 1rem;
+    text-align: center;
+  }
+
+  .navLinkActive::after {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 70%;
+    height: 2px;
+  }
+
+  .profileSection {
+    margin-left: auto;
+    padding: 0;
+  }
 }

@@ -11,6 +11,7 @@
 }
 
 .footerContainer {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -68,6 +69,13 @@
   background-color: white;
   color: #2563eb;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 480px) {
+  .footer { padding: 1.25rem 0.75rem; }
+  .footerTitle { font-size: 1.25rem; }
+  .footerLinkButton a { padding: 0.5rem 0.9rem; font-size: 0.9rem; }
+  .footerContainer { gap: 0.5rem; }
 }
 
 .footerLinkButton a:hover {

@@ -107,21 +107,23 @@ const Modal: React.FC<ModalProps> = ({
       {/* Contenido modal */}
       <div
         ref={modalRef}
-        className={`relative bg-white rounded-lg shadow-lg p-6 z-10 transform transition-all duration-200 ${
+        className={`relative bg-white rounded-lg shadow-lg p-4 sm:p-6 z-10 transform transition-all duration-200 ${
           isClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"
-        } w-96`}
+        } w-full max-w-md mx-4 sm:mx-0 max-h-[90vh] overflow-y-auto`}
         onClick={(e) => e.stopPropagation()}
         tabIndex={-1}
+        role="document"
       >
         {showCloseButton && (
-          <Button
+          <button
             ref={closeButtonRef}
-            variant="secondary"
+            type="button"
             onClick={handleClose}
-            className="absolute top-2 right-2"
+            className="absolute top-2 right-2 p-1 bg-transparent rounded hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            aria-label="Cerrar modal"
           >
             ✕
-          </Button>
+          </button>
         )}
         <div>{children}</div>
       </div>
