@@ -5,6 +5,7 @@
 import React from "react";
 import { campaigns as defaultCampaigns } from "../services/mockCampaigns";
 import { useNotification } from "./NotificationProvider";
+import { SkeletonList, SkeletonCard } from './ui/Skeleton';
 
 interface Campaign {
   id: number;
@@ -15,9 +16,10 @@ interface Campaign {
 }
 interface CampaignListProps {
   campaigns?: Campaign[];
+  isLoading?: boolean;
 }
 
-const CampaignList: React.FC<CampaignListProps> = ({ campaigns = defaultCampaigns }) => {
+const CampaignList: React.FC<CampaignListProps> = ({ campaigns = defaultCampaigns, isLoading = false }) => {
   const { addToast } = useNotification();
   
   const handleRegister = (title: string, active: boolean) => {
@@ -27,6 +29,16 @@ const CampaignList: React.FC<CampaignListProps> = ({ campaigns = defaultCampaign
     }
     addToast(`Te has inscrito en la campaña "${title}" con éxito.`, 'success');
   };
+
+  if (isLoading) {
+    return (
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <SkeletonCard />
+        <SkeletonCard />
+        <SkeletonCard />
+      </div>
+    );
+  }
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -35,6 +35,8 @@
     "ts-node": "^10.9.2",
     "typescript": "5.9.2",
     "vitest": "^3.2.4"
+    ,
+    "identity-obj-proxy": "^3.0.0"
   },
   "scripts": {
     "dev": "next dev",

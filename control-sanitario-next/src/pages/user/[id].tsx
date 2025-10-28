@@ -8,6 +8,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { HiUser, HiMail, HiLocationMarker, HiCalendar, HiSpeakerphone } from "react-icons/hi";
 import styles from "../../styles/user-profile.module.css";
+import { SkeletonList, SkeletonCard } from '../../components/ui/Skeleton';
 
 // Datos mock expandidos de usuarios con información de perfil
 const usersProfileData = [
@@ -159,10 +160,23 @@ const UserProfilePage = () => {
       <>
         <Navbar />
         <main className={styles.container}>
-          <div className={styles.loadingContainer}>
-            <div className={styles.spinner}></div>
-            <p>Cargando perfil...</p>
-          </div>
+          <section className={styles.profileHeader}>
+            <div className={styles.profileImageContainer}>
+              <div className="w-24 h-24 rounded-full bg-gray-200 animate-pulse" />
+            </div>
+            <div className={styles.profileInfo}>
+              <div className={styles.nameAndRole}>
+                <div className="w-48 h-8 bg-gray-200 rounded animate-pulse" />
+              </div>
+              <div className="mt-3">
+                <div className="w-full h-4 bg-gray-200 rounded animate-pulse mb-2" />
+                <div className="w-3/4 h-4 bg-gray-200 rounded animate-pulse" />
+              </div>
+            </div>
+          </section>
+          <section className={styles.statsSection}>
+            <SkeletonList count={3} />
+          </section>
         </main>
         <Footer />
       </>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from '../styles/commentSection.module.css';
+import { Skeleton } from './ui/Skeleton';
 
 interface Comment {
   id: number;
@@ -10,9 +11,10 @@ interface Comment {
 
 interface CommentSectionProps {
   animalId: number;
+  isLoading?: boolean;
 }
 
-const CommentSection = ({ animalId }: CommentSectionProps) => {
+const CommentSection = ({ animalId, isLoading = false }: CommentSectionProps) => {
   const [comments, setComments] = useState<Comment[]>([
     { id: 1, usuario: 'Juan', contenido: 'Firulais es muy amigable!', fecha: '2025-10-03' },
     { id: 2, usuario: 'María', contenido: 'Michi parece tímido pero dulce.', fecha: '2025-10-02' },
@@ -55,64 +57,82 @@ const CommentSection = ({ animalId }: CommentSectionProps) => {
 
   return (
     <div className={styles.root}>
-      <h3 className={styles.title}>Comentarios</h3>
-      <div style={{ marginBottom: '1rem' }}>
-        {comments.map(c => (
-          <div key={c.id} className={styles.comment}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span className={styles.user}>{c.usuario}</span>
-              <span className={styles.date}>({c.fecha})</span>
+      {isLoading ? (
+        <div>
+          <h3 className={styles.title}>Comentarios</h3>
+          <div style={{ marginBottom: '1rem' }}>
+            <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded mb-3">
+              <Skeleton width="w-1/4" height="h-4" />
+              <div className="mt-2"><Skeleton width="w-full" height="h-3" /></div>
             </div>
-            {editingCommentId === c.id ? (
-              <div>
-                <input
-                  type="text"
-                  value={editingContent}
-                  onChange={(e) => setEditingContent(e.target.value)}
-                  className={styles.input}
-                />
-                <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                  <button
-                    onClick={() => handleSaveEdit(c.id)}
-                    className={styles.button}
-                  >Guardar</button>
-                  <button
-                    onClick={() => setEditingCommentId(null)}
-                    className={styles.editButton}
-                  >Cancelar</button>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <span className={styles.commentContent} style={{ display: 'block', margin: '0.5rem 0' }}>{c.contenido}</span>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <button
-                    onClick={() => handleEdit(c)}
-                    className={styles.editButton}
-                  >Editar</button>
-                  <button
-                    onClick={() => handleDelete(c.id)}
-                    className={styles.deleteButton}
-                  >Eliminar</button>
-                </div>
-              </div>
-            )}
+            <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded mb-3">
+              <Skeleton width="w-1/4" height="h-4" />
+              <div className="mt-2"><Skeleton width="w-full" height="h-3" /></div>
+            </div>
           </div>
-        ))}
-      </div>
-      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-        <input
-          type="text"
-          value={newComment}
-          onChange={e => setNewComment(e.target.value)}
-          className={styles.input}
-          placeholder="Escribe un comentario..."
-        />
-        <button
-          onClick={handleAddComment}
-          className={styles.button}
-        >Enviar</button>
-      </div>
+        </div>
+      ) : (
+        <>
+          <h3 className={styles.title}>Comentarios</h3>
+          <div style={{ marginBottom: '1rem' }}>
+            {comments.map(c => (
+              <div key={c.id} className={styles.comment}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span className={styles.user}>{c.usuario}</span>
+                  <span className={styles.date}>({c.fecha})</span>
+                </div>
+                {editingCommentId === c.id ? (
+                  <div>
+                    <input
+                      type="text"
+                      value={editingContent}
+                      onChange={(e) => setEditingContent(e.target.value)}
+                      className={styles.input}
+                    />
+                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                      <button
+                        onClick={() => handleSaveEdit(c.id)}
+                        className={styles.button}
+                      >Guardar</button>
+                      <button
+                        onClick={() => setEditingCommentId(null)}
+                        className={styles.editButton}
+                      >Cancelar</button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <span className={styles.commentContent} style={{ display: 'block', margin: '0.5rem 0' }}>{c.contenido}</span>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <button
+                        onClick={() => handleEdit(c)}
+                        className={styles.editButton}
+                      >Editar</button>
+                      <button
+                        onClick={() => handleDelete(c.id)}
+                        className={styles.deleteButton}
+                      >Eliminar</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+            <input
+              type="text"
+              value={newComment}
+              onChange={e => setNewComment(e.target.value)}
+              className={styles.input}
+              placeholder="Escribe un comentario..."
+            />
+            <button
+              onClick={handleAddComment}
+              className={styles.button}
+            >Enviar</button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
