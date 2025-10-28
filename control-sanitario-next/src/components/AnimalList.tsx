@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import AnimalCard from './AnimalCard';
 import { SkeletonList } from './ui/Skeleton';
+import { motion } from 'framer-motion';
 
 // Datos mock de animales disponibles
 const animals = [
@@ -103,15 +104,21 @@ export default function AnimalList({ isLoading }: { isLoading?: boolean }) {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
           {filtered.map((animal, i) => (
-            <AnimalCard
+            <motion.div
               key={i}
-              animalId={`${i + 1}`}
-              nombre={animal.nombre}
-              estado_general={animal.estado}
-              zona={animal.ubicacion}
-              age={animal.edad}
-              images={animal.imagenes}
-            />
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.28, delay: i * 0.04 }}
+            >
+              <AnimalCard
+                animalId={`${i + 1}`}
+                nombre={animal.nombre}
+                estado_general={animal.estado}
+                zona={animal.ubicacion}
+                age={animal.edad}
+                images={animal.imagenes}
+              />
+            </motion.div>
           ))}
         </div>
       )}

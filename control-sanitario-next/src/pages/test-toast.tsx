@@ -4,12 +4,14 @@
  */
 import React from 'react';
 import { useToast } from '../hooks/useToast';
+import { useToastContext } from '../components/ToastContainer';
 import ToastContainer from '../components/ToastContainer';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const TestToastPage: React.FC = () => {
-  const { toasts, success, error, info, warning, removeToast } = useToast();
+  const { success, error, info, warning, clearAll } = useToast();
+  const { toasts, removeToast } = useToastContext();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
@@ -238,12 +240,7 @@ const TestToastPage: React.FC = () => {
       <Footer />
 
       {/* Contenedor de Toasts */}
-      <ToastContainer
-        toasts={toasts}
-        onDismiss={removeToast}
-        position="top-right"
-        maxToasts={5}
-      />
+      {/* The actual ToastContainer is already rendered by the ToastProvider in _app; keep a reference usage in page for convenience if needed. */}
     </div>
   );
 };

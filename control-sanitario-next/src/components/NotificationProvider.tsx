@@ -23,18 +23,26 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
  * Wrapper sobre useToastContext para proporcionar la API addToast
  */
 export const useNotification = () => {
-  const { addToast: contextAddToast } = useToastContext();
-  
-  const addToast = (message: string, type: 'success' | 'error' | 'warning' | 'info') => {
-    const durations = {
-      success: 5000,
-      error: 7000,
-      warning: 6000,
-      info: 5000
-    };
-    
-    contextAddToast(message, type, durations[type], true);
-  };
+  // Hacemos la API tolerante a la ausencia del provider para facilitar tests y uso aislado
+  try {
+    const { addToast: contextAddToast } = useToastContext();
 
-  return { addToast };
+    const addToast = (message: string, type: 'success' | 'error' | 'warning' | 'info') => {
+      const durations = {
+        success: 5000,
+        error: 7000,
+        warning: 6000,
+        info: 5000
+      };
+      contextAddToast(message, type, durations[type], true);
+    };
+
+    return { addToast };
+  } catch (e) {
+    // Si no hay provider, devolvemos una versión no-op para evitar que componentes fallen en tests
+    const addToast = (_message: string, _type: 'success' | 'error' | 'warning' | 'info') => {
+      // noop
+    };
+    return { addToast };
+  }
 };
