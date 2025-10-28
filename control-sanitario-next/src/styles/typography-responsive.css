@@ -1,0 +1,537 @@
+/**
+ * SISTEMA DE TIPOGRAFÍA RESPONSIVA
+ * Sistema completo de tipografía con escalado fluido
+ * Usa clamp() para transiciones suaves entre breakpoints
+ * Optimizado para móvil, tablet y desktop
+ */
+
+/* ============================================
+   IMPORTAR FUENTES (Opcional - descomentar si decides usar)
+   ============================================ */
+
+/* Opción: Google Fonts Poppins + Roboto Slab */
+/*
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto+Slab:wght@400;500;600;700&display=swap');
+*/
+
+/* ============================================
+   VARIABLES DE TIPOGRAFÍA MEJORADAS
+   ============================================ */
+
+:root {
+  /* === FAMILIAS TIPOGRÁFICAS === */
+  /* Sistema actual */
+  --font-family-sans: 'Helvetica Neue', Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-serif: Georgia, 'Times New Roman', serif;
+  
+  /* Alternativas (descomentar para usar) */
+  /* --font-family-sans: 'Poppins', 'Helvetica Neue', sans-serif; */
+  /* --font-family-serif: 'Roboto Slab', Georgia, serif; */
+  
+  /* === PESOS DE FUENTE === */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  
+  /* === TAMAÑOS CON CLAMP (Escalado Fluido) === */
+  /* Títulos */
+  --font-size-h1: clamp(1.75rem, 4vw, 3rem);           /* 28px → 48px */
+  --font-size-h2: clamp(1.5rem, 3vw, 2.25rem);         /* 24px → 36px */
+  --font-size-h3: clamp(1.25rem, 2.5vw, 1.875rem);     /* 20px → 30px */
+  --font-size-h4: clamp(1.125rem, 2vw, 1.5rem);        /* 18px → 24px */
+  --font-size-h5: clamp(1rem, 1.5vw, 1.25rem);         /* 16px → 20px */
+  --font-size-h6: clamp(0.9375rem, 1.5vw, 1.125rem);   /* 15px → 18px */
+  
+  /* Cuerpo y elementos */
+  --font-size-body: clamp(0.875rem, 1.5vw, 1.0625rem); /* 14px → 17px */
+  --font-size-lead: clamp(1rem, 1.75vw, 1.25rem);      /* 16px → 20px */
+  --font-size-small: clamp(0.75rem, 1.2vw, 0.875rem);  /* 12px → 14px */
+  --font-size-xs: clamp(0.6875rem, 1vw, 0.8125rem);    /* 11px → 13px */
+  
+  /* Elementos UI */
+  --font-size-button: clamp(0.875rem, 1.5vw, 1rem);    /* 14px → 16px */
+  --font-size-label: clamp(0.8125rem, 1.5vw, 0.9375rem); /* 13px → 15px */
+  --font-size-input: clamp(1rem, 1.5vw, 1.0625rem);    /* 16px → 17px */
+  
+  /* === INTERLINEADO (LINE-HEIGHT) === */
+  --line-height-tight: 1.1;
+  --line-height-snug: 1.2;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.6;
+  --line-height-loose: 1.8;
+  
+  /* === ESPACIADO DE LETRAS === */
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  
+  /* === MEDIDAS DE CARACTERES (Ancho óptimo de línea) === */
+  --measure-narrow: 45ch;  /* Para texto denso */
+  --measure-normal: 65ch;  /* Óptimo para lectura */
+  --measure-wide: 80ch;    /* Textos amplios */
+}
+
+/* ============================================
+   ESTILOS BASE MEJORADOS
+   ============================================ */
+
+html {
+  /* Mejora de renderizado de texto */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern' 1;
+  font-kerning: normal;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-relaxed);
+  color: var(--text-primary);
+  
+  /* Hyphens para mejor justificación en móvil */
+  hyphens: auto;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ============================================
+   JERARQUÍA DE TÍTULOS CON ESCALADO FLUIDO
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  color: var(--text-primary);
+  
+  /* Mejora visual en títulos */
+  letter-spacing: var(--letter-spacing-tight);
+  text-wrap: balance; /* Balance lines in headings */
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-extrabold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+}
+
+h5 {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+}
+
+h6 {
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+/* ============================================
+   PÁRRAFOS Y TEXTO
+   ============================================ */
+
+p {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-relaxed);
+  margin-top: 0;
+  margin-bottom: 1em;
+  max-width: var(--measure-normal);
+}
+
+/* Texto destacado / lead */
+.lead,
+.text-lead {
+  font-size: var(--font-size-lead);
+  line-height: var(--line-height-relaxed);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-secondary);
+}
+
+/* Texto pequeño */
+small,
+.text-small {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-normal);
+}
+
+/* Texto extra pequeño */
+.text-xs {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+}
+
+/* ============================================
+   ÉNFASIS Y ESTILOS DE TEXTO
+   ============================================ */
+
+strong,
+b,
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.font-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.font-light {
+  font-weight: var(--font-weight-light);
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+/* ============================================
+   ENLACES
+   ============================================ */
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-color-hover);
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ============================================
+   LISTAS
+   ============================================ */
+
+ul, ol {
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+li {
+  margin-bottom: 0.5em;
+  line-height: var(--line-height-relaxed);
+}
+
+/* ============================================
+   BLOCKQUOTES
+   ============================================ */
+
+blockquote {
+  margin: 1.5em 0;
+  padding-left: 1.5em;
+  border-left: 4px solid var(--primary-color);
+  font-style: italic;
+  font-size: var(--font-size-lead);
+  line-height: var(--line-height-relaxed);
+  color: var(--text-secondary);
+}
+
+blockquote cite {
+  display: block;
+  margin-top: 0.5em;
+  font-size: var(--font-size-small);
+  font-style: normal;
+  font-weight: var(--font-weight-medium);
+}
+
+/* ============================================
+   CÓDIGO
+   ============================================ */
+
+code,
+kbd,
+pre,
+samp {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  background-color: var(--background-light);
+  border-radius: 4px;
+  font-weight: var(--font-weight-medium);
+}
+
+pre {
+  padding: 1em;
+  background-color: var(--background-light);
+  border-radius: 8px;
+  overflow-x: auto;
+  line-height: var(--line-height-relaxed);
+}
+
+/* ============================================
+   ELEMENTOS DE FORMULARIO
+   ============================================ */
+
+label {
+  display: block;
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 0.5em;
+  color: var(--text-primary);
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-input);
+  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-regular);
+}
+
+/* Prevenir zoom en iOS al enfocar inputs */
+@media (max-width: 640px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="password"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+
+button,
+.button,
+[type="button"],
+[type="submit"] {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: none;
+}
+
+/* ============================================
+   CLASES DE UTILIDAD RESPONSIVAS
+   ============================================ */
+
+/* Tamaños de fuente responsivos */
+.text-responsive-h1 { font-size: var(--font-size-h1); line-height: var(--line-height-tight); }
+.text-responsive-h2 { font-size: var(--font-size-h2); line-height: var(--line-height-snug); }
+.text-responsive-h3 { font-size: var(--font-size-h3); line-height: var(--line-height-snug); }
+.text-responsive-h4 { font-size: var(--font-size-h4); line-height: var(--line-height-normal); }
+.text-responsive-h5 { font-size: var(--font-size-h5); line-height: var(--line-height-normal); }
+.text-responsive-h6 { font-size: var(--font-size-h6); line-height: var(--line-height-normal); }
+.text-responsive-body { font-size: var(--font-size-body); line-height: var(--line-height-relaxed); }
+.text-responsive-lead { font-size: var(--font-size-lead); line-height: var(--line-height-relaxed); }
+.text-responsive-small { font-size: var(--font-size-small); line-height: var(--line-height-normal); }
+
+/* Pesos de fuente */
+.font-weight-light { font-weight: var(--font-weight-light); }
+.font-weight-regular { font-weight: var(--font-weight-regular); }
+.font-weight-medium { font-weight: var(--font-weight-medium); }
+.font-weight-semibold { font-weight: var(--font-weight-semibold); }
+.font-weight-bold { font-weight: var(--font-weight-bold); }
+.font-weight-extrabold { font-weight: var(--font-weight-extrabold); }
+
+/* Interlineado */
+.leading-tight { line-height: var(--line-height-tight); }
+.leading-snug { line-height: var(--line-height-snug); }
+.leading-normal { line-height: var(--line-height-normal); }
+.leading-relaxed { line-height: var(--line-height-relaxed); }
+.leading-loose { line-height: var(--line-height-loose); }
+
+/* Espaciado de letras */
+.tracking-tight { letter-spacing: var(--letter-spacing-tight); }
+.tracking-normal { letter-spacing: var(--letter-spacing-normal); }
+.tracking-wide { letter-spacing: var(--letter-spacing-wide); }
+.tracking-wider { letter-spacing: var(--letter-spacing-wider); }
+
+/* Ancho de medida (línea óptima) */
+.measure-narrow { max-width: var(--measure-narrow); }
+.measure-normal { max-width: var(--measure-normal); }
+.measure-wide { max-width: var(--measure-wide); }
+
+/* ============================================
+   OPTIMIZACIONES POR BREAKPOINT
+   ============================================ */
+
+/* Móvil pequeño (< 480px) */
+@media (max-width: 480px) {
+  body {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.6;
+  }
+  
+  h1 { font-size: 1.75rem; } /* 28px */
+  h2 { font-size: 1.5rem; }  /* 24px */
+  h3 { font-size: 1.25rem; } /* 20px */
+  
+  /* Reducir padding en blockquotes y listas */
+  blockquote { padding-left: 1rem; }
+  ul, ol { padding-left: 1.25rem; }
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  body {
+    font-size: 1rem; /* 16px */
+    line-height: 1.6;
+  }
+  
+  h1 { font-size: clamp(2rem, 4vw, 2.5rem); }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+  
+  p {
+    max-width: var(--measure-normal);
+  }
+}
+
+/* Desktop (> 1024px) */
+@media (min-width: 1024px) {
+  body {
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.7;
+  }
+  
+  h1 { font-size: 3rem; }     /* 48px */
+  h2 { font-size: 2.25rem; }  /* 36px */
+  h3 { font-size: 1.875rem; } /* 30px */
+  
+  p {
+    max-width: var(--measure-normal);
+  }
+  
+  /* Mayor espaciado en desktop */
+  blockquote { padding-left: 2rem; }
+}
+
+/* ============================================
+   MODO OSCURO (Dark Mode)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  body {
+    /* Aumentar ligeramente el line-height en modo oscuro */
+    line-height: 1.7;
+  }
+  
+  /* Mayor peso en títulos para mejor contraste */
+  h1, h2, h3 {
+    font-weight: var(--font-weight-extrabold);
+  }
+  
+  /* Ajustar opacidad de texto secundario */
+  .text-secondary {
+    opacity: 0.8;
+  }
+}
+
+/* Clase manual para modo oscuro */
+.dark {
+  body {
+    line-height: 1.7;
+  }
+  
+  h1, h2, h3 {
+    font-weight: var(--font-weight-extrabold);
+  }
+  
+  .text-secondary {
+    opacity: 0.8;
+  }
+}
+
+/* ============================================
+   PREFERENCIAS DE USUARIO
+   ============================================ */
+
+/* Reducir movimiento si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Aumentar contraste si el usuario lo prefiere */
+@media (prefers-contrast: high) {
+  body {
+    font-weight: var(--font-weight-medium);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-extrabold);
+  }
+}
+
+/* ============================================
+   IMPRESIÓN
+   ============================================ */
+
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+  }
+  
+  h1 { font-size: 24pt; }
+  h2 { font-size: 18pt; }
+  h3 { font-size: 14pt; }
+  
+  a {
+    text-decoration: underline;
+    color: #000;
+  }
+  
+  /* Mostrar URLs después de enlaces */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+  }
+}

@@ -48,7 +48,7 @@ const ProfilePage: React.FC = () => {
             alt="Foto de perfil"
             className="w-28 h-28 rounded-full mb-4 border-4 border-blue-400 shadow-lg object-cover tablet:w-36 tablet:h-36 tablet:mb-6"
           />
-          <h1 className={theme === 'dark' ? 'text-3xl font-extrabold mb-2 text-white tracking-tight tablet:text-4xl' : 'text-3xl font-extrabold mb-2 text-blue-800 tracking-tight tablet:text-4xl'}>{mockUser.nombre}</h1>
+          <h1 className={theme === 'dark' ? 'text-responsive-h1 font-extrabold leading-tight mb-2 text-white tracking-tight' : 'text-responsive-h1 font-extrabold leading-tight mb-2 text-blue-800 tracking-tight'}>{mockUser.nombre}</h1>
           <p className={theme === 'dark' ? 'text-base text-gray-200 mb-1 tablet:text-lg' : 'text-base text-gray-700 mb-1 tablet:text-lg'}>{mockUser.email}</p>
           <p className={theme === 'dark' ? 'text-base text-blue-300 mb-4 tablet:text-lg' : 'text-base text-blue-600 mb-4 tablet:text-lg'}>Zona: {mockUser.zona}</p>
           <div className="w-full max-w-md tablet:max-w-lg">

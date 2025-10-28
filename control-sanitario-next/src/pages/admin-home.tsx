@@ -123,7 +123,7 @@ const AdminHome: React.FC = () => {
 
         {/* Contenido principal */}
         <main className="px-4 py-8 max-w-6xl mx-auto flex flex-col items-center tablet:px-6 tablet:py-10">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-blue-700 mb-6 text-center tablet:text-4xl tablet:mb-8">Resumen del sistema</h2>
+          <h2 className="text-responsive-h2 font-extrabold leading-snug text-blue-700 mb-6 text-center">Resumen del sistema</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-8 tablet:gap-8">
             <InfoBox title="Usuarios activos" value={120} link="/admin/users" />
             <InfoBox title="Campañas en curso" value={12} link="/admin/campaigns" />

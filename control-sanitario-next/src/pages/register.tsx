@@ -88,7 +88,7 @@ const Register = () => {
           noValidate
           className="tablet:max-w-xl tablet:p-10"
         >
-        <h2 className="tablet:text-3xl" style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 20 }}>Crear Cuenta</h2>
+        <h2 className="text-responsive-h2 font-bold leading-snug" style={{ marginBottom: 20 }}>Crear Cuenta</h2>
         
         <label className="tablet:text-lg" style={labelStyle}>Nombre</label>
         {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}

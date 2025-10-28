@@ -1,4 +1,5 @@
-@import './variables.css'; /* Añadido al principio */
+@import './variables.css'; /* Variables de colores y configuración */
+@import './typography-responsive.css'; /* Sistema de tipografía responsiva */
 
 @tailwind base;
 @tailwind components;

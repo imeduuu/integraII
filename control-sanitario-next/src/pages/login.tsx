@@ -93,9 +93,9 @@ const Login = () => {
           noValidate
           className="tablet:max-w-xl tablet:p-10"
         >
-        <h2 className="tablet:text-3xl" style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 20 }}>Iniciar Sesión</h2>
+        <h2 className="text-responsive-h2 font-bold leading-snug" style={{ marginBottom: 20 }}>Iniciar Sesión</h2>
         
-        <label className="tablet:text-lg" style={labelStyle}>Correo electrónico</label>
+        <label className="text-responsive-body font-semibold" style={labelStyle}>Correo electrónico</label>
         {/* Migración: Se reemplaza el input nativo por el componente Input UI estándar. */}
         <Input
           type="email"
@@ -111,7 +111,7 @@ const Login = () => {
         />
         {errors.email && <span style={errorStyle}>{errors.email.message}</span>}
 
-        <label className="tablet:text-lg" style={labelStyle}>Contraseña</label>
+        <label className="text-responsive-body font-semibold" style={labelStyle}>Contraseña</label>
         <Input
           type="password"
           placeholder="Mínimo 6 caracteres"
@@ -136,7 +136,7 @@ const Login = () => {
   </Button>
         
         <div style={{ marginTop: 12 }}>
-          <a href="/forgot-password" style={{ color: '#2563eb', textDecoration: 'underline', fontSize: '0.95rem' }} className="tablet:text-base">
+          <a href="/forgot-password" className="text-responsive-small font-medium hover:underline" style={{ color: '#2563eb' }}>
             ¿Olvidaste tu contraseña?
           </a>
         </div>

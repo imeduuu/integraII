@@ -10,7 +10,7 @@ export default function MapaPage() {
       <Navbar />
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-start py-8 px-2">
         <div className="w-full max-w-4xl mx-auto">
-          <h1 className="text-3xl font-extrabold mb-6 text-gray-800 dark:text-gray-100 text-center">Mapa Interactivo</h1>
+          <h1 className="text-responsive-h1 font-extrabold leading-tight mb-6 text-gray-800 dark:text-gray-100 text-center">Mapa Interactivo</h1>
           <div className="w-full max-w-3xl mx-auto">
             <MapView />
           </div>

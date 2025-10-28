@@ -81,7 +81,7 @@ export default function Adopcion() {
     <>
       <Navbar />
       <main className="min-h-screen bg-gray-50 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8">Animales en Adopción</h1>
+        <h1 className="text-responsive-h1 font-bold leading-tight text-center mb-8">Animales en Adopción</h1>
 
         {!selectedAnimal ? (
         <div className={styles.grid}>
