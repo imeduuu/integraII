@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from '../styles/commentSection.module.css';
 import { Skeleton } from './ui/Skeleton';
+import { useNotification } from './NotificationProvider';
 
 interface Comment {
   id: number;
@@ -22,22 +23,41 @@ const CommentSection = ({ animalId, isLoading = false }: CommentSectionProps) =>
   const [newComment, setNewComment] = useState('');
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editingContent, setEditingContent] = useState('');
+  const [isAdding, setIsAdding] = useState(false);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [savingId, setSavingId] = useState<number | null>(null);
+  const { addToast } = useNotification();
 
   const handleAddComment = () => {
-    if (!newComment.trim()) return;
-    const nextId = comments.length ? comments[comments.length - 1].id + 1 : 1;
-    const comment: Comment = {
-      id: nextId,
-      usuario: 'Usuario Demo',
-      contenido: newComment,
-      fecha: new Date().toISOString().split('T')[0],
-    };
-    setComments([...comments, comment]);
-    setNewComment('');
+    if (!newComment.trim()) {
+      addToast('El comentario está vacío', 'error');
+      return;
+    }
+    setIsAdding(true);
+    // Simular llamada a API
+    setTimeout(() => {
+      const nextId = comments.length ? comments[comments.length - 1].id + 1 : 1;
+      const comment: Comment = {
+        id: nextId,
+        usuario: 'Usuario Demo',
+        contenido: newComment,
+        fecha: new Date().toISOString().split('T')[0],
+      };
+      setComments([...comments, comment]);
+      setNewComment('');
+      setIsAdding(false);
+      addToast('Comentario agregado', 'success');
+    }, 300);
   };
 
   const handleDelete = (id: number) => {
-    setComments(comments.filter(c => c.id !== id));
+    // Confirmación simple y feedback
+    setDeletingId(id);
+    setTimeout(() => {
+      setComments(comments.filter(c => c.id !== id));
+      setDeletingId(null);
+      addToast('Comentario eliminado', 'success');
+    }, 300);
   };
 
   const handleEdit = (comment: Comment) => {
@@ -46,13 +66,18 @@ const CommentSection = ({ animalId, isLoading = false }: CommentSectionProps) =>
   };
 
   const handleSaveEdit = (id: number) => {
-    setComments(
-      comments.map(c =>
-        c.id === id ? { ...c, contenido: editingContent } : c
-      )
-    );
-    setEditingCommentId(null);
-    setEditingContent('');
+    setSavingId(id);
+    setTimeout(() => {
+      setComments(
+        comments.map(c =>
+          c.id === id ? { ...c, contenido: editingContent } : c
+        )
+      );
+      setEditingCommentId(null);
+      setEditingContent('');
+      setSavingId(null);
+      addToast('Comentario actualizado', 'success');
+    }, 300);
   };
 
   return (
@@ -93,10 +118,12 @@ const CommentSection = ({ animalId, isLoading = false }: CommentSectionProps) =>
                       <button
                         onClick={() => handleSaveEdit(c.id)}
                         className={styles.button}
-                      >Guardar</button>
+                        disabled={savingId === c.id}
+                      >{savingId === c.id ? 'Guardando...' : 'Guardar'}</button>
                       <button
                         onClick={() => setEditingCommentId(null)}
                         className={styles.editButton}
+                        disabled={savingId === c.id}
                       >Cancelar</button>
                     </div>
                   </div>
@@ -107,11 +134,13 @@ const CommentSection = ({ animalId, isLoading = false }: CommentSectionProps) =>
                       <button
                         onClick={() => handleEdit(c)}
                         className={styles.editButton}
+                        disabled={deletingId === c.id}
                       >Editar</button>
                       <button
                         onClick={() => handleDelete(c.id)}
                         className={styles.deleteButton}
-                      >Eliminar</button>
+                        disabled={deletingId === c.id}
+                      >{deletingId === c.id ? 'Eliminando...' : 'Eliminar'}</button>
                     </div>
                   </div>
                 )}
@@ -129,7 +158,8 @@ const CommentSection = ({ animalId, isLoading = false }: CommentSectionProps) =>
             <button
               onClick={handleAddComment}
               className={styles.button}
-            >Enviar</button>
+              disabled={isAdding}
+            >{isAdding ? 'Enviando...' : 'Enviar'}</button>
           </div>
         </>
       )}
