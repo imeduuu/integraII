@@ -3,6 +3,8 @@
  */
 import React, { useState } from 'react';
 import AnimalCard from './AnimalCard';
+import { SkeletonList } from './ui/Skeleton';
+import { motion } from 'framer-motion';
 
 // Datos mock de animales disponibles
 const animals = [
@@ -62,7 +64,7 @@ const animals = [
  * Componente que renderiza lista filtrable de animales disponibles
  * Incluye filtros por estado y ubicación con vista en grid responsivo
  */
-export default function AnimalList() {
+export default function AnimalList({ isLoading }: { isLoading?: boolean }) {
   const [estado, setEstado] = useState('');
   const [ubicacion, setUbicacion] = useState('');
 
@@ -97,19 +99,29 @@ export default function AnimalList() {
           <option value="Centro">Centro</option>
         </select>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
-        {filtered.map((animal, i) => (
-          <AnimalCard
-            key={i}
-            animalId={`${i + 1}`}
-            nombre={animal.nombre}
-            estado_general={animal.estado}
-            zona={animal.ubicacion}
-            age={animal.edad}
-            images={animal.imagenes}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <SkeletonList count={6} />
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+          {filtered.map((animal, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.28, delay: i * 0.04 }}
+            >
+              <AnimalCard
+                animalId={`${i + 1}`}
+                nombre={animal.nombre}
+                estado_general={animal.estado}
+                zona={animal.ubicacion}
+                age={animal.edad}
+                images={animal.imagenes}
+              />
+            </motion.div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

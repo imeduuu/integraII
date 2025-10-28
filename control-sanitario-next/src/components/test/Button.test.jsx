@@ -14,7 +14,9 @@ describe('Button Component', () => {
     test('aplica la variante primary por defecto', () => {
       render(<Button>Primary Button</Button>)
       const button = screen.getByRole('button')
-      expect(button).toHaveClass('bg-blue-600', 'text-white')
+      // La implementación actual usa variables CSS para los colores
+      expect(button.className).toContain('bg-[var(--primary)]')
+      expect(button.className).toContain('text-[var(--primary-contrast)]')
     })
 
     test('aplica la variante secondary correctamente', () => {

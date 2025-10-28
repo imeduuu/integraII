@@ -1,11 +1,15 @@
 import Tooltip from './Tooltip';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
-import CommentSection from './CommentSection';
-import Image from "next/image";
 
+const CommentSection = dynamic(() => import('./CommentSection'), {
+  ssr: false,
+  loading: () => <div className="py-4 text-center text-sm text-gray-500">Cargando comentarios...</div>,
+});
 
 interface AnimalCardProps {
   nombre: string; // Nombre del animal
@@ -19,21 +23,20 @@ interface AnimalCardProps {
 const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, age, images, animalId }) => {
   const router = useRouter();
   const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
+
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center hover:shadow-lg transition-shadow duration-300 motion-safe-transition">
-      {/* Imagen del animal con tooltip y click para ver detalles usando Next/Image */}
-      <Tooltip text={`Ver detalles de ${nombre}`}>
-        <div onClick={() => router.push(`/animals/${animalId}`)} style={{ cursor: 'pointer' }}>
-          <Image
-            src={thumbnail}
-            alt={nombre}
-            width={96}
-            height={96}
-            className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-blue-300 hover:scale-105 transition-transform"
-          />
-        </div>
-      </Tooltip>
-      <h2 className="text-xl font-bold mb-2 text-blue-700">{nombre}</h2>
+    <div className="bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center">
+      <Image
+        src={thumbnail}
+        alt={nombre}
+        width={500} // Ajusta según diseño
+        height={300} // Ajusta según diseño
+        className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-green-200"
+        loading="lazy"
+        placeholder="blur"
+        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
+      />
+      <h2 className="text-xl font-bold mb-2 text-green-700">{nombre}</h2>
       <p className="text-sm text-gray-600 mb-1">
         <span className="font-semibold">Estado:</span> {estado_general}
       </p>
@@ -45,16 +48,14 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
           <span className="font-semibold">Edad:</span> {age}
         </p>
       )}
-      {/* Botón Adoptar con tooltip */}
-      <Tooltip text={`Adoptar a ${nombre}`}>
-        <Button
-          className="bg-blue-600 hover:bg-blue-700 mt-2"
-          onClick={() => router.push('/adopcion')}
-        >
-          Adoptar
-        </Button>
-      </Tooltip>
-      {/* Sección de comentarios */}
+      <Button
+        className="bg-blue-600 hover:bg-blue-700 mt-2"
+        onClick={() => router.push('/adopcion')}
+      >
+        Adoptar
+      </Button>
+
+      {/* Sección de comentarios usando CommentSection */}
       <div className="mt-4 w-full">
         <CommentSection animalId={Number(animalId)} />
       </div>

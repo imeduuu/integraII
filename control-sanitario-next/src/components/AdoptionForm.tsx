@@ -6,6 +6,7 @@ import Button from "./ui/Button";
 import Input from "./ui/Input";
 import Loader from "./ui/Loader";
 import { useNotification } from "../components/NotificationProvider";
+import { isEmail, isRequired } from '../utils/validators';
 
 interface Animal {
   nombre: string;
@@ -50,6 +51,18 @@ export default function AdoptionForm({ animal, onSubmit }: Props) {
     e.preventDefault();
     // Mostrar loader y deshabilitar formulario
     setIsSubmitting(true);
+    // Validaciones básicas
+    if (!isRequired(form.name) || !isRequired(form.reason)) {
+      addToast('Por favor completa todos los campos requeridos', 'error');
+      setIsSubmitting(false);
+      return;
+    }
+    if (!isEmail(form.email)) {
+      addToast('El correo electrónico no es válido', 'error');
+      setIsSubmitting(false);
+      return;
+    }
+
     // Simular llamada asíncrona si onSubmit no es async
     Promise.resolve()
       .then(() => onSubmit(form))

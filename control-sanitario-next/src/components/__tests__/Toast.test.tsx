@@ -57,8 +57,9 @@ describe('Toast Component', () => {
         />
       );
       
-      let toastDiv = container.firstChild as HTMLElement;
-      expect(toastDiv.className).toContain('bg-green');
+  let toastDiv = container.firstChild as HTMLElement;
+  // Ahora Toast usa border color y clases utilitarias para el icono, verificamos el borde
+  expect(toastDiv.className).toContain('border-green-500');
       
       rerender(
         <Toast
@@ -69,8 +70,8 @@ describe('Toast Component', () => {
         />
       );
       
-      toastDiv = container.firstChild as HTMLElement;
-      expect(toastDiv.className).toContain('bg-red');
+  toastDiv = container.firstChild as HTMLElement;
+  expect(toastDiv.className).toContain('border-red-500');
     });
   });
 
