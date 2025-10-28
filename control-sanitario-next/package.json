@@ -47,6 +47,11 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["text", "lcov", "html"]
+  },
   "dependencies": {
     "@prisma/client": "^6.14.0",
     "axios": "^1.11.0",
