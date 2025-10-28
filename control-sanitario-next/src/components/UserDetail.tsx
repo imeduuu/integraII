@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import styles from "../styles/admin-users.module.css";
 import Button from './ui/Button';
 import { useNotification } from './NotificationProvider';
+import { isEmail } from '../utils/validators';
 
 // Estructura de datos de usuario
 type User = {
@@ -38,7 +39,7 @@ const UserDetail: React.FC<Props> = ({ user }) => {
       setMessage("El nombre no puede estar vacío");
       return false;
     }
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    if (!isEmail(formData.email)) {
       setMessage("El email no es válido");
       return false;
     }

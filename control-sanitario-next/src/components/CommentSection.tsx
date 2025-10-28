@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from '../styles/commentSection.module.css';
 import { Skeleton } from './ui/Skeleton';
 import { useNotification } from './NotificationProvider';
+import { isRequired } from '../utils/validators';
 
 interface Comment {
   id: number;
@@ -29,7 +30,7 @@ const CommentSection = ({ animalId, isLoading = false }: CommentSectionProps) =>
   const { addToast } = useNotification();
 
   const handleAddComment = () => {
-    if (!newComment.trim()) {
+    if (!isRequired(newComment)) {
       addToast('El comentario está vacío', 'error');
       return;
     }
