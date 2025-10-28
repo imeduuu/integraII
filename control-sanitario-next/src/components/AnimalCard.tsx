@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
 import CommentSection from './CommentSection';
@@ -19,10 +20,15 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center">
-      <img
+      <Image
         src={thumbnail}
         alt={nombre}
+        width={500} // Ajusta según diseño
+        height={300} // Ajusta según diseño
         className="w-24 h-24 object-cover rounded-full mb-3 border-2 border-green-200"
+        loading="lazy"
+        placeholder="blur"
+        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="
       />
       <h2 className="text-xl font-bold mb-2 text-green-700">{nombre}</h2>
       <p className="text-sm text-gray-600 mb-1">
