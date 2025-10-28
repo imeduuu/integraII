@@ -25,16 +25,24 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
   const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
 
   return (
-    <div className={cardClasses.container}>
+    <article
+      className={cardClasses.container}
+      role="article"
+      aria-label={`Tarjeta del animal ${nombre}`}
+    >
       <img src={thumbnail} alt={nombre} className={cardClasses.img} />
       <h2 className={cardClasses.nombre}>{nombre}</h2>
       <p className={cardClasses.info}>Estado: {estado_general}</p>
       <p className={cardClasses.info}>Ubicación: {zona}</p>
       {age && <p className={cardClasses.info}>Edad: {age}</p>}
-      <Button className={cardClasses.button} onClick={() => router.push('/adopcion')}>
+      <Button
+        className={cardClasses.button}
+        onClick={() => router.push('/adopcion')}
+        aria-label={`Iniciar proceso de adopción para ${nombre}`}
+      >
         Adoptar
       </Button>
-    </div>
+    </article>
   );
 };
 
