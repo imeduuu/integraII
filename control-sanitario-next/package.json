@@ -59,7 +59,7 @@
     "leaflet": "^1.9.4",
     "next": "^14.2.3",
     "next-auth": "^4.24.11",
-    "nodemailer": "^7.0.10",
+    "nodemailer": "^6.9.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.62.0",

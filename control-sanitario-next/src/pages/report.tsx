@@ -6,6 +6,9 @@ import Input from '../components/ui/Input';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useNotification } from '../components/NotificationProvider';
+import { getRazas } from '../services/razaAnimalesAdop';
+import { useEffect } from 'react';
+
 // ...import eliminado: Map...
 
 import styles from '../styles/report.module.css';
@@ -19,6 +22,34 @@ const Report = () => {
   const [mensaje, setMensaje] = useState('');
   const { addToast } = useNotification();
   // ...eliminado showMap para mapa antiguo...
+  const [razas, setRazas] = useState<any[]>([]);
+  const [selectedRaza, setSelectedRaza] = useState<number | ''>('');
+  const [loadingRazas, setLoadingRazas] = useState(false);
+
+  useEffect(() => {
+    const cargarRazas = async () => {
+      setLoadingRazas(true);
+      try {
+        const data = await getRazas();
+        console.log('Razas recibidas del backend:', data);
+        if (Array.isArray(data)) {
+          setRazas(data);
+        } else {
+          console.warn('getRazas did not return an array:', data);
+          setRazas([]);
+        }
+      } catch (err) {
+        console.error('Error cargando razas:', err);
+        addToast('No se pudieron cargar las razas', 'error');
+        setRazas([]);
+      } finally {
+        setLoadingRazas(false);
+      }
+    };
+    cargarRazas();
+  }, []);
+
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -163,6 +194,23 @@ const Report = () => {
               rows={2}
               style={{ resize: 'vertical' }}
             />
+            {/* Selector de razas */}
+            <label className={styles.label}>Raza</label>
+            <select
+              className={styles.input}
+              value={selectedRaza}
+              onChange={(e) => setSelectedRaza(e.target.value ? Number(e.target.value) : '')}
+              required
+            >
+              <option value="">Selecciona una raza</option>
+              {loadingRazas && <option value="">Cargando razas...</option>}
+              {razas.map((r, idx) => (
+                // key único: combina id y idx para evitar warning si hay ids duplicados
+                <option key={`${r.id_raza ?? r.id ?? idx}-${r.raza ?? r.nombre ?? idx}`} value={r.id_raza ?? r.id ?? idx}>
+                  {(r.raza)}
+                </option>
+              ))}
+            </select>
 
             {/* NUEVO: Buscar por dirección */}
             <label className={styles.label}>Buscar por Dirección</label>
