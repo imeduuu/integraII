@@ -33,6 +33,7 @@ const Navbar = () => {
       { href: '/edit-profile', label: 'Perfil' },
       { href: '/adopcion', label: 'Adopciones' },
       { href: '/report', label: 'Reportar' },
+      { href: '/avistamientos', label: 'Avistamientos' },
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
       { href: '/user-directory', label: 'Usuarios' },

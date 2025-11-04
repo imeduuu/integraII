@@ -8,6 +8,7 @@ import Footer from '../components/Footer';
 import { useNotification } from '../components/NotificationProvider';
 import { getRazas } from '../services/razaAnimalesAdop';
 import { useEffect } from 'react';
+import { createSighting } from '../services/sightings';
 
 // ...import eliminado: Map...
 
@@ -72,35 +73,28 @@ const Report = () => {
     }
     
     try {
-      const res = await fetch('/api/report', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          descripcion,
-          ubicacion,
-          latitud: parseFloat(latitud),
-          longitud: parseFloat(longitud)
-        })
-      });
-      
-      if (res.ok) {
-        setMensaje('Reporte enviado correctamente');
-        addToast('✓ Reporte enviado exitosamente. Gracias por ayudar a los animales.', 'success');
-        setDescripcion('');
-        setUbicacion('');
-        setLatitud('');
-        setLongitud('');
-        setDireccion('');
-      } else {
-        const errorData = await res.json().catch(() => ({}));
-        setMensaje('Error al enviar el reporte');
-        addToast(errorData.message || 'Error al enviar el reporte. Intenta nuevamente.', 'error');
-      }
-    } catch (error) {
-      console.error('Error de conexión:', error);
-      setMensaje('Error de conexión');
-      addToast('Error de conexión con el servidor. Verifica tu internet.', 'error');
-    }
+  await createSighting({
+    description: descripcion,
+    location: ubicacion,
+    latitude: parseFloat(latitud),
+    longitude: parseFloat(longitud),
+    breed_id: selectedRaza ? Number(selectedRaza) : null,
+  });
+
+  setMensaje('Reporte enviado correctamente');
+  addToast('✓ Reporte enviado exitosamente. Gracias por ayudar a los animales.', 'success');
+
+  // Limpiar formulario
+  setDescripcion('');
+  setUbicacion('');
+  setLatitud('');
+  setLongitud('');
+  setDireccion('');
+  setSelectedRaza('');
+} catch (error: any) {
+  console.error('Error al crear avistamiento:', error);
+  addToast(error.message || 'Error al enviar el reporte. Intenta nuevamente.', 'error');
+}
   };
 
   // Nueva función: buscar coordenadas desde dirección
@@ -156,6 +150,7 @@ const Report = () => {
                 "additionalProperty": [
                   { "@type": "PropertyValue", "name": "Ubicación", "value": ubicacion || "No especificada" },
                   { "@type": "PropertyValue", "name": "Latitud", "value": latitud || "No especificada" },
+                  { "@type": "PropertyValue", "name": "Raza", "value": (selectedRaza === '' ? "No especificada" : (razas.find(r => Number(r.id_raza ?? r.id) === Number(selectedRaza))?.raza ?? "No especificada")) },
                   { "@type": "PropertyValue", "name": "Longitud", "value": longitud || "No especificada" },
                   { "@type": "PropertyValue", "name": "Descripción", "value": descripcion || "No especificada" }
                 ]
