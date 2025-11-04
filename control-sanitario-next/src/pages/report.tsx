@@ -6,6 +6,10 @@ import Input from '../components/ui/Input';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useNotification } from '../components/NotificationProvider';
+import { getRazas } from '../services/razaAnimalesAdop';
+import { useEffect } from 'react';
+import { createSighting } from '../services/sightings';
+
 // ...import eliminado: Map...
 
 import styles from '../styles/report.module.css';
@@ -19,6 +23,34 @@ const Report = () => {
   const [mensaje, setMensaje] = useState('');
   const { addToast } = useNotification();
   // ...eliminado showMap para mapa antiguo...
+  const [razas, setRazas] = useState<any[]>([]);
+  const [selectedRaza, setSelectedRaza] = useState<number | ''>('');
+  const [loadingRazas, setLoadingRazas] = useState(false);
+
+  useEffect(() => {
+    const cargarRazas = async () => {
+      setLoadingRazas(true);
+      try {
+        const data = await getRazas();
+        console.log('Razas recibidas del backend:', data);
+        if (Array.isArray(data)) {
+          setRazas(data);
+        } else {
+          console.warn('getRazas did not return an array:', data);
+          setRazas([]);
+        }
+      } catch (err) {
+        console.error('Error cargando razas:', err);
+        addToast('No se pudieron cargar las razas', 'error');
+        setRazas([]);
+      } finally {
+        setLoadingRazas(false);
+      }
+    };
+    cargarRazas();
+  }, []);
+
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,35 +73,28 @@ const Report = () => {
     }
     
     try {
-      const res = await fetch('/api/report', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          descripcion,
-          ubicacion,
-          latitud: parseFloat(latitud),
-          longitud: parseFloat(longitud)
-        })
-      });
-      
-      if (res.ok) {
-        setMensaje('Reporte enviado correctamente');
-        addToast('✓ Reporte enviado exitosamente. Gracias por ayudar a los animales.', 'success');
-        setDescripcion('');
-        setUbicacion('');
-        setLatitud('');
-        setLongitud('');
-        setDireccion('');
-      } else {
-        const errorData = await res.json().catch(() => ({}));
-        setMensaje('Error al enviar el reporte');
-        addToast(errorData.message || 'Error al enviar el reporte. Intenta nuevamente.', 'error');
-      }
-    } catch (error) {
-      console.error('Error de conexión:', error);
-      setMensaje('Error de conexión');
-      addToast('Error de conexión con el servidor. Verifica tu internet.', 'error');
-    }
+  await createSighting({
+    description: descripcion,
+    location: ubicacion,
+    latitude: parseFloat(latitud),
+    longitude: parseFloat(longitud),
+    breed_id: selectedRaza ? Number(selectedRaza) : null,
+  });
+
+  setMensaje('Reporte enviado correctamente');
+  addToast('✓ Reporte enviado exitosamente. Gracias por ayudar a los animales.', 'success');
+
+  // Limpiar formulario
+  setDescripcion('');
+  setUbicacion('');
+  setLatitud('');
+  setLongitud('');
+  setDireccion('');
+  setSelectedRaza('');
+} catch (error: any) {
+  console.error('Error al crear avistamiento:', error);
+  addToast(error.message || 'Error al enviar el reporte. Intenta nuevamente.', 'error');
+}
   };
 
   // Nueva función: buscar coordenadas desde dirección
@@ -125,6 +150,7 @@ const Report = () => {
                 "additionalProperty": [
                   { "@type": "PropertyValue", "name": "Ubicación", "value": ubicacion || "No especificada" },
                   { "@type": "PropertyValue", "name": "Latitud", "value": latitud || "No especificada" },
+                  { "@type": "PropertyValue", "name": "Raza", "value": (selectedRaza === '' ? "No especificada" : (razas.find(r => Number(r.id_raza ?? r.id) === Number(selectedRaza))?.raza ?? "No especificada")) },
                   { "@type": "PropertyValue", "name": "Longitud", "value": longitud || "No especificada" },
                   { "@type": "PropertyValue", "name": "Descripción", "value": descripcion || "No especificada" }
                 ]
@@ -163,6 +189,23 @@ const Report = () => {
               rows={2}
               style={{ resize: 'vertical' }}
             />
+            {/* Selector de razas */}
+            <label className={styles.label}>Raza</label>
+            <select
+              className={styles.input}
+              value={selectedRaza}
+              onChange={(e) => setSelectedRaza(e.target.value ? Number(e.target.value) : '')}
+              required
+            >
+              <option value="">Selecciona una raza</option>
+              {loadingRazas && <option value="">Cargando razas...</option>}
+              {razas.map((r, idx) => (
+                // key único: combina id y idx para evitar warning si hay ids duplicados
+                <option key={`${r.id_raza ?? r.id ?? idx}-${r.raza ?? r.nombre ?? idx}`} value={r.id_raza ?? r.id ?? idx}>
+                  {(r.raza)}
+                </option>
+              ))}
+            </select>
 
             {/* NUEVO: Buscar por dirección */}
             <label className={styles.label}>Buscar por Dirección</label>
