@@ -11,16 +11,11 @@ export type Region = any;
  * El backend responde con { success: true, data: [...], count }
  * Esta función devuelve el array `data` para fácil consumo en componentes.
  */
+import api from './api';
+
 export async function getRegions(): Promise<any[]> {
-  const response = await fetch('/api/regions');
-
-  if (!response.ok) {
-    const text = await response.text().catch(() => null);
-    throw new Error('Error al obtener las regiones' + (text ? `: ${text}` : ''));
-  }
-
-  const json = await response.json();
-
+  const res = await api.get('/regions');
+  const json = res.data as any;
   if (json && json.data) return json.data;
   if (Array.isArray(json)) return json;
   return [];

@@ -42,7 +42,7 @@ export function FormularioAvistamiento() {
     }
   };
 
-  return (/* tu JSX */);
+  return null;
 }
 
 
@@ -214,7 +214,7 @@ export function RecordatoriosSistema() {
     }, delay);
   };
 
-  return (/* tu JSX */);
+  return null;
 }
 
 
@@ -274,7 +274,7 @@ export function ListaCasos() {
     }
   };
 
-  return (/* tu JSX */);
+  return null;
 }
 
 
@@ -319,7 +319,7 @@ export function SolicitudAdopcion({ animalId, animalName }) {
     }
   };
 
-  return (/* tu JSX */);
+  return null;
 }
 
 
@@ -385,7 +385,7 @@ export function MensajesPage() {
     };
   }, []);
 
-  return (/* tu JSX */);
+  return null;
 }
 
 

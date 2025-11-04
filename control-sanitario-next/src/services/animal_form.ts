@@ -1,25 +1,23 @@
-import axios from "axios";
+import api from './api';
 
-const API_URL = "http://localhost:3000/api/full-animal"; // usa tu API local
+const BASE_PATH = '/full-animal';
 
 export async function createFullAnimal(data: any) {
   try {
-    const res = await axios.post(API_URL, data, {
-      headers: { "Content-Type": "application/json" },
-    });
+    const res = await api.post(BASE_PATH, data);
     return res.data;
   } catch (error) {
-    console.error("Error al crear el animal:", error);
+    console.error('Error al crear el animal:', error);
     throw error;
   }
 }
 
 export async function getFullAnimals() {
   try {
-    const res = await axios.get(API_URL);
+    const res = await api.get(BASE_PATH);
     return res.data;
   } catch (error) {
-    console.error("Error al obtener animales:", error);
-    return [];
+    console.error('Error al obtener animales:', error);
+    throw error;
   }
 }

@@ -125,6 +125,7 @@ model especie {
 
   razas      raza[]
   avistamientos avistamiento[]
+  animales    animal[]
 }
 
 model raza {
@@ -142,12 +143,19 @@ model animal {
   id_usuario_propietario Int?
   fecha_nacimiento      DateTime?
   is_edad_aproximada    Boolean   @default(false)
+  edad_animal           String?   @db.VarChar(50)  // Campo adicional para compatibilidad con API
   id_estado_salud       Int
   id_raza               Int?
+  id_categoria          Int?      // Campo adicional para compatibilidad con API
+  id_especie           Int?      // Campo adicional para compatibilidad con API
+  estado_general        String?   @db.VarChar(20) @default("Activo")  // Campo adicional para compatibilidad con API
+  zona                  String?   @db.VarChar(100)  // Campo adicional para compatibilidad con API
 
   propietario           usuario?        @relation("propietario", fields: [id_usuario_propietario], references: [id_usuario])
   estado_salud          estado_salud    @relation(fields: [id_estado_salud], references: [id_estado_salud])
   raza                  raza?           @relation(fields: [id_raza], references: [id_raza])
+  especie              especie?        @relation(fields: [id_especie], references: [id_especie])
+  categoria            categoria?      @relation("categoria", fields: [id_categoria], references: [id_categoria])
   fotos                 animal_foto[]
   historiales_medicos   historial_medico[]
   adopciones            adopcion[]
@@ -269,6 +277,12 @@ model nivel_riesgo {
   id_nivel_riesgo Int      @id @default(autoincrement())
   nivel_riesgo    String   @db.VarChar(50)
   alertas         alerta[]
+}
+
+model categoria {
+  id_categoria     Int      @id @default(autoincrement())
+  nombre_categoria String   @db.VarChar(50)
+  animales         animal[] @relation("categoria")
 }
 
 model password_reset {

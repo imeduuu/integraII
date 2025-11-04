@@ -4,6 +4,10 @@ const prisma = new PrismaClient();
 const db: any = prisma;
 
 async function main() {
+  // Sexo records
+  await prisma.sexo.upsert({ where: { id_sexo: 1 }, update: {}, create: { id_sexo: 1, sexo: 'Masculino' } });
+  await prisma.sexo.upsert({ where: { id_sexo: 2 }, update: {}, create: { id_sexo: 2, sexo: 'Femenino' } });
+
   // Roles base
   await prisma.rol.upsert({ where: { id_rol: 1 }, update: {}, create: { id_rol: 1, nombre_rol: 'Admin' } });
   await prisma.rol.upsert({ where: { id_rol: 2 }, update: {}, create: { id_rol: 2, nombre_rol: 'Usuario' } });
@@ -36,7 +40,7 @@ async function main() {
       telefono: '123456789',
       email: 'admin@demo.com',
       password_hash: 'admin123',
-      sexo: 'M',
+      id_sexo: 1,  // We'll create the sexo record first
       activo: true,
       id_rol: 1,
     },
@@ -54,20 +58,19 @@ async function main() {
       telefono: '987654321',
       email: 'user@demo.com',
       password_hash: 'user123',
-      sexo: 'F',
+      id_sexo: 2,  // We'll create the sexo record first
       activo: true,
       id_rol: 2,
     },
   });
 
   // Catálogos base
-  const especie = await prisma.especie.upsert({ where: { id_especie: 1 }, update: {}, create: { id_especie: 1, nombre_especie: 'Perro' } });
-  const categoria = await prisma.categoria.upsert({ where: { id_categoria: 1 }, update: {}, create: { id_categoria: 1, nombre_categoria: 'Doméstico' } });
-  const estadoSalud = await prisma.estado_salud.upsert({ where: { id_estado_salud: 1 }, update: {}, create: { id_estado_salud: 1, nombre_estado_salud: 'Sano' } });
+  const especie = await prisma.especie.upsert({ where: { id_especie: 1 }, update: {}, create: { id_especie: 1, especie: 'Perro' } });
+  const estadoSalud = await prisma.estado_salud.upsert({ where: { id_estado_salud: 1 }, update: {}, create: { id_estado_salud: 1, estado_salud: 'Sano' } });
 
   // Animales de prueba
-  await prisma.animal.upsert({ where: { id_animal: 1 }, update: {}, create: { id_animal: 1, nombre_animal: 'Firulais', edad_animal: '2 años', id_estado_salud: estadoSalud.id_estado_salud, id_categoria: categoria.id_categoria, id_especie: especie.id_especie } });
-  await prisma.animal.upsert({ where: { id_animal: 2 }, update: {}, create: { id_animal: 2, nombre_animal: 'Michi', edad_animal: '1 año', id_estado_salud: estadoSalud.id_estado_salud, id_categoria: categoria.id_categoria, id_especie: especie.id_especie } });
+  await prisma.animal.upsert({ where: { id_animal: 1 }, update: {}, create: { id_animal: 1, nombre_animal: 'Firulais', fecha_nacimiento: new Date('2021-01-01'), is_edad_aproximada: true, id_estado_salud: estadoSalud.id_estado_salud } });
+  await prisma.animal.upsert({ where: { id_animal: 2 }, update: {}, create: { id_animal: 2, nombre_animal: 'Michi', fecha_nacimiento: new Date('2022-01-01'), is_edad_aproximada: true, id_estado_salud: estadoSalud.id_estado_salud } });
 
   // Estados de solicitud (base)
   await prisma.estado_solicitud.upsert({ where: { id_estado_solicitud: 1 }, update: {}, create: { id_estado_solicitud: 1, estado_solicitud: 'Pendiente' } });
@@ -91,7 +94,7 @@ async function main() {
           telefono: '123456789',
           email: 'juan@example.com',
           password_hash: '123',
-          sexo: 'M',
+          id_sexo: 1,
           activo: true,
           id_rol: rolesDb.length > 0 ? rolesDb[0].id_rol : 1,
         },
@@ -103,7 +106,7 @@ async function main() {
           telefono: '987654321',
           email: 'ana@example.com',
           password_hash: '456',
-          sexo: 'F',
+          id_sexo: 2,
           activo: true,
           id_rol: rolesDb.length > 1 ? rolesDb[1].id_rol : 2,
         },
@@ -168,7 +171,7 @@ async function main() {
       telefono: '222222222',
       email: 'org@demo.com',
       password_hash: 'org123',
-      sexo: 'F',
+      id_sexo: 2,
       activo: true,
       id_rol: 3,
       id_organizacion: org.id_organizacion,

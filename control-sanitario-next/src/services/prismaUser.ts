@@ -32,7 +32,7 @@ export async function createUser(
       activo,
   telefono,
   ...(id_sexo !== undefined ? { sexo: { connect: { id_sexo } } } : {}),
-  fecha_nacimiento,
+  ...(fecha_nacimiento !== undefined ? { fecha_nacimiento } : {}),
   ...(id_organizacion !== undefined ? { organizacion: { connect: { id_organizacion } } } : {})
     },
   });
