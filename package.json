@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@prisma/client": "^6.18.0",
+
     "leaflet": "^1.9.4",
     "react-leaflet": "^5.0.0"
   },

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
+import Head from 'next/head';
 import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -52,9 +53,34 @@ const Donations = () => {
     addToast('¡Gracias por tu generosa donación! Nos pondremos en contacto pronto.', 'success');
     setFormData({ name: '', email: '', type: '', quantity: '', message: '' });
   };
+const [acceptedPolicy, setAcceptedPolicy] = React.useState(false);
 
   return (
     <>
+    <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Control Sanitario",
+              "url": "https://HuellaSegura.vercel.app",
+              "logo": "https://HuellaSegura.vercel.app/logo.png",
+              "sameAs": [
+                "https://www.facebook.com/HuellaSegura",
+                "https://www.instagram.com/HuellaSegura"
+              ],
+              "potentialAction": {
+                "@type": "DonateAction",
+                "target": "https://HuellaSegura.vercel.app/donaciones",
+                "name": "Donar a Control Sanitario"
+              }
+            })
+          }}
+        />
+      </Head>
+      
       <Navbar />
       <main className={styles.wrapper}>
         <section className={styles.card}>
@@ -124,8 +150,40 @@ const Donations = () => {
               />
             </div>
             <div className={styles.actions}>
+              {}
+<p style={{ fontSize: '0.9rem', color: '#4b5563', marginTop: '12px' }}>
+  Al registrar tu donación aceptas nuestra{' '}
+  <a
+    href="/politica-privacidad"
+    style={{ color: '#2563eb', textDecoration: 'underline' }}
+  >
+    Política de Privacidad
+  </a>.
+</p>
+
               {/* Migración: Se reemplaza el botón nativo por el componente Button UI estándar. */}
-              <Button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>Registrar Donación</Button>
+              <Button type="submit" className={`${styles.btn} ${styles.btnPrimary}`} disabled={!acceptedPolicy}>
+  Registrar Donación
+</Button>
+
+              <p style={{ fontSize: '0.9rem', color: '#4b5563', marginTop: '12px' }}>
+  Acepto la{' '}
+  <a
+    href="/politica-privacidad"
+    style={{ color: '#2563eb', textDecoration: 'underline' }}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    política de privacidad
+  </a>.
+  <input
+    type="checkbox"
+    checked={acceptedPolicy}
+    onChange={(e) => setAcceptedPolicy(e.target.checked)}
+    style={{ marginLeft: 8 }}
+  />
+</p>
+
             </div>
           </form>
         </section>

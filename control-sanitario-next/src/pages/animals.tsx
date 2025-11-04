@@ -1,5 +1,6 @@
   import React, { useState, useEffect } from 'react';
   import Navbar from '../components/Navbar';
+  import Head from 'next/head';
   import Footer from '../components/Footer';
   import AnimalCard from '../components/AnimalCard';
   import Button from '../components/ui/Button';
@@ -54,6 +55,45 @@
     const { theme } = useTheme();
     return (
       <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CollectionPage",
+              "name": "Animales en Adopción y Rescatados - Control Sanitario",
+              "url": "https://HuellaSegura.vercel.app/animales",
+              "description": "Listado de animales disponibles para adopción y rescatados, con filtros por estado, especie y ubicación.",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Control Sanitario",
+                "logo": "https://HuellaSegura.vercel.app/logo.png"
+              },
+              "mainEntity": {
+                "@type": "ItemList",
+                "itemListElement": filtered.map((animal, index) => ({
+                  "@type": "ListItem",
+                  "position": index + 1,
+                  "name": animal.nombre,
+                  "url": `https://HuellaSegura.vercel.app/animales#${animal.id}`,
+                  "item": {
+                    "@type": "Thing",
+                    "name": animal.nombre,
+                    "additionalProperty": [
+                      { "@type": "PropertyValue", "name": "Especie", "value": animal.especie },
+                      { "@type": "PropertyValue", "name": "Estado", "value": animal.estado_general },
+                      { "@type": "PropertyValue", "name": "Ubicación", "value": animal.zona },
+                      { "@type": "PropertyValue", "name": "Imagen", "value": Array.isArray(animal.images) ? animal.images[0] : animal.images || "/animals/dog1.webp" }
+                    ]
+                  }
+                }))
+              }
+            })
+          }}
+        />
+      </Head>
+      
         <Navbar />
         <main className={`${styles.root} ${theme === 'dark' ? styles.dark : ''}`}>
           <h2 className={styles.title}>Animales en Adopción y Rescatados</h2>

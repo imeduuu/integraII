@@ -5,6 +5,9 @@ import React, { useState } from 'react';
 import Button from './ui/Button';
 import Input from './ui/Input';
 import Modal from './ui/Modal';
+
+import { sanitizeFormData } from "../utils/sanitize";
+
 import Loader from './ui/Loader';
 import { useNotification } from '../components/NotificationProvider';
 
