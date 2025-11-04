@@ -24,6 +24,7 @@ model usuario {
   activo              Boolean   @default(true)
   deleted_at          DateTime?
   id_ciudad           Int? // antes: Int
+  tokenVersion Int @default(0)
 
   rol                 rol?              @relation(fields: [id_rol], references: [id_rol])
   sexo                sexo?              @relation(fields: [id_sexo], references: [id_sexo])
