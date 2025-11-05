@@ -14,6 +14,7 @@ import Tooltip from './Tooltip';
 const Navbar = () => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  // Página de test ahora se muestra como cualquier otra página del navbar
 
   // Aplica estilos activos al enlace de la página actual
   const getLinkClasses = (path: string) => {
@@ -47,8 +48,11 @@ const Navbar = () => {
       { href: '/org-stats', label: 'Estadísticas' }
     ];
   }
+  // Mostrar Test Orgs para todos los roles (entorno de desarrollo)
+  links.push({ href: '/test-navbar-orgs', label: 'Test Orgs' });
 
 return (
+  <>
   <nav className={styles.navbar}>
     <div className={styles.navbarHeader}>
       <span className={styles.navbarTitle}>Huella Segura</span>
@@ -85,8 +89,10 @@ return (
       <Tooltip text="Abrir configuración del perfil ⚙️">
         <a href="/profile" className={getLinkClasses('/profile')} onClick={() => setMenuOpen(false)}>Ver perfil</a>
       </Tooltip>
+
     </div>
   </nav>
+  </>
 );
 };
 
