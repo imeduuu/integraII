@@ -28,7 +28,8 @@ const Navbar = () => {
       { href: '/admin-home', label: 'Panel Admin' },
       { href: '/admin-users', label: 'Usuarios' },
       { href: '/admin-campaigns', label: 'Campañas' },
-      { href: '/admin-inbox', label: 'Bandeja de Entrada' }
+      { href: '/admin-inbox', label: 'Bandeja de Entrada' },
+      { href: '/admin-species', label: 'Especies' }
     ];
   } else if (userMock.role === 'user') {
     links = [
@@ -50,6 +51,8 @@ const Navbar = () => {
   }
   // Mostrar Test Orgs para todos los roles (entorno de desarrollo)
   links.push({ href: '/test-navbar-orgs', label: 'Test Orgs' });
+  // Enlace de prueba para ver el CRUD de especies en cualquier rol
+  links.push({ href: '/admin-species', label: 'Test Species' });
 
 return (
   <>

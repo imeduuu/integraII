@@ -1,0 +1,68 @@
+/* Estilos básicos para la página de CRUD de especies */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+.subtitle {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+.formRow {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+.helper {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+.info {
+  color: #2563eb;
+}
+.error {
+  color: #dc2626;
+}
+.tableWrapper {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th, .table td {
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  padding: 0.75rem 0.5rem;
+}
+.table th {
+  color: #374151;
+  font-weight: 600;
+}
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.empty {
+  text-align: center;
+  color: #6b7280;
+}

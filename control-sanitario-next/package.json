@@ -45,6 +45,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "jest --passWithNoTests",
     "analyze": "cross-env ANALYZE=true next build"
   },
   "jest": {
