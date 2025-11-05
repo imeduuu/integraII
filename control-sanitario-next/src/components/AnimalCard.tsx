@@ -1,10 +1,11 @@
 import Tooltip from './Tooltip';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
+import api from '../services/api';
 
 const CommentSection = dynamic(() => import('./CommentSection'), {
   ssr: false,
@@ -22,7 +23,26 @@ interface AnimalCardProps {
 
 const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, age, images, animalId }) => {
   const router = useRouter();
+  const [hasHistory, setHasHistory] = useState(false);
   const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
+
+  // Verifica si el animal tiene historial médico para mostrar el botón
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const { data } = await api.get(`/medicalHistory/${animalId}`);
+        if (!mounted) return;
+        setHasHistory(Array.isArray(data) && data.length > 0);
+      } catch {
+        if (!mounted) return;
+        setHasHistory(false);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [animalId]);
 
   return (
     <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 tablet:p-5 w-full max-w-xs sm:w-72 tablet:w-80 flex flex-col items-center hover:shadow-lg transition-shadow duration-300 motion-safe-transition tablet-card">
@@ -57,6 +77,14 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, a
           onClick={() => router.push('/adopcion')}
         >
           Adoptar
+        </Button>
+      </Tooltip>
+      <Tooltip text={`Ver historial médico de ${nombre}`}>
+        <Button
+          className="bg-emerald-600 hover:bg-emerald-700 mt-2 tablet-button"
+          onClick={() => router.push(`/medicalHistory/${animalId}`)}
+        >
+          Historial médico{hasHistory ? '' : ' (sin registros)'}
         </Button>
       </Tooltip>
       {/* Sección de comentarios */}
