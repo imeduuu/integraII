@@ -1,97 +1,86 @@
-import Tooltip from './Tooltip';
-
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
+// AnimalCard.tsx
+import React, { useState } from 'react';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
-import api from '../services/api';
-
-const CommentSection = dynamic(() => import('./CommentSection'), {
-  ssr: false,
-  loading: () => <div className="py-4 text-center text-sm text-gray-500">Cargando comentarios...</div>,
-});
 
 interface AnimalCardProps {
-  nombre: string; // Nombre del animal
-  estado_general: string; // Estado (Disponible, Adoptado, etc.)
-  zona: string; // Ubicación geográfica
-  age?: string; // Edad opcional
-  images?: string[]; // Array de URLs de imágenes
-  animalId: string; // ID del animal
+  animalId?: string;
+  nombre: string;
+  estado_general: string;
+  zona: string;
+  age?: string;
+  images?: string[];
 }
 
-const AnimalCard: React.FC<AnimalCardProps> = ({ nombre, estado_general, zona, age, images, animalId }) => {
-  const router = useRouter();
-  const [hasHistory, setHasHistory] = useState(false);
-  const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
+// Reutilizable dentro del componente
+const cardClasses = {
+  container: 'bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center',
+  img: 'w-24 h-24 object-cover rounded-full mb-3 border-2 border-green-200',
+  nombre: 'text-xl font-bold mb-2 text-green-700',
+  info: 'text-sm text-gray-600 mb-1 font-semibold',
+  button: 'bg-blue-600 hover:bg-blue-700 mt-2',
+  ghost: 'bg-gray-200 text-gray-800 hover:bg-gray-300 mt-2'
+};
 
-  // Verifica si el animal tiene historial médico para mostrar el botón
-  useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        const { data } = await api.get(`/medicalHistory/${animalId}`);
-        if (!mounted) return;
-        setHasHistory(Array.isArray(data) && data.length > 0);
-      } catch {
-        if (!mounted) return;
-        setHasHistory(false);
+const AnimalCard: React.FC<AnimalCardProps> = ({ animalId, nombre, estado_general, zona, age, images }) => {
+  const router = useRouter();
+  const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
+  const [loadingAddState, setLoadingAddState] = useState(false);
+
+  const handleAddHealthState = async () => {
+    const nombreEstado = window.prompt('Nombre del nuevo estado de salud (ej. Sano, En tratamiento)');
+    if (!nombreEstado) return;
+    const value = nombreEstado.trim();
+    if (!value) return;
+    try {
+      setLoadingAddState(true);
+      const res = await fetch('/api/health-states', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre_estado_salud: value })
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || json?.success === false) {
+        throw new Error(json?.error || 'No se pudo crear el estado de salud');
       }
-    })();
-    return () => {
-      mounted = false;
-    };
-  }, [animalId]);
+      alert('Estado de salud creado correctamente');
+    } catch (e: any) {
+      alert(e?.message ?? 'Error creando estado de salud');
+    } finally {
+      setLoadingAddState(false);
+    }
+  };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 tablet:p-5 w-full max-w-xs sm:w-72 tablet:w-80 flex flex-col items-center hover:shadow-lg transition-shadow duration-300 motion-safe-transition tablet-card">
-      {/* Imagen del animal con tooltip y click para ver detalles usando Next/Image */}
-      <Tooltip text={`Ver detalles de ${nombre}`}>
-        <div onClick={() => router.push(`/animals/${animalId}`)} style={{ cursor: 'pointer' }}>
-          <Image
-            src={thumbnail}
-            alt={nombre}
-            width={96}
-            height={96}
-            className="w-24 h-24 tablet:w-28 tablet:h-28 object-cover rounded-full mb-3 border-2 border-blue-300 hover:scale-105 transition-transform"
-          />
-        </div>
-      </Tooltip>
-      <h2 className="text-xl tablet:text-2xl font-bold mb-2 text-blue-700">{nombre}</h2>
-      <p className="text-sm tablet:text-base text-gray-600 mb-1">
-        <span className="font-semibold">Estado:</span> {estado_general}
-      </p>
-      <p className="text-sm tablet:text-base text-gray-600 mb-1">
-        <span className="font-semibold">Ubicación:</span> {zona}
-      </p>
-      {age && (
-        <p className="text-sm tablet:text-base text-gray-600 mb-2">
-          <span className="font-semibold">Edad:</span> {age}
-        </p>
-      )}
-      {/* Botón Adoptar con tooltip */}
-      <Tooltip text={`Adoptar a ${nombre}`}>
-        <Button
-          className="bg-blue-600 hover:bg-blue-700 mt-2 tablet-button"
-          onClick={() => router.push('/adopcion')}
-        >
-          Adoptar
-        </Button>
-      </Tooltip>
-      <Tooltip text={`Ver historial médico de ${nombre}`}>
-        <Button
-          className="bg-emerald-600 hover:bg-emerald-700 mt-2 tablet-button"
-          onClick={() => router.push(`/medicalHistory/${animalId}`)}
-        >
-          Historial médico{hasHistory ? '' : ' (sin registros)'}
-        </Button>
-      </Tooltip>
-      {/* Sección de comentarios */}
-      <div className="mt-4 w-full">
-        <CommentSection animalId={Number(animalId)} />
-      </div>
-    </div>
+    <article
+      className={cardClasses.container}
+      role="article"
+      aria-label={`Tarjeta del animal ${nombre}`}
+    >
+      <img src={thumbnail} alt={nombre} className={cardClasses.img} />
+      <h2 className={cardClasses.nombre}>{nombre}</h2>
+      <p className={cardClasses.info}>Estado: {estado_general}</p>
+      <p className={cardClasses.info}>Ubicación: {zona}</p>
+      {age && <p className={cardClasses.info}>Edad: {age}</p>}
+      <Button
+        className={cardClasses.button}
+        onClick={() => router.push(`/adopcion${animalId ? `?animalId=${animalId}` : ''}`)}
+        aria-label={`Iniciar proceso de adopción para ${nombre}`}
+      >
+        Adoptar
+      </Button>
+
+      {/* Botón para agregar un estado de salud usando los endpoints Health States API */}
+      <Button
+        variant="secondary"
+        className={cardClasses.ghost}
+        onClick={handleAddHealthState}
+        isLoading={loadingAddState}
+        aria-label={`Agregar estado de salud desde la tarjeta de ${nombre}`}
+      >
+        Agregar estado de salud
+      </Button>
+    </article>
   );
 };
 

@@ -1,131 +1,93 @@
-﻿/* Navbar responsive con menú hamburguesa en móviles */
+/* Título alineado a la izquierda */
+.navbarTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff; /* Ajustado para mayor contraste con fondo azul */
+  letter-spacing: 0.05em;
+  margin-right: auto;
+  align-self: flex-start;
+}
+.profileSectionRight {
+  position: absolute;
+  top: 1.2rem;
+  right: 2.5vw;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 .navbar {
-  background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
-  color: #fff;
-  padding: 0.75rem 1rem;
+  background-color: hsl(212, 92%, 64%); /* Un negro muy oscuro */
+  color: #43a2f0;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #43a2f0; /* Separación sutil */
+}
+@media (min-width: 640px) {
+  .navbar {
+    flex-direction: row;
+  }
+}
+
+/* Navbar ocupa todo el ancho, sin bordes blancos laterales */
+.navbar {
+  width: 100vw;
+  min-width: 100vw;
+  margin: 0;
+  left: 0;
+  top: 0;
+  background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
+  color: #fff;
+  padding: 1.2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 2px solid #2563eb;
   box-shadow: 0 2px 12px rgba(37,99,235,0.08);
   position: relative;
-  z-index: 1000;
-  width: 100%;
-}
-
-.dark .navbar {
-  background: linear-gradient(90deg, #111827 60%, #1e293b 100%);
-  border-bottom: 2px solid #334155;
-}
-
-.navbarHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.navbarTitle {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #000000;
-  letter-spacing: 0.05em;
-}
-
-.dark .navbarTitle {
-  color: #fff;
-}
-
-.menuToggle {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  background: transparent;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
   z-index: 10;
 }
 
-.hamburger {
-  width: 25px;
-  height: 3px;
-  background-color: #000000;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.dark .hamburger {
-  background-color: #fff;
-}
-
-.navbarLinks {
-  display: none;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 1rem 0;
-}
-
-.navbarLinksOpen {
-  display: flex;
-}
-
 .navLink {
-  color: #000000;
-  padding: 0.75rem 1rem;
+  color: #ffffff; /* Ajustado para contraste con fondo navbar */
+  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  text-decoration: none;
-  transition: background-color 0.3s ease-in-out, color 0.3s;
-  display: block;
-  text-align: left;
+  text-decoration: none; /* Quitamos el subrayado por defecto */
+  transition: background-color 0.3s ease-in-out;
 }
-
-.dark .navLink {
-  color: #fff;
-}
-
 .navLink:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #e0f2fe; /* Color de hover más contrastante */
 }
-
 .navLinkActive {
-  background-color: #43a2f0;
+  background-color: #1e40af; /* Ajustado para contraste suficiente */
   font-weight: bold;
   position: relative;
+  overflow: hidden;
 }
-
 .navLinkActive::after {
-  content: "";
+  content: '';
   position: absolute;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 0.25rem;
-  width: 4px;
-  height: 70%;
-  background-color: #000000;
+  width: 70%;
+  height: 2px;
+  background-color: #ffffff; /* Mejor contraste con fondo activo */
 }
-
-.dark .navLinkActive::after {
-  background-color: #fff;
-}
-
 .profileSection {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
 }
-
-.profileSection a {
-  color: #ffffff !important;
-  font-weight: 500;
-  text-decoration: none;
-  transition: opacity 0.3s ease;
-}
-
-.profileSection a:hover {
-  opacity: 0.8;
-  text-decoration: underline;
+.profileImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffffff; /* Ajustado para contraste con fondo */
 }
 
 .profileImage {
@@ -133,91 +95,20 @@
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #ffffff;
-  cursor: pointer;
+  border: 2px solid #000000;
 }
 
-.dark .profileImage {
-  border-color: #fff;
-}
 
-@media (min-width: 768px) {
-  .navbar {
-    flex-direction: row;
-    align-items: center;
-    padding: 1rem 2rem;
-  }
-
-  .navbarHeader {
-    width: auto;
-  }
-
+/* Ajustes para resoluciones menores a 740px */
+@media (max-width: 740px) {
   .navbarTitle {
-    font-size: 1.5rem;
-    margin-right: 2rem;
+    font-size: 1.25rem;
   }
-
-  .menuToggle {
-    display: none;
+  .navbar {
+    padding: 0.8rem 1rem;
   }
-
   .navbarLinks {
-    display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    flex: 1;
-    padding: 0;
-    align-items: center;
     justify-content: center;
-  }
-
-  .navLink {
-    padding: 0.5rem 1rem;
-    text-align: center;
-  }
-
-  .navLinkActive::after {
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-    width: 70%;
-    height: 2px;
-  }
-
-  .profileSection {
-    margin-left: auto;
-    padding: 0;
-  }
-}
-
-/* Tablet optimizations */
-@media (min-width: 768px) and (max-width: 1366px) {
-  .navbar {
-    padding: 1.25rem 2.5rem;
-  }
-  .navbarTitle {
-    font-size: 1.75rem;
-    margin-right: 3rem;
-  }
-  .navbarLinks {
-    gap: 0.75rem 1.5rem;
-  }
-  .navLink {
-    padding: 0.75rem 1.25rem;
-    font-size: 1.125rem;
-    min-height: 48px;
-    display: flex;
-    align-items: center;
-  }
-  .profileSection {
-    gap: 0.75rem;
-  }
-  .profileSection a {
-    font-size: 1.125rem;
-  }
-  .profileImage {
-    width: 40px;
-    height: 40px;
   }
 }

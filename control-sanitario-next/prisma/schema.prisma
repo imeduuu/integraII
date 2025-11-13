@@ -7,278 +7,178 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model usuario {
-  id_usuario          Int       @id @default(autoincrement())
-  id_rol              Int?
-  id_sexo             Int? // antes: Int
-  nombre_usuario      String    @db.VarChar(50)
-  apellido_paterno    String?   @db.VarChar(30)
-  apellido_materno    String?   @db.VarChar(30)
-  fecha_nacimiento    DateTime?
-  telefono            String?   @db.VarChar(20)
-  email               String    @unique @db.VarChar(100)
-  password_hash       String    @db.VarChar(255)
-  id_organizacion     Int?
-  fecha_creacion      DateTime  @default(now())
-  fecha_ultimo_login  DateTime?
-  activo              Boolean   @default(true)
-  deleted_at          DateTime?
-  id_ciudad           Int? // antes: Int
-
-  rol                 rol?              @relation(fields: [id_rol], references: [id_rol])
-  sexo                sexo?              @relation(fields: [id_sexo], references: [id_sexo])
-  organizacion        organizacion?     @relation(fields: [id_organizacion], references: [id_organizacion])
-  ciudad              ciudad?            @relation(fields: [id_ciudad], references: [id_ciudad])
-
-  google_accounts     google_accounts[]
-  avistamientos       avistamiento[]
-  alertas             alerta[]
-  dispositivos        dispositivo[]
-  adopciones_rescate  adopcion[]        @relation("rescatista")
-  adopciones_adopta   adopcion[]        @relation("adoptante")
-  solicitudes         solicitud_adopcion[]
-  password_resets     password_reset[]
-  audit_logs          audit_log[]
-  animales_propietario animal[]         @relation("propietario")
-}
-
-model rol {
-  id_rol     Int     @id @default(autoincrement())
-  nombre_rol String  @db.VarChar(30)
-
-  usuarios   usuario[]
-}
-
-model sexo {
-  id_sexo Int     @id @default(autoincrement())
-  sexo    String  @db.VarChar(15)
-
-  usuarios usuario[]
-}
-
 model organizacion {
-  id_organizacion       Int     @id @default(autoincrement())
-  nombre_organizacion   String  @db.VarChar(50)
-  telefono_organizacion String  @db.VarChar(20)
-  email_organizacion    String  @unique @db.VarChar(100)
+  id_organizacion       Int       @id @default(autoincrement())
+  nombre_organizacion   String    @db.VarChar(50)
+  telefono_organizacion String    @db.VarChar(20)
+  email_organizacion    String    @unique @db.VarChar(100)
+  direccion             String    @db.VarChar(100)
   id_ciudad             Int?
-  direccion             String  @db.VarChar(100)
-
-  ciudad                ciudad?  @relation(fields: [id_ciudad], references: [id_ciudad])
+  ciudad                ciudad?   @relation(fields: [id_ciudad], references: [id_ciudad])
   usuarios              usuario[]
 }
 
-model region {
-  id_region     Int      @id @default(autoincrement())
-  nombre_region String   @db.VarChar(50)
-
-  ciudades      ciudad[]
+model rol {
+  id_rol     Int       @id @default(autoincrement())
+  nombre_rol String    @db.VarChar(30)
+  usuarios   usuario[]
 }
 
-model ciudad {
-  id_ciudad   Int      @id @default(autoincrement())
-  id_region   Int
-  nombre_ciudad String @db.VarChar(50)
-
-  region        region  @relation(fields: [id_region], references: [id_region])
-  usuarios      usuario[]
-  organizaciones organizacion[]
-}
-
-model google_accounts {
-  id_google_account Int      @id @default(autoincrement())
-  id_usuario        Int
-  google_account_id String   @db.VarChar(255)
-  google_email      String   @db.VarChar(255)
-  refresh_token     String?
-  access_token      String?
-  token_expiry      DateTime?
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
-
-  usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
-}
-
-model dispositivo {
-  id_dispositivo  Int      @id @default(autoincrement())
-  id_usuario      Int
-  plataforma      String   @db.VarChar(20)
-  token           String   @unique
-  fecha_creacion  DateTime @default(now())
-  fecha_actualizacion DateTime?
-  activo          Boolean  @default(true)
-
-  usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
-}
-
-model estado_salud {
-  id_estado_salud   Int      @id @default(autoincrement())
-  estado_salud      String?   @db.VarChar(20) // antes: String
-  animales          animal[]
-  avistamientos     avistamiento[]
-}
-
-model especie {
-  id_especie Int      @id @default(autoincrement())
-  especie    String?   @db.VarChar(20) // antes: String
-
-  razas      raza[]
-  avistamientos avistamiento[]
-}
-
-model raza {
-  id_raza    Int      @id @default(autoincrement())
-  id_especie Int
-  raza       String   @db.VarChar(20)
-
-  especie especie @relation(fields: [id_especie], references: [id_especie])
-  animales animal[]
+model usuario {
+  id_usuario                                       Int                  @id @default(autoincrement())
+  nombre_usuario                                   String               @db.VarChar(50)
+  apellido_paterno                                 String?              @db.VarChar(30)
+  apellido_materno                                 String?              @db.VarChar(30)
+  fecha_nacimiento                                 DateTime?
+  telefono                                         String?              @db.VarChar(20)
+  email                                            String               @unique @db.VarChar(100)
+  password_hash                                    String               @db.VarChar(255)
+  fecha_creacion                                   DateTime             @default(now())
+  fecha_ultimo_login                               DateTime?
+  activo                                           Boolean              @default(true)
+  id_organizacion                                  Int?
+  id_rol                                           Int?
+  deleted_at                                       DateTime?
+  id_ciudad                                        Int?
+  id_sexo                                          Int?
+  adopcion_adopcion_id_usuario_adoptanteTousuario  adopcion[]           @relation("adopcion_id_usuario_adoptanteTousuario")
+  adopcion_adopcion_id_usuario_rescatistaTousuario adopcion[]           @relation("adopcion_id_usuario_rescatistaTousuario")
+  alerta                                           alerta[]
+  animal                                           animal[]
+  audit_log                                        audit_log[]
+  avistamientos                                    avistamiento[]
+  dispositivo                                      dispositivo[]
+  google_accounts                                  google_accounts[]
+  password_reset                                   password_reset[]
+  solicitudes                                      solicitud_adopcion[]
+  ciudad                                           ciudad?              @relation(fields: [id_ciudad], references: [id_ciudad])
+  organizacion                                     organizacion?        @relation(fields: [id_organizacion], references: [id_organizacion])
+  rol                                              rol?                 @relation(fields: [id_rol], references: [id_rol])
+  sexo                                             sexo?                @relation(fields: [id_sexo], references: [id_sexo])
 }
 
 model animal {
-  id_animal             Int       @id @default(autoincrement())
-  nombre_animal         String?   @db.VarChar(30)
+  id_animal              Int                @id @default(autoincrement())
+  nombre_animal          String?            @db.VarChar(30)
+  id_estado_salud        Int
+  fecha_nacimiento       DateTime?
+  id_raza                Int?
   id_usuario_propietario Int?
-  fecha_nacimiento      DateTime?
-  is_edad_aproximada    Boolean   @default(false)
-  id_estado_salud       Int
-  id_raza               Int?
-
-  propietario           usuario?        @relation("propietario", fields: [id_usuario_propietario], references: [id_usuario])
-  estado_salud          estado_salud    @relation(fields: [id_estado_salud], references: [id_estado_salud])
-  raza                  raza?           @relation(fields: [id_raza], references: [id_raza])
-  fotos                 animal_foto[]
-  historiales_medicos   historial_medico[]
-  adopciones            adopcion[]
+  is_edad_aproximada     Boolean            @default(false)
+  adopcion               adopcion[]
+  estado_salud           estado_salud       @relation(fields: [id_estado_salud], references: [id_estado_salud])
+  raza                   raza?              @relation(fields: [id_raza], references: [id_raza])
+  usuario                usuario?           @relation(fields: [id_usuario_propietario], references: [id_usuario])
+  animal_foto            animal_foto[]
+  historial_medico       historial_medico[]
 }
 
-model animal_foto {
-  id_foto   Int     @id @default(autoincrement())
-  id_animal Int
-  url       String  @db.VarChar(255)
-
-  animal animal @relation(fields: [id_animal], references: [id_animal])
+model especie {
+  id_especie    Int            @id @default(autoincrement())
+  especie       String?        @db.VarChar(20)
+  avistamientos avistamiento[]
+  raza          raza[]
 }
 
-model historial_medico {
-  id_historial_medico Int      @id @default(autoincrement())
-  id_animal           Int
-  fecha_evento        DateTime
-  tipo_evento         String   @db.VarChar(25)
-  diagnostico         String?
-  detalles            String?
-  nombre_veterinario  String?  @db.VarChar(50)
-
-  animal animal @relation(fields: [id_animal], references: [id_animal])
-}
-
-model adopcion {
-  id_adopcion            Int       @id @default(autoincrement())
-  id_animal              Int
-  id_usuario_rescatista  Int
-  fecha_publicacion      DateTime  @default(now())
-  id_usuario_adoptante   Int?
-  fecha_adopcion         DateTime?
-  disponible             Boolean   @default(true)
-  descripcion            String?
-
-  animal                 animal   @relation(fields: [id_animal], references: [id_animal])
-  rescatista             usuario  @relation("rescatista", fields: [id_usuario_rescatista], references: [id_usuario])
-  adoptante              usuario? @relation("adoptante", fields: [id_usuario_adoptante], references: [id_usuario])
-  solicitudes            solicitud_adopcion[]
+model estado_salud {
+  id_estado_salud     Int            @id @default(autoincrement())
+  nombre_estado_salud String?        @map("estado_salud") @db.VarChar(20)
+  animales            animal[]
+  avistamientos       avistamiento[]
 }
 
 model solicitud_adopcion {
-  id_solicitud_adopcion   Int       @id @default(autoincrement())
+  id_solicitud_adopcion   Int               @id @default(autoincrement())
   id_usuario              Int
-  id_adopcion             Int?
   fecha_ingreso_solicitud DateTime
   fecha_termino_solicitud DateTime?
-  id_estado_solicitud     Int? // antes: Int
-
-  usuario         usuario          @relation(fields: [id_usuario], references: [id_usuario])
-  adopcion        adopcion?         @relation(fields: [id_adopcion], references: [id_adopcion])    
-  estadoSolicitud     estado_solicitud?  @relation(fields: [id_estado_solicitud], references: [id_estado_solicitud])
+  id_adopcion             Int?
+  id_estado_solicitud     Int?
+  adopcion                adopcion?         @relation(fields: [id_adopcion], references: [id_adopcion])
+  estado_solicitud        estado_solicitud? @relation(fields: [id_estado_solicitud], references: [id_estado_solicitud])
+  usuario                 usuario           @relation(fields: [id_usuario], references: [id_usuario])
 }
 
 model estado_solicitud {
-  id_estado_solicitud Int      @id @default(autoincrement())
-  estado_solicitud    String   @db.VarChar(20)
-  solicitudes         solicitud_adopcion[]
-}
-
-model estado_avistamiento {
-  id_estado_avistamiento Int    @id @default(autoincrement())
-  estado_avistamiento    String @db.VarChar(20)
-  avistamientos          avistamiento[]
+  id_estado_solicitud Int                  @id @default(autoincrement())
+  estado_solicitud    String               @db.VarChar(20)
+  solicitud_adopcion  solicitud_adopcion[]
 }
 
 model avistamiento {
-  id_avistamiento        Int       @id @default(autoincrement())
+  id_avistamiento        Int                 @id @default(autoincrement())
   id_usuario             Int
-  id_especie             Int
-  id_estado_salud        Int
   id_estado_avistamiento Int
-  fecha_creacion         DateTime  @default(now())
-  fecha_actualizacion    DateTime  @updatedAt
+  id_estado_salud        Int
+  id_especie             Int
+  fecha_creacion         DateTime            @default(now())
+  fecha_actualizacion    DateTime            @updatedAt
   descripcion            String?
-  direccion              String?   @db.VarChar(30)
+  direccion              String?             @db.VarChar(30)
   ubicacion              String?
-  fotos                  avistamiento_foto[]
-
-  usuario             usuario             @relation(fields: [id_usuario], references: [id_usuario])
-  especie             especie             @relation(fields: [id_especie], references: [id_especie])
-  estado_salud        estado_salud        @relation(fields: [id_estado_salud], references: [id_estado_salud])
-  estado_avistamiento estado_avistamiento @relation(fields: [id_estado_avistamiento], references: [id_estado_avistamiento])
+  especie                especie             @relation(fields: [id_especie], references: [id_especie])
+  estado_avistamiento    estado_avistamiento @relation(fields: [id_estado_avistamiento], references: [id_estado_avistamiento])
+  estado_salud           estado_salud        @relation(fields: [id_estado_salud], references: [id_estado_salud])
+  usuario                usuario             @relation(fields: [id_usuario], references: [id_usuario])
+  avistamiento_foto      avistamiento_foto[]
 }
 
-model avistamiento_foto {
-  id_foto         Int     @id @default(autoincrement())
-  id_avistamiento Int
-  url             String  @db.VarChar(255)
+model estado_avistamiento {
+  id_estado_avistamiento Int            @id @default(autoincrement())
+  estado_avistamiento    String         @db.VarChar(20)
+  avistamientos          avistamiento[]
+}
 
-  avistamiento avistamiento @relation(fields: [id_avistamiento], references: [id_avistamiento])
+model google_accounts {
+  id_google_account Int       @id @default(autoincrement())
+  id_usuario        Int
+  google_account_id String    @db.VarChar(255)
+  google_email      String    @db.VarChar(255)
+  refresh_token     String?
+  access_token      String?
+  token_expiry      DateTime?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  usuario           usuario   @relation(fields: [id_usuario], references: [id_usuario])
+}
+
+model adopcion {
+  id_adopcion                                     Int                  @id @default(autoincrement())
+  id_animal                                       Int
+  id_usuario_rescatista                           Int
+  fecha_publicacion                               DateTime             @default(now())
+  id_usuario_adoptante                            Int?
+  fecha_adopcion                                  DateTime?
+  disponible                                      Boolean              @default(true)
+  descripcion                                     String?
+  animal                                          animal               @relation(fields: [id_animal], references: [id_animal])
+  usuario_adopcion_id_usuario_adoptanteTousuario  usuario?             @relation("adopcion_id_usuario_adoptanteTousuario", fields: [id_usuario_adoptante], references: [id_usuario])
+  usuario_adopcion_id_usuario_rescatistaTousuario usuario              @relation("adopcion_id_usuario_rescatistaTousuario", fields: [id_usuario_rescatista], references: [id_usuario])
+  solicitud_adopcion                              solicitud_adopcion[]
 }
 
 model alerta {
-  id_alerta       Int      @id @default(autoincrement())
-  titulo          String   @db.VarChar(100)
-  descripcion     String?
-  id_usuario      Int
-  id_tipo_alerta  Int
-  id_nivel_riesgo Int
-  ubicacion       String?  @db.VarChar(255)
-  fecha_creacion  DateTime @default(now())
+  id_alerta        Int          @id @default(autoincrement())
+  titulo           String       @db.VarChar(100)
+  descripcion      String?
+  id_usuario       Int
+  id_tipo_alerta   Int
+  id_nivel_riesgo  Int
+  ubicacion        String?      @db.VarChar(255)
+  fecha_creacion   DateTime     @default(now())
   fecha_expiracion DateTime?
-  activa          Boolean  @default(true)
-  reportes        Int?     @default(0)
-
-  usuario      usuario      @relation(fields: [id_usuario], references: [id_usuario])
-  tipo_alerta  tipo_alerta  @relation(fields: [id_tipo_alerta], references: [id_tipo_alerta])
-  nivel_riesgo nivel_riesgo @relation(fields: [id_nivel_riesgo], references: [id_nivel_riesgo])
+  activa           Boolean      @default(true)
+  reportes         Int?         @default(0)
+  nivel_riesgo     nivel_riesgo @relation(fields: [id_nivel_riesgo], references: [id_nivel_riesgo])
+  tipo_alerta      tipo_alerta  @relation(fields: [id_tipo_alerta], references: [id_tipo_alerta])
+  usuario          usuario      @relation(fields: [id_usuario], references: [id_usuario])
 }
 
-model tipo_alerta {
-  id_tipo_alerta Int      @id @default(autoincrement())
-  tipo_alerta    String   @db.VarChar(50)
-  alertas        alerta[]
-}
-
-model nivel_riesgo {
-  id_nivel_riesgo Int      @id @default(autoincrement())
-  nivel_riesgo    String   @db.VarChar(50)
-  alertas         alerta[]
-}
-
-model password_reset {
-  id_reset    Int      @id @default(autoincrement())
-  id_usuario  Int
-  token       String   @unique @db.VarChar(255)
-  expires_at  DateTime
-  used        Boolean  @default(false)
-  created_at  DateTime @default(now())
-
-  usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
+model animal_foto {
+  id_foto   Int    @id @default(autoincrement())
+  id_animal Int
+  url       String @db.VarChar(255)
+  animal    animal @relation(fields: [id_animal], references: [id_animal])
 }
 
 model audit_log {
@@ -292,6 +192,85 @@ model audit_log {
   ip_address   String?
   user_agent   String?
   created_at   DateTime @default(now())
+  usuario      usuario  @relation(fields: [id_usuario], references: [id_usuario])
+}
 
-  usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
+model avistamiento_foto {
+  id_foto         Int          @id @default(autoincrement())
+  id_avistamiento Int
+  url             String       @db.VarChar(255)
+  avistamiento    avistamiento @relation(fields: [id_avistamiento], references: [id_avistamiento])
+}
+
+model ciudad {
+  id_ciudad     Int            @id @default(autoincrement())
+  id_region     Int
+  nombre_ciudad String         @db.VarChar(50)
+  region        region         @relation(fields: [id_region], references: [id_region])
+  organizacion  organizacion[]
+  usuario       usuario[]
+}
+
+model dispositivo {
+  id_dispositivo      Int       @id @default(autoincrement())
+  id_usuario          Int
+  plataforma          String    @db.VarChar(20)
+  token               String    @unique
+  fecha_creacion      DateTime  @default(now())
+  fecha_actualizacion DateTime?
+  activo              Boolean   @default(true)
+  usuario             usuario   @relation(fields: [id_usuario], references: [id_usuario])
+}
+
+model historial_medico {
+  id_historial_medico Int      @id @default(autoincrement())
+  id_animal           Int
+  fecha_evento        DateTime
+  tipo_evento         String   @db.VarChar(25)
+  diagnostico         String?
+  detalles            String?
+  nombre_veterinario  String?  @db.VarChar(50)
+  animal              animal   @relation(fields: [id_animal], references: [id_animal])
+}
+
+model nivel_riesgo {
+  id_nivel_riesgo Int      @id @default(autoincrement())
+  nivel_riesgo    String   @db.VarChar(50)
+  alerta          alerta[]
+}
+
+model password_reset {
+  id_reset   Int      @id @default(autoincrement())
+  id_usuario Int
+  token      String   @unique @db.VarChar(255)
+  expires_at DateTime
+  used       Boolean  @default(false)
+  created_at DateTime @default(now())
+  usuario    usuario  @relation(fields: [id_usuario], references: [id_usuario])
+}
+
+model raza {
+  id_raza    Int      @id @default(autoincrement())
+  id_especie Int
+  raza       String   @db.VarChar(20)
+  animal     animal[]
+  especie    especie  @relation(fields: [id_especie], references: [id_especie])
+}
+
+model region {
+  id_region     Int      @id @default(autoincrement())
+  nombre_region String   @db.VarChar(50)
+  ciudad        ciudad[]
+}
+
+model sexo {
+  id_sexo Int       @id @default(autoincrement())
+  sexo    String    @db.VarChar(15)
+  usuario usuario[]
+}
+
+model tipo_alerta {
+  id_tipo_alerta Int      @id @default(autoincrement())
+  tipo_alerta    String   @db.VarChar(50)
+  alerta         alerta[]
 }
