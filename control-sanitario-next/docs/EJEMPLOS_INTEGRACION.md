@@ -1,12 +1,12 @@
-/**
- * EJEMPLOS PRÁCTICOS DE INTEGRACIÓN
- * Copiar y adaptar estos ejemplos a tu aplicación
- */
+# Ejemplos Prácticos de Integración
 
-// ========================================
-// EJEMPLO 1: Integrar en un formulario
-// ========================================
+> Copiar y adaptar estos ejemplos a tu aplicación
 
+---
+
+## EJEMPLO 1: Integrar en un formulario
+
+```tsx
 import { notificationService } from '../services/notificationService';
 
 export function FormularioAvistamiento() {
@@ -42,14 +42,15 @@ export function FormularioAvistamiento() {
     }
   };
 
-  return null;
+  return <form>{/* tu JSX */}</form>;
 }
+```
 
+---
 
-// ========================================
-// EJEMPLO 2: Integrar con WebSocket
-// ========================================
+## EJEMPLO 2: Integrar con WebSocket
 
+```tsx
 import { useEffect } from 'react';
 import { notificationService } from '../services/notificationService';
 import io from 'socket.io-client';
@@ -85,16 +86,17 @@ export function useRealtimeNotifications() {
     return () => socket.disconnect();
   }, []);
 }
+```
 
+---
 
-// ========================================
-// EJEMPLO 3: Página de configuración
-// ========================================
+## EJEMPLO 3: Página de configuración
 
-import { PushNotificationManager } from '../components/PushNotificationManager';
+```tsx
 import { useState } from 'react';
+import { PushNotificationManager } from '../components/PushNotificationManager';
 
-export default function ConfiguracionPage() {
+export function ConfiguracionPage() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   return (
@@ -124,14 +126,15 @@ export default function ConfiguracionPage() {
     </div>
   );
 }
+```
 
+---
 
-// ========================================
-// EJEMPLO 4: Hook personalizado
-// ========================================
+## EJEMPLO 4: Hook personalizado
 
-import { usePushNotifications } from '../hooks/usePushNotifications';
+```tsx
 import { useCallback } from 'react';
+import { usePushNotifications } from '../hooks/usePushNotifications';
 
 export function useAppNotifications() {
   const { permission, success, error, info } = usePushNotifications();
@@ -167,12 +170,13 @@ export function useAppNotifications() {
     notifyReportRejected
   };
 }
+```
 
+---
 
-// ========================================
-// EJEMPLO 5: Notificaciones programadas
-// ========================================
+## EJEMPLO 5: Notificaciones programadas
 
+```tsx
 import { notificationService } from '../services/notificationService';
 
 export function RecordatoriosSistema() {
@@ -216,12 +220,13 @@ export function RecordatoriosSistema() {
 
   return null;
 }
+```
 
+---
 
-// ========================================
-// EJEMPLO 6: Integrar en componente existente
-// ========================================
+## EJEMPLO 6: Integrar en componente existente
 
+```tsx
 import { useState, useEffect } from 'react';
 import { notificationService } from '../services/notificationService';
 
@@ -274,14 +279,15 @@ export function ListaCasos() {
     }
   };
 
-  return null;
+  return <div>{/* tu JSX */}</div>;
 }
+```
 
+---
 
-// ========================================
-// EJEMPLO 7: Notificaciones de adopción
-// ========================================
+## EJEMPLO 7: Notificaciones de adopción
 
+```tsx
 import { notificationService } from '../services/notificationService';
 
 export function SolicitudAdopcion({ animalId, animalName }) {
@@ -319,14 +325,15 @@ export function SolicitudAdopcion({ animalId, animalName }) {
     }
   };
 
-  return null;
+  return <form>{/* tu JSX */}</form>;
 }
+```
 
+---
 
-// ========================================
-// EJEMPLO 8: Sistema de alertas críticas
-// ========================================
+## EJEMPLO 8: Sistema de alertas críticas
 
+```tsx
 import { useEffect } from 'react';
 import { notificationService } from '../services/notificationService';
 
@@ -364,12 +371,13 @@ export function MonitoreoSistema() {
 
   return null; // Componente invisible de monitoreo
 }
+```
 
+---
 
-// ========================================
-// EJEMPLO 9: Limpiar notificaciones
-// ========================================
+## EJEMPLO 9: Limpiar notificaciones
 
+```tsx
 import { useEffect } from 'react';
 import { notificationService } from '../services/notificationService';
 
@@ -385,19 +393,19 @@ export function MensajesPage() {
     };
   }, []);
 
-  return null;
+  return <div>{/* tu JSX */}</div>;
 }
+```
 
+---
 
-// ========================================
-// EJEMPLO 10: Inicialización en _app.tsx
-// ========================================
+## EJEMPLO 10: Inicialización en _app.tsx
 
-// Ya implementado, pero aquí está el patrón:
+```tsx
 import { useEffect } from 'react';
 import { notificationService } from '../services/notificationService';
 
-function MyApp({ Component, pageProps }) {
+export function MyApp({ Component, pageProps }) {
   useEffect(() => {
     // Inicializar servicio de notificaciones
     const init = async () => {
@@ -416,71 +424,70 @@ function MyApp({ Component, pageProps }) {
     init();
   }, []);
 
-  return (
-    <NotificationProvider>
-      <Component {...pageProps} />
-    </NotificationProvider>
-  );
+  return <Component {...pageProps} />;
 }
+```
 
+---
 
-// ========================================
-// TIPS Y MEJORES PRÁCTICAS
-// ========================================
+## TIPS Y MEJORES PRÁCTICAS
 
-/*
-1. SIEMPRE mostrar toast, OPCIONALMENTE mostrar push:
-   ✅ success('Título', 'Mensaje', true)
-   ❌ No confiar solo en push (puede estar desactivado)
+### 1. SIEMPRE mostrar toast, OPCIONALMENTE mostrar push
+```
+✅ success('Título', 'Mensaje', true)
+❌ No confiar solo en push (puede estar desactivado)
+```
 
-2. Usar tags para notificaciones relacionadas:
-   ✅ tag: `caso-${casoId}` (reemplaza notificaciones del mismo caso)
+### 2. Usar tags para notificaciones relacionadas
+```
+✅ tag: `caso-${casoId}` (reemplaza notificaciones del mismo caso)
+```
 
-3. URLs para navegar al hacer clic:
-   ✅ url: '/casos/123' (navega al caso específico)
+### 3. URLs para navegar al hacer clic
+```
+✅ url: '/casos/123' (navega al caso específico)
+```
 
-4. Duración apropiada:
-   - Success: 3-5 segundos
-   - Error: 5-7 segundos
-   - Warning: 4-6 segundos
-   - Info: 3-5 segundos
+### 4. Duración apropiada
+- Success: 3-5 segundos
+- Error: 5-7 segundos
+- Warning: 4-6 segundos
+- Info: 3-5 segundos
 
-5. No abusar de notificaciones:
-   ❌ Notificar cada click
-   ✅ Notificar eventos importantes
+### 5. No abusar de notificaciones
+```
+❌ Notificar cada click
+✅ Notificar eventos importantes
+```
 
-6. Limpiar notificaciones antiguas:
-   ✅ clearNotificationsByTag() al resolver un caso
-   ✅ clearAllNotifications() al cerrar sesión
+### 6. Limpiar notificaciones antiguas
+```
+✅ clearNotificationsByTag() al resolver un caso
+✅ clearAllNotifications() al cerrar sesión
+```
 
-7. Solicitar permisos en el contexto correcto:
-   ❌ Inmediatamente al cargar la página
-   ✅ Después de una acción del usuario
-   ✅ Al habilitar una función que requiere notificaciones
+### 7. Solicitar permisos en el contexto correcto
+```
+❌ Inmediatamente al cargar la página
+✅ Después de una acción del usuario
+✅ Al habilitar una función que requiere notificaciones
+```
 
-8. Proporcionar valor antes de pedir permisos:
-   ✅ Mostrar qué tipo de notificaciones recibirán
-   ✅ Explicar los beneficios
+### 8. Proporcionar valor antes de pedir permisos
+```
+✅ Mostrar qué tipo de notificaciones recibirán
+✅ Explicar los beneficios
+```
 
-9. Respetar la privacidad:
-   ❌ Enviar datos sensibles en notificaciones
-   ✅ Usar mensajes genéricos con link para detalles
+### 9. Respetar la privacidad
+```
+❌ Enviar datos sensibles en notificaciones
+✅ Usar mensajes genéricos con link para detalles
+```
 
-10. Testing:
-    ✅ Probar con permisos granted/denied/default
-    ✅ Probar en diferentes navegadores
-    ✅ Probar en móvil y desktop
-*/
-
-export default {
-  // Exportar para referencia
-  FormularioAvistamiento,
-  useRealtimeNotifications,
-  ConfiguracionPage,
-  useAppNotifications,
-  RecordatoriosSistema,
-  ListaCasos,
-  SolicitudAdopcion,
-  MonitoreoSistema,
-  MensajesPage
-};
+### 10. Testing
+```
+✅ Probar con permisos granted/denied/default
+✅ Probar en diferentes navegadores
+✅ Probar en móvil y desktop
+```

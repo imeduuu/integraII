@@ -1,11 +1,10 @@
 /**
  * Barra de navegación principal con menús dinámicos por rol
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/navbar.module.css';
 import { userMock } from '../context/userMock';
-import Tooltip from './Tooltip';
 
 /**
  * Componente de navegación que renderiza menús específicos según el rol del usuario
@@ -13,7 +12,6 @@ import Tooltip from './Tooltip';
  */
 const Navbar = () => {
   const router = useRouter();
-  const [menuOpen, setMenuOpen] = useState(false);
 
   // Aplica estilos activos al enlace de la página actual
   const getLinkClasses = (path: string) => {
@@ -21,13 +19,12 @@ const Navbar = () => {
   };
 
   // Configuración de enlaces por rol de usuario
-  let links = [];
+  let links: { href: string; label: string }[] = [];
   if (userMock.role === 'admin') {
     links = [
       { href: '/admin-home', label: 'Panel Admin' },
       { href: '/admin-users', label: 'Usuarios' },
-      { href: '/admin-campaigns', label: 'Campañas' },
-      { href: '/admin-inbox', label: 'Bandeja de Entrada' }
+      { href: '/admin-campaigns', label: 'Campañas' }
     ];
   } else if (userMock.role === 'user') {
     links = [
@@ -37,9 +34,7 @@ const Navbar = () => {
       { href: '/avistamientos', label: 'Avistamientos' },
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
-      { href: '/user-directory', label: 'Usuarios' },
-      { href: '/admin-orgs', label: 'Organizaciones' },
-      { href: '/faqs', label: 'FAQs' }
+      { href: '/admin-orgs', label: 'Organizaciones' }
     ];
   } else if (userMock.role === 'org') {
     links = [
@@ -49,46 +44,40 @@ const Navbar = () => {
     ];
   }
 
-return (
-  <nav className={styles.navbar}>
-    <div className={styles.navbarHeader}>
+  return (
+    <nav role="navigation" aria-label="Navegación principal" className={styles.navbar}>
       <span className={styles.navbarTitle}>Huella Segura</span>
-      
-      {/* Botón hamburguesa para móviles */}
-      <button 
-        className={styles.menuToggle}
-        onClick={() => setMenuOpen(!menuOpen)}
-        aria-label="Toggle menu"
-        aria-expanded={menuOpen}
-      >
-        <span className={styles.hamburger}></span>
-        <span className={styles.hamburger}></span>
-        <span className={styles.hamburger}></span>
-      </button>
-    </div>
 
-    <div className={`${styles.navbarLinks} ${menuOpen ? styles.navbarLinksOpen : ''}`}>
-      <Tooltip text="Ir al inicio 🏠">
-        <a href="/" className={getLinkClasses('/')} onClick={() => setMenuOpen(false)}>Inicio</a>
-      </Tooltip>
-      <Tooltip text="Ver mapa interactivo 🗺️">
-        <a href="/mapa" className={getLinkClasses('/mapa')} onClick={() => setMenuOpen(false)}>Mapa</a>
-      </Tooltip>
-
-      {links.map(link => (
-        <Tooltip key={link.href} text={`Ir a ${link.label}`}>
-          <a href={link.href} className={getLinkClasses(link.href)} onClick={() => setMenuOpen(false)}>
+      <div className={styles.navbarLinks} aria-hidden={false}>
+        <a
+          href="/"
+          className={getLinkClasses('/')}
+          aria-current={router.pathname === '/' ? 'page' : undefined}
+        >
+          Inicio
+        </a>
+        {links.map(link => (
+          <a
+            key={link.href + link.label}
+            href={link.href}
+            className={getLinkClasses(link.href)}
+            aria-current={router.pathname === link.href ? 'page' : undefined}
+          >
             {link.label}
           </a>
-        </Tooltip>
-      ))}
+        ))}
+      </div>
 
-      <Tooltip text="Abrir configuración del perfil ⚙️">
-        <a href="/profile" className={getLinkClasses('/profile')} onClick={() => setMenuOpen(false)}>Ver perfil</a>
-      </Tooltip>
-    </div>
-  </nav>
-);
+      <div className={styles.profileSection + ' ' + styles.profileSectionRight} role="region" aria-label="Perfil del usuario">
+        <img
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=32&h=32"
+          alt="Imagen de perfil"
+          className={styles.profileImage}
+        />
+        <a href="/edit-profile" className={getLinkClasses('/edit-profile')}>Editar perfil</a>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;

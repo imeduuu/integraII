@@ -1,0 +1,105 @@
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d5d8dd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.inputSmall {
+  width: 160px;
+}
+
+.button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button:hover:not(:disabled) {
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+}
+
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 10px 0 12px;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+  max-width: 520px;
+}
+
+.label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.cardHeader {
+  font-weight: 700;
+}
+
+.cardMeta {
+  color: #6b7280;
+  font-size: 0.92rem;
+}
+
+.dangerButton {
+  margin-top: 10px;
+  background: linear-gradient(90deg, #dc2626, #f87171);
+}
+
+.muted {
+  color: #6b7280;
+}

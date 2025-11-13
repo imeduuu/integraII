@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Input from '../components/ui/Input'; // Migración: Usar input UI estándar
 import Button from '../components/ui/Button'; // Migración: Usar botón UI estándar
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../styles/org-publish-adoption.module.css";
 import ProtectedRoute from "../components/ProtectedRoute";
+import { getSpecies, type Species } from "../services/species_form";
 
 type AdoptionFormData = {
   nombre: string;
@@ -18,6 +19,10 @@ type AdoptionFormData = {
 
 
 const OrgPublishAdoption = () => {
+  const [species, setSpecies] = useState<Species[]>([]);
+  const [loadingSpecies, setLoadingSpecies] = useState<boolean>(false);
+  const [errorSpecies, setErrorSpecies] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -27,6 +32,27 @@ const OrgPublishAdoption = () => {
   const onSubmit = (data: AdoptionFormData) => {
     console.log("Datos enviados:", data);
   };
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      setLoadingSpecies(true);
+      setErrorSpecies(null);
+      try {
+        const list = await getSpecies();
+        if (mounted) setSpecies(list);
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Error desconocido al cargar especies";
+        console.error("Error cargando especies:", err);
+        if (mounted) setErrorSpecies(msg);
+      } finally {
+        if (mounted) setLoadingSpecies(false);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <ProtectedRoute allowedRoles={["org"]}>
@@ -61,20 +87,27 @@ const OrgPublishAdoption = () => {
               />
             </div>
 
-            {/* Tipo */}
+            {/* Especie */}
             <div>
-              <label className={styles.label}>Tipo</label>
-              <select
-                className={styles.input}
-                {...register("tipo", { required: "El tipo es obligatorio" })}
-              >
-                <option value="">Selecciona una opción</option>
-                <option value="perro">Perro</option>
-                <option value="gato">Gato</option>
-              </select>
-              {errors.tipo && (
-                <p className={styles.error}>{errors.tipo.message}</p>
+              <label className={styles.label}>Especie</label>
+              {loadingSpecies ? (
+                <p className={styles.helper}>Cargando especies…</p>
+              ) : errorSpecies ? (
+                <p className={styles.error}>No se pudo cargar la lista de especies. {errorSpecies}</p>
+              ) : (
+                <select
+                  className={styles.input}
+                  {...register("tipo", { required: "La especie es obligatoria" })}
+                >
+                  <option value="">Selecciona una especie</option>
+                  {species.map((sp) => (
+                    <option key={sp.id_especie} value={String(sp.id_especie)}>
+                      {sp.nombre_especie}
+                    </option>
+                  ))}
+                </select>
               )}
+              {errors.tipo && <p className={styles.error}>{errors.tipo.message}</p>}
             </div>
 
             {/* Descripción */}

@@ -1,25 +1,47 @@
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-const db: any = prisma;
 
 async function main() {
-  // Sexo records
-  await prisma.sexo.upsert({ where: { id_sexo: 1 }, update: {}, create: { id_sexo: 1, sexo: 'Masculino' } });
-  await prisma.sexo.upsert({ where: { id_sexo: 2 }, update: {}, create: { id_sexo: 2, sexo: 'Femenino' } });
+  // Sexos
+  const sexoM = await prisma.sexo.upsert({
+    where: { id_sexo: 1 },
+    update: {},
+    create: { sexo: 'Masculino' },
+  });
+  const sexoF = await prisma.sexo.upsert({
+    where: { id_sexo: 2 },
+    update: {},
+    create: { sexo: 'Femenino' },
+  });
 
   // Roles base
-  await prisma.rol.upsert({ where: { id_rol: 1 }, update: {}, create: { id_rol: 1, nombre_rol: 'Admin' } });
-  await prisma.rol.upsert({ where: { id_rol: 2 }, update: {}, create: { id_rol: 2, nombre_rol: 'Usuario' } });
-  await prisma.rol.upsert({ where: { id_rol: 3 }, update: {}, create: { id_rol: 3, nombre_rol: 'Organización' } });
-  await prisma.rol.upsert({ where: { id_rol: 4 }, update: {}, create: { id_rol: 4, nombre_rol: 'Voluntario' } });
+  const adminRole = await prisma.rol.upsert({
+    where: { id_rol: 1 },
+    update: {},
+    create: { nombre_rol: 'ADMIN' },
+  });
+  const userRole = await prisma.rol.upsert({
+    where: { id_rol: 2 },
+    update: {},
+    create: { nombre_rol: 'USUARIO' },
+  });
+  const orgRole = await prisma.rol.upsert({
+    where: { id_rol: 3 },
+    update: {},
+    create: { nombre_rol: 'ORGANIZACION' },
+  });
+  const volRole = await prisma.rol.upsert({
+    where: { id_rol: 4 },
+    update: {},
+    create: { nombre_rol: 'VOLUNTARIO' },
+  });
 
   // Organización de prueba
   const org = await prisma.organizacion.upsert({
     where: { id_organizacion: 1 },
     update: {},
     create: {
-      id_organizacion: 1,
       nombre_organizacion: 'Fundación Animal Demo',
       telefono_organizacion: '111111111',
       email_organizacion: 'contacto@fundaciondemo.com',
@@ -27,12 +49,11 @@ async function main() {
     },
   });
 
-  // Usuarios de prueba (upserts básicos)
-  await prisma.usuario.upsert({
-    where: { id_usuario: 1 },
+  // Usuarios de prueba
+  const admin = await prisma.usuario.upsert({
+    where: { email: 'admin@demo.com' },
     update: {},
     create: {
-      id_usuario: 1,
       nombre_usuario: 'Admin',
       apellido_paterno: 'Demo',
       apellido_materno: 'Test',
@@ -40,17 +61,16 @@ async function main() {
       telefono: '123456789',
       email: 'admin@demo.com',
       password_hash: 'admin123',
-      id_sexo: 1,  // We'll create the sexo record first
+      id_sexo: sexoM.id_sexo,
       activo: true,
-      id_rol: 1,
+      id_rol: adminRole.id_rol,
     },
   });
 
-  await prisma.usuario.upsert({
-    where: { id_usuario: 2 },
+  const user = await prisma.usuario.upsert({
+    where: { email: 'user@demo.com' },
     update: {},
     create: {
-      id_usuario: 2,
       nombre_usuario: 'User',
       apellido_paterno: 'Demo',
       apellido_materno: 'Test',
@@ -58,112 +78,16 @@ async function main() {
       telefono: '987654321',
       email: 'user@demo.com',
       password_hash: 'user123',
-      id_sexo: 2,  // We'll create the sexo record first
+      id_sexo: sexoF.id_sexo,
       activo: true,
-      id_rol: 2,
+      id_rol: userRole.id_rol,
     },
   });
 
-  // Catálogos base
-  const especie = await prisma.especie.upsert({ where: { id_especie: 1 }, update: {}, create: { id_especie: 1, especie: 'Perro' } });
-  const estadoSalud = await prisma.estado_salud.upsert({ where: { id_estado_salud: 1 }, update: {}, create: { id_estado_salud: 1, estado_salud: 'Sano' } });
-
-  // Animales de prueba
-  await prisma.animal.upsert({ where: { id_animal: 1 }, update: {}, create: { id_animal: 1, nombre_animal: 'Firulais', fecha_nacimiento: new Date('2021-01-01'), is_edad_aproximada: true, id_estado_salud: estadoSalud.id_estado_salud } });
-  await prisma.animal.upsert({ where: { id_animal: 2 }, update: {}, create: { id_animal: 2, nombre_animal: 'Michi', fecha_nacimiento: new Date('2022-01-01'), is_edad_aproximada: true, id_estado_salud: estadoSalud.id_estado_salud } });
-
-  // Estados de solicitud (base)
-  await prisma.estado_solicitud.upsert({ where: { id_estado_solicitud: 1 }, update: {}, create: { id_estado_solicitud: 1, estado_solicitud: 'Pendiente' } });
-  await prisma.estado_solicitud.upsert({ where: { id_estado_solicitud: 2 }, update: {}, create: { id_estado_solicitud: 2, estado_solicitud: 'Aprobada' } });
-  await prisma.estado_solicitud.upsert({ where: { id_estado_solicitud: 3 }, update: {}, create: { id_estado_solicitud: 3, estado_solicitud: 'Rechazada' } });
-
-  // --- Lógica adicional (campañas y aportes) ---
-  // Insertar usuarios de ejemplo si no hay ninguno (no duplicar los upserts ya existentes)
-  const usuarios = await prisma.usuario.findMany();
-  if (usuarios.length === 0) {
-    console.log('Insertando usuarios de ejemplo...');
-    const rolesDb = await prisma.rol.findMany();
-
-    await prisma.usuario.createMany({
-      data: [
-        {
-          nombre_usuario: 'Juan',
-          apellido_paterno: 'Pérez',
-          apellido_materno: 'Gómez',
-          fecha_nacimiento: new Date('1990-01-01'),
-          telefono: '123456789',
-          email: 'juan@example.com',
-          password_hash: '123',
-          id_sexo: 1,
-          activo: true,
-          id_rol: rolesDb.length > 0 ? rolesDb[0].id_rol : 1,
-        },
-        {
-          nombre_usuario: 'Ana',
-          apellido_paterno: 'Gómez',
-          apellido_materno: 'López',
-          fecha_nacimiento: new Date('1992-05-10'),
-          telefono: '987654321',
-          email: 'ana@example.com',
-          password_hash: '456',
-          id_sexo: 2,
-          activo: true,
-          id_rol: rolesDb.length > 1 ? rolesDb[1].id_rol : 2,
-        },
-      ],
-    });
-  }
-
-  // Crear campañas si no existen (compatible con migration.sql)
-  const campanias = await (db.campania as any)?.findMany?.();
-  if (!campanias || campanias.length === 0) {
-    console.log('Insertando campaña de ejemplo...');
-    await (db.campania as any)?.create?.({
-      data: {
-        titulo: 'Campaña de Alimentos',
-        descripcion: 'Recolección de alimentos para mascotas',
-        fecha_inicio: new Date(),
-        fecha_fin: new Date(new Date().setMonth(new Date().getMonth() + 1)),
-        activa: true,
-      },
-    });
-  }
-
-  // Insertar aportes si hay usuarios y campañas
-  const usuariosActuales = await prisma.usuario.findMany();
-  const campaniasActuales = await (db.campania as any)?.findMany?.() || [];
-
-  if (usuariosActuales.length > 0 && campaniasActuales.length > 0) {
-    console.log('Insertando datos de aportes...');
-    await (db.aporte as any)?.createMany?.({
-      data: [
-        {
-          tipo: 'material',
-          descripcion: 'Donación de alimento para mascotas',
-          id_usuario: usuariosActuales[0].id_usuario,
-          id_campania: campaniasActuales[0].id_campania,
-        },
-        {
-          tipo: 'tiempo',
-          descripcion: 'Voluntariado de limpieza en refugio',
-          id_usuario: usuariosActuales[0].id_usuario,
-          id_campania: campaniasActuales[0].id_campania,
-        },
-      ],
-    });
-    console.log('Aportes insertados correctamente');
-  } else {
-    console.warn('No hay usuarios o campañas para crear aportes.');
-  }
-
-  console.log('Seed completado (con aportes y campañas si aplicable)');
-
-  // Mantener upserts de usuarios específicos (no duplican los createMany anteriores)
-  await prisma.usuario.upsert({
-    where: { id_usuario: 3 },
+  const orgUser = await prisma.usuario.upsert({
+    where: { email: 'org@demo.com' },
     update: {},
     create: {
-      id_usuario: 3,
       nombre_usuario: 'Fundación',
       apellido_paterno: 'Animal',
       apellido_materno: 'Protectora',
@@ -171,18 +95,17 @@ async function main() {
       telefono: '222222222',
       email: 'org@demo.com',
       password_hash: 'org123',
-      id_sexo: 2,
+      id_sexo: sexoF.id_sexo,
       activo: true,
-      id_rol: 3,
+      id_rol: orgRole.id_rol,
       id_organizacion: org.id_organizacion,
     },
   });
 
-  await prisma.usuario.upsert({
-    where: { id_usuario: 4 },
+  const volunteer = await prisma.usuario.upsert({
+    where: { email: 'volunt@demo.com' },
     update: {},
     create: {
-      id_usuario: 4,
       nombre_usuario: 'Juan',
       apellido_paterno: 'Perez',
       apellido_materno: 'Ayuda',
@@ -190,65 +113,158 @@ async function main() {
       telefono: '333333333',
       email: 'volunt@demo.com',
       password_hash: 'volunt123',
-      sexo: 'M',
+      id_sexo: sexoM.id_sexo,
       activo: true,
-      id_rol: 4,
+      id_rol: volRole.id_rol,
+    },
+  });
+
+  // Catálogos base - Especies
+  const especie = await prisma.especie.upsert({
+    where: { id_especie: 1 },
+    update: {},
+    create: { especie: 'Perro' },
+  });
+  const especieGato = await prisma.especie.upsert({
+    where: { id_especie: 2 },
+    update: {},
+    create: { especie: 'Gato' },
+  });
+
+  // Estados de salud
+  const estadoSalud = await prisma.estado_salud.upsert({
+    where: { id_estado_salud: 1 },
+    update: {},
+    create: { estado_salud: 'Sano' },
+  });
+  const estadoEnfermo = await prisma.estado_salud.upsert({
+    where: { id_estado_salud: 2 },
+    update: {},
+    create: { estado_salud: 'Enfermo' },
+  });
+
+  // Razas
+  const razaLabrador = await prisma.raza.upsert({
+    where: { id_raza: 1 },
+    update: {},
+    create: {
+      id_especie: especie.id_especie,
+      raza: 'Labrador',
+    },
+  });
+
+  // Crear animales de prueba
+  const animal1 = await prisma.animal.upsert({
+    where: { id_animal: 1 },
+    update: {},
+    create: {
+      nombre_animal: 'Firulais',
+      id_estado_salud: estadoSalud.id_estado_salud,
+      id_raza: razaLabrador.id_raza,
+      id_usuario_propietario: admin.id_usuario,
+    },
+  });
+
+  const animal2 = await prisma.animal.upsert({
+    where: { id_animal: 2 },
+    update: {},
+    create: {
+      nombre_animal: 'Michi',
+      id_estado_salud: estadoSalud.id_estado_salud,
+      id_raza: razaLabrador.id_raza,
+      id_usuario_propietario: user.id_usuario,
+    },
+  });
+
+  // Estados de adopción
+  await prisma.estado_solicitud.upsert({
+    where: { id_estado_solicitud: 1 },
+    update: {},
+    create: { estado_solicitud: 'Pendiente' },
+  });
+  await prisma.estado_solicitud.upsert({
+    where: { id_estado_solicitud: 2 },
+    update: {},
+    create: { estado_solicitud: 'Aprobada' },
+  });
+  await prisma.estado_solicitud.upsert({
+    where: { id_estado_solicitud: 3 },
+    update: {},
+    create: { estado_solicitud: 'Rechazada' },
+  });
+
+  // Adopción de ejemplo
+  const adopcion = await prisma.adopcion.upsert({
+    where: { id_adopcion: 1 },
+    update: {},
+    create: {
+      id_animal: animal1.id_animal,
+      id_usuario_rescatista: admin.id_usuario,
+      id_usuario_adoptante: user.id_usuario,
+      disponible: false,
+      descripcion: 'Adopción completada',
     },
   });
 
   // Solicitud de adopción de ejemplo
-  await prisma.solicitud_adopcion.upsert({ where: { id_solicitud_adopcion: 1 }, update: {}, create: { id_solicitud_adopcion: 1, id_usuario: 2, id_animal: 1, estado_adopcion: 'Revisión inicial', fecha_ingreso_solicitud: new Date(), estado_solicitud: 1 } });
+  await prisma.solicitud_adopcion.upsert({
+    where: { id_solicitud_adopcion: 1 },
+    update: {},
+    create: {
+      id_usuario: user.id_usuario,
+      id_adopcion: adopcion.id_adopcion,
+      fecha_ingreso_solicitud: new Date(),
+      id_estado_solicitud: 2, // Aprobada
+    },
+  });
 
-  await prisma.estado_avistamiento.upsert({ where: { id_estado_avistamiento: 1 }, update: {}, create: { id_estado_avistamiento: 1, estado_avistamiento: 'Activo' } });
-  await prisma.estado_avistamiento.upsert({ where: { id_estado_avistamiento: 2 }, update: {}, create: { id_estado_avistamiento: 2, estado_avistamiento: 'Resuelto' } });
+  // Estados de avistamiento
+  const estadoActivo = await prisma.estado_avistamiento.upsert({
+    where: { id_estado_avistamiento: 1 },
+    update: {},
+    create: { estado_avistamiento: 'Activo' },
+  });
+  await prisma.estado_avistamiento.upsert({
+    where: { id_estado_avistamiento: 2 },
+    update: {},
+    create: { estado_avistamiento: 'Resuelto' },
+  });
 
-  await prisma.avistamiento.upsert({ where: { id_avistamiento: 1 }, update: {}, create: { id_avistamiento: 1, id_usuario: 4, id_estado_avistamiento: 1, id_estado_salud: estadoSalud.id_estado_salud, id_especie: especie.id_especie, descripcion: 'Cachorro encontrado en la calle, necesita atención.', direccion: 'Parque Central' } });
+  // Avistamiento de ejemplo
+  await prisma.avistamiento.upsert({
+    where: { id_avistamiento: 1 },
+    update: {},
+    create: {
+      id_usuario: volunteer.id_usuario,
+      id_estado_avistamiento: estadoActivo.id_estado_avistamiento,
+      id_estado_salud: estadoSalud.id_estado_salud,
+      id_especie: especie.id_especie,
+      descripcion: 'Cachorro encontrado en la calle, necesita atención.',
+      direccion: 'Parque Central',
+    },
+  });
 
-  // Google account, comentarios, favoritos, faqs
-  try {
-    if (db.google_accounts && typeof db.google_accounts.upsert === 'function') {
-      await db.google_accounts.upsert({ where: { id_google_account: 1 }, update: {}, create: { id_google_account: 1, id_usuario: 2, google_account_id: 'fake-google-id', google_email: 'user@demo.com', refresh_token: 'fake-refresh-token', access_token: 'fake-access-token' } });
-    }
-  } catch (e) {
-    // ignore if model not present
-  }
+  // Google account ficticia
+  await prisma.google_accounts.upsert({
+    where: { id_google_account: 1 },
+    update: {},
+    create: {
+      id_usuario: user.id_usuario,
+      google_account_id: 'fake-google-id',
+      google_email: 'user@demo.com',
+      refresh_token: 'fake-refresh-token',
+      access_token: 'fake-access-token',
+    },
+  });
 
-  try {
-    if (db.comentario && typeof db.comentario.upsert === 'function') {
-      await db.comentario.upsert({ where: { id_comentario: 1 }, update: {}, create: { id_comentario: 1, contenido: 'Firulais es muy amigable y juguetón.', id_usuario: 2, id_animal: 1 } });
-      await db.comentario.upsert({ where: { id_comentario: 2 }, update: {}, create: { id_comentario: 2, contenido: 'Michi parece tímido pero saludable.', id_usuario: 3, id_animal: 2 } });
-      await db.comentario.upsert({ where: { id_comentario: 3 }, update: {}, create: { id_comentario: 3, contenido: 'Encontré al cachorro en buen estado, necesita seguimiento.', id_usuario: 4, id_animal: 1 } });
-    }
-  } catch (e) {
-    // ignore
-  }
-
-  try {
-    if (db.favorito && typeof db.favorito.upsert === 'function') {
-      await db.favorito.upsert({ where: { id_favorito: 1 }, update: {}, create: { id_favorito: 1, id_usuario: 2, id_animal: 1 } });
-      await db.favorito.upsert({ where: { id_favorito: 2 }, update: {}, create: { id_favorito: 2, id_usuario: 2, id_animal: 2 } });
-    }
-  } catch (e) {
-    // ignore
-  }
-
-  try {
-    if (db.faq && typeof db.faq.upsert === 'function') {
-      await db.faq.upsert({ where: { id_faq: 1 }, update: {}, create: { id_faq: 1, pregunta: '¿Cómo puedo reportar un animal en la calle?', respuesta: 'Puedes reportar un animal desde la sección "Reportar" en el menú principal. Deberás proporcionar una descripción del animal, su ubicación y, si es posible, una foto.' } });
-      await db.faq.upsert({ where: { id_faq: 2 }, update: {}, create: { id_faq: 2, pregunta: '¿Qué necesito para adoptar una mascota?', respuesta: 'Para adoptar, debes ir a la sección "Adopciones", elegir una mascota y completar el formulario de solicitud. Se te pedirá información sobre tu experiencia con mascotas y las condiciones de tu hogar.' } });
-      await db.faq.upsert({ where: { id_faq: 3 }, update: {}, create: { id_faq: 3, pregunta: '¿Cómo puedo ser voluntario?', respuesta: '¡Gracias por tu interés! Puedes registrarte como voluntario en la sección de "Voluntariado". Una vez registrado, una organización se pondrá en contacto contigo para coordinar actividades.' } });
-    }
-  } catch (e) {
-    // ignore
-  }
+  console.log('✅ Seed ejecutado correctamente');
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error('❌ Error en seed:', e);
     process.exit(1);
   })
   .finally(async () => {
     await prisma.$disconnect();
   });
-
