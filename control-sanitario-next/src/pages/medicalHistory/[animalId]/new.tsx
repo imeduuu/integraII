@@ -1,11 +1,16 @@
 import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
-import api from '../../../services/api';
+import { useMedicalHistory } from '../../../hooks/useMedicalHistory';
 import styles from '../../../styles/medical-history-test.module.css';
 
 export default function MedicalHistoryCreatePage() {
   const router = useRouter();
   const { animalId } = router.query as { animalId?: string };
+  const animalIdNum = animalId ? Number(animalId) : null;
+  
+  // Usar el custom hook para acceder a la función crear
+  const { crear } = useMedicalHistory(animalIdNum);
+  
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
     fecha_evento: '',
@@ -24,8 +29,9 @@ export default function MedicalHistoryCreatePage() {
     }
     setSaving(true);
     try {
-      await api.post(`/medicalHistory/${animalId}`, {
-        ...form,
+      await crear({
+        fecha_evento: form.fecha_evento,
+        tipo_evento: form.tipo_evento,
         diagnostico: form.diagnostico || null,
         detalles: form.detalles || null,
         nombre_veterinario: form.nombre_veterinario || null,
@@ -37,7 +43,7 @@ export default function MedicalHistoryCreatePage() {
     } finally {
       setSaving(false);
     }
-  }, [animalId, form]);
+  }, [animalId, form, crear]);
 
   return (
     <div className={styles.container}>

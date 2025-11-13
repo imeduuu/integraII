@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import styles from "../styles/volunteer-form.module.css";
 
-import { sanitizeFormData } from "../utils/sanitize";
-import Loader from './ui/Loader';
-import { useNotification } from '../components/NotificationProvider';
-
 const VolunteerForm = () => {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -59,60 +55,58 @@ const VolunteerForm = () => {
       setMessage("");
     } else {
       setErrors({});
-      setIsSubmitting(true);
-      // Simular envío asíncrono
-      Promise.resolve()
-        .then(() => {
-          setMessage("✅ Registro exitoso. ¡Gracias por ser voluntario!");
-          console.log("Datos enviados:", formData);
-          setFormData({ nombre: "", correo: "", telefono: "" });
-          addToast('Registro de voluntario exitoso', 'success');
-        })
-        .catch(() => addToast('Error al registrar voluntario', 'error'))
-        .finally(() => setIsSubmitting(false));
+      setMessage("✅ Registro exitoso. ¡Gracias por ser voluntario!");
+      console.log("Datos enviados:", formData);
+      setFormData({ nombre: "", correo: "", telefono: "" });
     }
   };
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { addToast } = useNotification();
 
   return (
     <div className={styles.formContainer}>
       <h2>Registro de Voluntarios</h2>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form} role="form" aria-labelledby="volunteer-title">
+        <h3 id="volunteer-title" className="sr-only">Formulario de registro de voluntarios</h3>
+
         {/* Nombre */}
+        <label htmlFor="vol-nombre">Nombre completo</label>
         <input
+          id="vol-nombre"
           type="text"
           name="nombre"
           placeholder="Nombre completo"
           value={formData.nombre}
           onChange={handleChange}
+          aria-describedby={errors.nombre ? 'error-nombre' : undefined}
         />
-        {errors.nombre && <p className={styles.error}>{errors.nombre}</p>}
+        {errors.nombre && <p id="error-nombre" className={styles.error}>{errors.nombre}</p>}
 
         {/* Correo */}
+        <label htmlFor="vol-correo">Correo electrónico</label>
         <input
+          id="vol-correo"
           type="email"
           name="correo"
           placeholder="Correo electrónico"
           value={formData.correo}
           onChange={handleChange}
+          aria-describedby={errors.correo ? 'error-correo' : undefined}
         />
-        {errors.correo && <p className={styles.error}>{errors.correo}</p>}
+        {errors.correo && <p id="error-correo" className={styles.error}>{errors.correo}</p>}
 
         {/* Teléfono */}
+        <label htmlFor="vol-telefono">Teléfono</label>
         <input
+          id="vol-telefono"
           type="tel"
           name="telefono"
           placeholder="Teléfono"
           value={formData.telefono}
           onChange={handleChange}
+          aria-describedby={errors.telefono ? 'error-telefono' : undefined}
         />
-        {errors.telefono && <p className={styles.error}>{errors.telefono}</p>}
+        {errors.telefono && <p id="error-telefono" className={styles.error}>{errors.telefono}</p>}
 
-        <button type="submit" disabled={isSubmitting} className="inline-flex items-center gap-2">
-          {isSubmitting ? <><Loader size={16} /> Registrando...</> : 'Registrarse'}
-        </button>
+        <button type="submit">Registrarse</button>
       </form>
 
       {message && <p className={styles.message}>{message}</p>}
