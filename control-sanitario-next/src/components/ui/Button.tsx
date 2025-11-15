@@ -1,33 +1,40 @@
-import React from "react";
+import React from 'react';
+
+type Variant = 'primary' | 'secondary' | 'ghost';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary";
+  variant?: Variant;
+  size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  variant = "primary",
-  className = "",
-  isLoading = false,
-  ...props
-}) => {
-  const baseStyles =
-    "px-4 py-2 rounded-lg font-semibold focus:outline-none transition-colors duration-200 motion-safe-transition text-base";
+const sizeMap: Record<NonNullable<ButtonProps['size']>, string> = {
+  sm: 'py-1 px-3 text-sm',
+  md: 'py-2 px-4 text-base',
+  lg: 'py-3 px-6 text-lg',
+};
 
-  const variants = {
-    primary:
-      "bg-[var(--primary)] text-[var(--primary-contrast)] hover:brightness-90 disabled:opacity-60 disabled:cursor-not-allowed disabled:brightness-75 disabled:shadow-none",
-    secondary:
-      "bg-gray-200 text-gray-800 hover:bg-gray-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500 disabled:shadow-none",
-  };
+export default function Button({
+  variant = 'primary',
+  size = 'md',
+  className = '',
+  children,
+  isLoading = false,
+  ...rest
+}: ButtonProps) {
+  const base = 'btn';
+  const variantClass =
+    variant === 'primary'
+      ? 'btn-primary'
+      : variant === 'secondary'
+      ? 'btn-secondary'
+      : 'bg-transparent text-current';
 
   return (
     <button
-      {...props}
-      disabled={isLoading || props.disabled}
-      className={`${baseStyles} ${variants[variant]} ${className} ${isLoading ? 'opacity-70 cursor-wait' : ''}`}
-      // focus-visible handled globally in theme.css
+      className={`${base} ${variantClass} ${sizeMap[size]} ${className} ${isLoading ? 'opacity-70 cursor-wait' : ''}`}
+      disabled={isLoading || rest.disabled}
+      {...rest}
     >
       {isLoading ? (
         <span className="inline-flex items-center gap-2">
@@ -42,6 +49,4 @@ const Button: React.FC<ButtonProps> = ({
       )}
     </button>
   );
-};
-
-export default Button;
+}

@@ -70,21 +70,22 @@
 
 
 .navLink {
-  color: #000000;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  color: rgba(255,255,255,0.95);
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.6rem;
   text-decoration: none;
-  transition: background-color 0.3s ease-in-out, color 0.3s;
+  transition: background-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
 }
 .dark .navLink {
-  color: #fff;
+  color: rgba(255,255,255,0.95);
 }
 .navLink:hover {
-  background-color: #ffffff; /* Un gris oscuro al pasar el cursor */
+  background-color: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
 }
 .navLinkActive {
-  background-color: #43a2f0; /* Un gris oscuro para el enlace activo */
-  font-weight: bold;
+  background-color: rgba(255,255,255,0.14);
+  font-weight: 700;
   position: relative;
   overflow: hidden;
 }
@@ -96,7 +97,7 @@
   bottom: 0.25rem;
   width: 70%;
   height: 2px;
-  background-color: #000000;
+  background-color: rgba(255,255,255,0.9);
 }
 .profileSection {
   display: flex;
@@ -108,7 +109,7 @@
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #000000;
+  border: 2px solid rgba(255,255,255,0.9);
 }
 
 .profileImage {

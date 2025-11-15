@@ -8,6 +8,7 @@ import { useToastContext } from '../components/ToastContainer';
 import ToastContainer from '../components/ToastContainer';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Button from '../components/ui/Button';
 
 const TestToastPage: React.FC = () => {
   const { success, error, info, warning, clearAll } = useToast();
@@ -16,7 +17,7 @@ const TestToastPage: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       <Navbar />
       
-      <main className="flex-1 container mx-auto px-4 py-8 max-w-6xl">
+  <main className="flex-1 container mx-auto px-4 py-8 max-w-6xl app-container">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -34,33 +35,33 @@ const TestToastPage: React.FC = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <button
+            <Button
               onClick={() => success('¡Operación completada exitosamente!')}
               className="px-6 py-4 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-all transform hover:scale-105 shadow-md"
             >
               ✅ Éxito
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => error('Ha ocurrido un error. Por favor, inténtalo de nuevo.')}
               className="px-6 py-4 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-all transform hover:scale-105 shadow-md"
             >
               ❌ Error
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => info('Esta es una notificación informativa.')}
               className="px-6 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-all transform hover:scale-105 shadow-md"
             >
               ℹ️ Información
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => warning('¡Atención! Esta es una advertencia importante.')}
               className="px-6 py-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg font-medium transition-all transform hover:scale-105 shadow-md"
             >
               ⚠️ Advertencia
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -71,28 +72,28 @@ const TestToastPage: React.FC = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <button
+            <Button
               onClick={() => success('Toast con 10 segundos de duración', { duration: 10000 })}
               className="px-6 py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium transition-colors shadow-md"
             >
               ⏱️ Duración Larga (10s)
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => error('Toast que no se cierra automáticamente', { duration: 0 })}
               className="px-6 py-4 bg-rose-500 hover:bg-rose-600 text-white rounded-lg font-medium transition-colors shadow-md"
             >
               🔒 Sin Auto-cierre
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => info('Toast no cerrable manualmente', { dismissible: false, duration: 3000 })}
               className="px-6 py-4 bg-sky-500 hover:bg-sky-600 text-white rounded-lg font-medium transition-colors shadow-md"
             >
               🚫 No Cerrable
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => {
                 for (let i = 0; i < 3; i++) {
                   setTimeout(() => {
@@ -103,21 +104,21 @@ const TestToastPage: React.FC = () => {
               className="px-6 py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg font-medium transition-colors shadow-md"
             >
               📚 Múltiples Toasts
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => success('Toast con mensaje muy largo: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')}
               className="px-6 py-4 bg-purple-500 hover:bg-purple-600 text-white rounded-lg font-medium transition-colors shadow-md"
             >
               📝 Mensaje Largo
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => warning('Toast rápido', { duration: 2000 })}
               className="px-6 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors shadow-md"
             >
               ⚡ Duración Corta (2s)
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -128,7 +129,7 @@ const TestToastPage: React.FC = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button
+            <Button
               onClick={() => {
                 info('Guardando cambios...');
                 setTimeout(() => success('Perfil actualizado correctamente'), 2000);
@@ -136,9 +137,9 @@ const TestToastPage: React.FC = () => {
               className="px-6 py-4 bg-teal-500 hover:bg-teal-600 text-white rounded-lg font-medium transition-colors shadow-md"
             >
               💾 Simular Guardado
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => {
                 info('Procesando solicitud...');
                 setTimeout(() => error('No se pudo completar la operación. Verifica tu conexión.'), 2000);
@@ -146,16 +147,16 @@ const TestToastPage: React.FC = () => {
               className="px-6 py-4 bg-pink-500 hover:bg-pink-600 text-white rounded-lg font-medium transition-colors shadow-md"
             >
               🔌 Simular Error de Red
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => warning('Tu sesión expirará en 5 minutos. Por favor, guarda tu trabajo.', { duration: 8000 })}
               className="px-6 py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-colors shadow-md"
             >
               ⏰ Advertencia de Sesión
-            </button>
+            </Button>
 
-            <button
+            <Button
               onClick={() => {
                 success('Archivo cargado exitosamente');
                 setTimeout(() => info('Procesando archivo...'), 1000);
@@ -164,7 +165,7 @@ const TestToastPage: React.FC = () => {
               className="px-6 py-4 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg font-medium transition-colors shadow-md"
             >
               📤 Simular Subida de Archivo
-            </button>
+            </Button>
           </div>
         </div>
 

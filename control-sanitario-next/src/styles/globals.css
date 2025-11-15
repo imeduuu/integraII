@@ -1,7 +1,142 @@
+/* Import Google Font Inter for modern UI */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
 @import './variables.css'; /* Añadido al principio */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ... resto de los estilos globales ... */
+/* Base global styles to standardize appearance */
+:root {
+	color-scheme: light dark;
+}
+
+html, body, #__next {
+	height: 100%;
+}
+
+body {
+	font-family: var(--font-family-sans);
+	font-size: var(--font-size-base);
+	background-color: var(--background-light);
+	color: var(--text-primary);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Container utility for page content */
+.app-container {
+	max-width: 1100px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+/* Hero section helper */
+.hero {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4rem 1rem;
+	position: relative;
+}
+
+/* Section spacing */
+.section {
+	padding: 3rem 1rem;
+}
+
+/* Base link styles */
+a {
+	color: var(--primary-color);
+	text-decoration: none;
+}
+a:hover {
+	color: var(--primary-color-hover);
+	text-decoration: underline;
+}
+
+/* Button reset and variants */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	border-radius: var(--radius-md);
+	padding: 0.5rem 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+	box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+}
+.btn-primary {
+	background-color: var(--primary-color);
+	color: var(--text-on-primary);
+}
+.btn-primary:hover { background-color: var(--primary-color-hover); }
+.btn-secondary {
+	background-color: var(--secondary-color);
+	color: var(--text-on-primary);
+}
+
+.btn:active { transform: translateY(1px) scale(0.998); }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(15,23,42,0.12); }
+
+/* Card base */
+.card {
+		background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,255,0.95));
+		border-radius: var(--radius-md);
+		box-shadow: 0 8px 30px rgba(15,23,42,0.08);
+		padding: 1rem;
+		transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(15,23,42,0.12); }
+
+.card--glass {
+	background: rgba(255,255,255,0.6);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(255,255,255,0.5);
+}
+
+/* Form elements */
+input, textarea, select {
+	border: 1px solid #e6eef6;
+	padding: 0.6rem 0.75rem;
+	border-radius: var(--radius-sm);
+	background: #fff;
+}
+
+input:focus, textarea:focus, select:focus { outline: none; box-shadow: 0 6px 18px rgba(37,99,235,0.12); border-color: rgba(37,99,235,0.9); }
+
+/* Small helpers */
+.muted { color: var(--text-secondary); }
+
+/* Dark mode tweaks (simple) */
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: var(--background-dark);
+		color: var(--text-on-primary);
+	}
+		.card { background: linear-gradient(180deg, rgba(10,15,25,0.7), rgba(8,12,20,0.75)); box-shadow: none; }
+}
+
+/* Animations */
+@keyframes floatUp {
+	from { opacity: 0; transform: translateY(12px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float { animation: floatUp 0.6s ease both; }
+
+/* Small utility */
+.muted { color: var(--text-secondary); }
+
+/* Make the main container responsive and centered on wide screens */
+@media (min-width: 1280px) {
+	.app-container { max-width: 1200px; }
+}
+
+/* End global styles */
