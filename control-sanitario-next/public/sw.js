@@ -6,7 +6,6 @@
 const CACHE_NAME = 'control-sanitario-v1';
 const urlsToCache = [
   '/',
-  '/styles/globals.css',
   '/manifest.json'
 ];
 
@@ -84,7 +83,7 @@ self.addEventListener('push', (event) => {
   let notificationData = {
     title: 'Nueva notificación',
     body: 'Tienes una nueva actualización',
-    icon: '/icon-192x192.png',
+    icon: '/icon-192x192.svg',
     badge: '/badge-72x72.png',
     tag: 'notification',
     requireInteraction: false,

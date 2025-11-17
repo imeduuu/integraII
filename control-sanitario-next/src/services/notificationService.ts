@@ -126,7 +126,7 @@ class NotificationService {
       title,
       body,
       type = 'info',
-      icon = '/icon-192x192.png',
+      icon = '/icon-192x192.svg',
       badge = '/badge-72x72.png',
       tag,
       requireInteraction = false,

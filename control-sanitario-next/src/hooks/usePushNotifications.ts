@@ -125,7 +125,7 @@ export const usePushNotifications = () => {
         if (registration) {
           const notificationOptions: any = {
             body: options.body,
-            icon: options.icon || '/icon-192x192.png',
+            icon: options.icon || '/icon-192x192.svg',
             badge: options.badge || '/badge-72x72.png',
             tag: options.tag || 'notification-' + Date.now(),
             requireInteraction: options.requireInteraction || false,
@@ -142,7 +142,7 @@ export const usePushNotifications = () => {
       // Fallback: notificación directa sin service worker
       const notificationOptions: any = {
         body: options.body,
-        icon: options.icon || '/icon-192x192.png',
+        icon: options.icon || '/icon-192x192.svg',
         badge: options.badge || '/badge-72x72.png',
         tag: options.tag,
         requireInteraction: options.requireInteraction,
