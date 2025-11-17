@@ -24,8 +24,12 @@ const Navbar = () => {
     links = [
       { href: '/admin-home', label: 'Panel Admin' },
       { href: '/admin-users', label: 'Usuarios' },
+<<<<<<< HEAD
       { href: '/admin-campaigns', label: 'Campañas' },
       { href: '/health-states', label: 'Estados Salud' }
+=======
+      { href: '/admin-campaigns', label: 'Campañas' }
+>>>>>>> origin/maycool
     ];
   } else if (userMock.role === 'user') {
     links = [
