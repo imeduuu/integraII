@@ -35,8 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
       include: {
         estado_salud: true,
-        categoria: true,
-        especie: true,
+        raza: true,
       },
     });
 

@@ -18,22 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === 'GET') {
       const animal = await prisma.animal.findUnique({
         where: { id_animal: animalId },
-        select: {
-          id_animal: true,
-          nombre_animal: true,
-          estado_general: true,
-          zona: true,
-          estado_salud: {
-            select: {
-              estado_salud: true,
-            },
-          },
-          especie: {
-            select: {
-              especie: true,
-            },
-          },
-        },
       });
 
       if (!animal) {

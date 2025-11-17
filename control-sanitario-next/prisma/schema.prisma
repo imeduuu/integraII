@@ -179,6 +179,8 @@ model animal {
   fotos                 animal_foto[]
   historiales_medicos   historial_medico[]
   adopciones            adopcion[]
+  solicitudes_adopcion  solicitud_adopcion[] @relation("animal_solicitudes")
+  avistamientos         avistamiento[]       @relation("animal_avistamientos")
 }
 
 model animal_foto {
@@ -230,7 +232,7 @@ model solicitud_adopcion {
   usuario         usuario          @relation(fields: [id_usuario], references: [id_usuario])
   adopcion        adopcion?        @relation(fields: [id_adopcion], references: [id_adopcion])    
   estadoSolicitud estado_solicitud? @relation(fields: [id_estado_solicitud], references: [id_estado_solicitud])
-  animal          animal?          @relation(fields: [id_animal], references: [id_animal])
+  animal          animal?          @relation("animal_solicitudes", fields: [id_animal], references: [id_animal])
 }
 
 model estado_solicitud {
@@ -267,7 +269,7 @@ model avistamiento {
   especie             especie             @relation(fields: [id_especie], references: [id_especie])
   estado_salud        estado_salud        @relation(fields: [id_estado_salud], references: [id_estado_salud])
   estado_avistamiento estado_avistamiento @relation(fields: [id_estado_avistamiento], references: [id_estado_avistamiento])
-  animal              animal?             @relation(fields: [id_animal], references: [id_animal])
+  animal              animal?             @relation("animal_avistamientos", fields: [id_animal], references: [id_animal])
 }
 
 model avistamiento_foto {

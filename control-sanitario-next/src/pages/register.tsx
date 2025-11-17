@@ -1,7 +1,7 @@
 /**
- * Página de registro de nuevos usuarios con validación de formularios
+ * Página de registro de nuevos usuarios con llamada real a API
  */
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import Navbar from '../components/Navbar';
@@ -10,14 +10,21 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNotification } from '../components/NotificationProvider';
 
 interface RegisterFormInputs {
-  nombre: string; // Nombre completo del usuario
-  email: string; // Email único
-  password: string; // Contraseña
-  confirm: string; // Confirmación de contraseña
+  nombre_usuario: string;
+  apellido_paterno?: string;
+  email: string;
+  password: string;
+  confirm: string;
+}
+
+interface ApiResponse {
+  success: boolean;
+  message: string;
+  id?: number;
 }
 
 const formStyle: React.CSSProperties = {
-  maxWidth: '400px',
+  maxWidth: '500px',
   margin: '20px auto',
   padding: '32px',
   background: '#f3f4f6',
@@ -39,26 +46,83 @@ const errorStyle: React.CSSProperties = {
   marginBottom: '16px',
 };
 
+const successBoxStyle: React.CSSProperties = {
+  marginTop: 16,
+  padding: '16px',
+  background: '#d1fae5',
+  border: '1px solid #6ee7b7',
+  borderRadius: '8px',
+  color: '#047857',
+  fontWeight: 600,
+};
+
+const errorBoxStyle: React.CSSProperties = {
+  marginTop: 16,
+  padding: '16px',
+  background: '#fee2e2',
+  border: '1px solid #fca5a5',
+  borderRadius: '8px',
+  color: '#dc2626',
+  fontWeight: 600,
+};
+
+const infoBoxStyle: React.CSSProperties = {
+  marginTop: 16,
+  padding: '16px',
+  background: '#dbeafe',
+  border: '1px solid #93c5fd',
+  borderRadius: '8px',
+  color: '#1e40af',
+  fontSize: '13px',
+  lineHeight: '1.5',
+};
+
 const Register = () => {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm<RegisterFormInputs>();
   const { addToast } = useNotification();
-  const [mensaje, setMensaje] = React.useState('');
-  const [acceptedPolicy, setAcceptedPolicy] = React.useState(false);
+  const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null);
+  const [acceptedPolicy, setAcceptedPolicy] = useState(false);
   const password = watch('password', '');
 
-  const onSubmit: SubmitHandler<RegisterFormInputs> = (data) => {
-    console.log('Datos del formulario:', data);
-
+  const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
     try {
-      addToast('¡Registro exitoso! Bienvenido a la plataforma.', 'success');
-      setMensaje('');
-      // Redireccionar o limpiar campos si se desea
+      setApiResponse(null);
+
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nombre_usuario: data.nombre_usuario,
+          apellido_paterno: data.apellido_paterno || null,
+          email: data.email,
+          password: data.password,
+        }),
+      });
+
+      const result: ApiResponse = await response.json();
+      setApiResponse(result);
+
+      if (result.success) {
+        addToast('¡Registro exitoso! Bienvenido a la plataforma.', 'success');
+        reset();
+        setAcceptedPolicy(false);
+      } else {
+        addToast(result.message || 'Error al registrar usuario.', 'error');
+      }
     } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : 'Error desconocido';
+      setApiResponse({
+        success: false,
+        message: errorMsg,
+      });
       addToast('Error al registrar usuario. Por favor intenta de nuevo.', 'error');
     }
   };
@@ -66,7 +130,7 @@ const Register = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-[calc(100vh-200px)] flex items-center justify-center tablet:min-h-[calc(100vh-250px)]">
+      <div className="min-h-[calc(100vh-200px)] flex items-center justify-center tablet:min-h-[calc(100vh-250px)] py-8">
         <form
           style={formStyle}
           onSubmit={handleSubmit(onSubmit)}
@@ -80,21 +144,40 @@ const Register = () => {
             Crear Cuenta
           </h2>
 
-          {/* Campo Nombre */}
+          {/* Campo Nombre Usuario */}
           <label className="tablet:text-lg" style={labelStyle}>
-            Nombre
+            Nombre de usuario *
           </label>
           <Input
             type="text"
-            placeholder="Tu nombre"
+            placeholder="Tu nombre de usuario"
             className="tablet:text-lg tablet:py-3 tablet:min-h-[48px]"
-            {...register('nombre', { required: 'El nombre es obligatorio' })}
+            {...register('nombre_usuario', {
+              required: 'El nombre de usuario es obligatorio',
+              minLength: {
+                value: 3,
+                message: 'Mínimo 3 caracteres',
+              },
+            })}
           />
-          {errors.nombre && <span style={errorStyle}>{errors.nombre.message}</span>}
+          {errors.nombre_usuario && (
+            <span style={errorStyle}>{errors.nombre_usuario.message}</span>
+          )}
+
+          {/* Campo Apellido Paterno */}
+          <label className="tablet:text-lg" style={labelStyle}>
+            Apellido paterno
+          </label>
+          <Input
+            type="text"
+            placeholder="Tu apellido paterno (opcional)"
+            className="tablet:text-lg tablet:py-3 tablet:min-h-[48px]"
+            {...register('apellido_paterno')}
+          />
 
           {/* Campo Email */}
           <label className="tablet:text-lg" style={labelStyle}>
-            Correo electrónico
+            Correo electrónico *
           </label>
           <Input
             type="email"
@@ -112,7 +195,7 @@ const Register = () => {
 
           {/* Campo Contraseña */}
           <label className="tablet:text-lg" style={labelStyle}>
-            Contraseña
+            Contraseña *
           </label>
           <Input
             type="password"
@@ -130,7 +213,7 @@ const Register = () => {
 
           {/* Confirmar Contraseña */}
           <label className="tablet:text-lg" style={labelStyle}>
-            Confirmar contraseña
+            Confirmar contraseña *
           </label>
           <Input
             type="password"
@@ -138,7 +221,8 @@ const Register = () => {
             className="tablet:text-lg tablet:py-3 tablet:min-h-[48px]"
             {...register('confirm', {
               required: 'Confirma tu contraseña',
-              validate: (value) => value === password || 'Las contraseñas no coinciden.',
+              validate: (value) =>
+                value === password || 'Las contraseñas no coinciden.',
             })}
           />
           {errors.confirm && <span style={errorStyle}>{errors.confirm.message}</span>}
@@ -171,18 +255,32 @@ const Register = () => {
           {/* Botón de envío */}
           <Button
             type="submit"
-            style={{ width: '100%', marginTop: 8 }}
+            style={{ width: '100%', marginTop: 16 }}
             className="tablet-button tablet:text-lg touch-feedback"
-            disabled={!acceptedPolicy}
+            disabled={!acceptedPolicy || isSubmitting}
           >
-            Registrarse
+            {isSubmitting ? 'Registrando...' : 'Registrarse'}
           </Button>
 
-          {mensaje && (
-            <p style={{ marginTop: 16, color: '#2563eb', fontWeight: 600 }}>
-              {mensaje}
-            </p>
+          {/* Respuesta del API */}
+          {apiResponse && (
+            <div style={apiResponse.success ? successBoxStyle : errorBoxStyle}>
+              <div style={{ marginBottom: 8 }}>
+                {apiResponse.success ? '✓' : '✗'} {apiResponse.message}
+              </div>
+              {apiResponse.success && apiResponse.id && (
+                <div style={{ fontSize: '12px', opacity: 0.8 }}>
+                  ID de usuario: {apiResponse.id}
+                </div>
+              )}
+            </div>
           )}
+
+          {/* Info sobre campos requeridos */}
+          <div style={infoBoxStyle}>
+            * Campos obligatorios. Los datos se envían directamente a la base de datos
+            mediante la API /api/auth/register
+          </div>
         </form>
       </div>
       <Footer />

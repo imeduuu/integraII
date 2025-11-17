@@ -34,8 +34,7 @@ export async function registrarAnimalCompleto({
       },
       include: {
         estado_salud: true,
-        categoria: true,
-        especie: true,
+        raza: true,
       },
     });
 
