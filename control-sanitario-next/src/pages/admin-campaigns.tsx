@@ -56,7 +56,7 @@ const CampaignList = () => {
     <>
       <Navbar />
       <main className="min-h-[70vh] w-full flex flex-col items-center justify-start px-2 py-8 bg-gradient-to-br from-green-50 via-white to-blue-100">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-green-700 mb-6 text-center animate-fadeIn">Campañas</h1>
+        <h1 className="text-responsive-h1 font-extrabold leading-tight text-green-700 mb-6 text-center animate-fadeIn">Campañas</h1>
         <div className="w-full max-w-3xl overflow-x-auto shadow-lg rounded-xl bg-white p-4 animate-fadeIn">
           <table className="w-full text-sm md:text-base border-separate border-spacing-y-2">
             <thead>

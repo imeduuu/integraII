@@ -39,7 +39,7 @@ export default function ConfirmationModal({
 }: Props) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" role="presentation" aria-modal="true">
-      <div className="bg-white dark:bg-gray-900 rounded p-6 shadow-lg w-96" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1}>
+  <div className="bg-white dark:bg-gray-900 rounded p-4 sm:p-6 shadow-lg w-full max-w-md mx-4 sm:mx-0 max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1}>
         <h2 id="modal-title" className="text-lg font-bold mb-4 dark:text-white">{title}</h2>
         <p>
           ¿Seguro que quieres enviar la solicitud para adoptar a{" "}

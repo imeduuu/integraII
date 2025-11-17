@@ -7,6 +7,54 @@
   background-color: #f9fafb;
 }
 
+/* Tablet optimizations */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .pageContainer {
+    padding: 3rem;
+  }
+  .filters {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+  .filterInput {
+    padding: 0.75rem 1rem;
+    font-size: 1.125rem;
+    min-height: 48px;
+  }
+  .filterButton {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    min-height: 48px;
+  }
+  .mainContent {
+    gap: 2.5rem;
+  }
+  .mapContainer {
+    min-height: 600px;
+    font-size: 1.125rem;
+  }
+  .publicationsList {
+    gap: 2rem;
+  }
+  .publicationCard {
+    border-radius: 12px;
+  }
+  .cardImage {
+    height: 220px;
+  }
+  .cardContent {
+    padding: 1.5rem;
+  }
+  .cardTitle {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .cardDescription {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+}
+
 .filters {
   background-color: #fff;
   padding: 1rem;

@@ -7,6 +7,20 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    extend: {
+      // Breakpoints personalizados para tablets
+      screens: {
+        'xs': '480px',      // móviles grandes
+        'sm': '640px',      // tablets pequeñas (vertical)
+        'md': '768px',      // tablets estándar (vertical)
+        'tablet': '834px',  // tablets comunes como iPad
+        'lg': '1024px',     // tablets grandes (horizontal) / laptops
+        'xl': '1280px',     // desktop
+        '2xl': '1536px',    // desktop grande
+        // Breakpoints personalizados para orientación
+        'tablet-portrait': {'raw': '(min-width: 768px) and (max-width: 1024px) and (orientation: portrait)'},
+        'tablet-landscape': {'raw': '(min-width: 768px) and (max-width: 1366px) and (orientation: landscape)'},
+      },
       // Colores personalizados
       colors: {
         primary: 'var(--primary-color)',
@@ -102,11 +116,46 @@ module.exports = {
         serif: ['var(--font-family-serif)'],
       },
       fontSize: {
+        // Tamaños legacy (mantener por compatibilidad)
         sm: 'var(--font-size-sm)',
         base: 'var(--font-size-base)',
         lg: 'var(--font-size-lg)',
         xl: 'var(--font-size-xl)',
         '2xl': 'var(--font-size-2xl)',
+        
+        // Tamaños responsivos con clamp() - NUEVOS
+        'responsive-h1': ['clamp(1.75rem, 4vw, 3rem)', { lineHeight: '1.1' }],
+        'responsive-h2': ['clamp(1.5rem, 3vw, 2.25rem)', { lineHeight: '1.2' }],
+        'responsive-h3': ['clamp(1.25rem, 2.5vw, 1.875rem)', { lineHeight: '1.2' }],
+        'responsive-h4': ['clamp(1.125rem, 2vw, 1.5rem)', { lineHeight: '1.3' }],
+        'responsive-h5': ['clamp(1rem, 1.5vw, 1.25rem)', { lineHeight: '1.3' }],
+        'responsive-h6': ['clamp(0.9375rem, 1.5vw, 1.125rem)', { lineHeight: '1.4' }],
+        'responsive-body': ['clamp(0.875rem, 1.5vw, 1.0625rem)', { lineHeight: '1.6' }],
+        'responsive-lead': ['clamp(1rem, 1.75vw, 1.25rem)', { lineHeight: '1.6' }],
+        'responsive-small': ['clamp(0.75rem, 1.2vw, 0.875rem)', { lineHeight: '1.4' }],
+      },
+      fontWeight: {
+        light: '300',
+        regular: '400',
+        medium: '500',
+        semibold: '600',
+        bold: '700',
+        extrabold: '800',
+      },
+      lineHeight: {
+        tight: '1.1',
+        snug: '1.2',
+        normal: '1.4',
+        relaxed: '1.6',
+        loose: '1.8',
+      },
+      letterSpacing: {
+        tighter: '-0.05em',
+        tight: '-0.025em',
+        normal: '0',
+        wide: '0.025em',
+        wider: '0.05em',
+        widest: '0.1em',
       },
       spacing: {
         'toast': '1rem',

@@ -7,8 +7,9 @@
   import AnimalGallery from "../components/AnimalGallery";
   // ...import eliminado: Map...
   import { animalsData } from '../utils/AnimalsData';
-  import styles from '../styles/animals.module.css';
-  import { useTheme } from '../context/ThemeContext';
+import styles from '../styles/animals.module.css';
+import { useTheme } from '../context/ThemeContext';
+import { useRouter } from 'next/router';
 
   const buttonStyle: React.CSSProperties = {
     width: '100%',
@@ -53,6 +54,7 @@
     );
 
     const { theme } = useTheme();
+    const router = useRouter();
     return (
       <>
       <Head>
@@ -155,7 +157,15 @@
               ))
             )}
           </div>
-
+{/* Botón para registrar un nuevo animal */}
+        <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+          <button
+            style={buttonStyle}
+            onClick={() => router.push('/registrar-animal')}
+          >
+            Registrar nuevo animal
+          </button>
+        </div>
           {/* Mapa eliminado, solo disponible en /mapa */}
         </main>
         <Footer />

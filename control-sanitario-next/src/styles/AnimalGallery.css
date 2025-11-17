@@ -1,4 +1,5 @@
 .animal-gallery-container {
+  width: 100%;
   max-width: 900px;
   margin: 2rem auto;
   border-radius: 1rem;
@@ -42,6 +43,7 @@
 /* Adaptación responsive */
 @media (max-width: 600px) {
   .animal-gallery-container {
+    width: 100%;
     max-width: 100%;
     border-radius: 0;
   }

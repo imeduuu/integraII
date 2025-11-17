@@ -1,4 +1,3 @@
-import Tooltip from './Tooltip';
 /**
  * Barra de navegación principal con menús dinámicos por rol
  */
@@ -20,24 +19,22 @@ const Navbar = () => {
   };
 
   // Configuración de enlaces por rol de usuario
-  let links = [];
+  let links: { href: string; label: string }[] = [];
   if (userMock.role === 'admin') {
     links = [
       { href: '/admin-home', label: 'Panel Admin' },
       { href: '/admin-users', label: 'Usuarios' },
-      { href: '/admin-campaigns', label: 'Campañas' },
-      { href: '/admin-inbox', label: 'Bandeja de Entrada' }
+      { href: '/admin-campaigns', label: 'Campañas' }
     ];
   } else if (userMock.role === 'user') {
     links = [
       { href: '/edit-profile', label: 'Perfil' },
       { href: '/adopcion', label: 'Adopciones' },
       { href: '/report', label: 'Reportar' },
+      { href: '/avistamientos', label: 'Avistamientos' },
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
-      { href: '/user-directory', label: 'Usuarios' },
-      { href: '/admin-orgs', label: 'Organizaciones' },
-      { href: '/faqs', label: 'FAQs' }
+      { href: '/admin-orgs', label: 'Organizaciones' }
     ];
   } else if (userMock.role === 'org') {
     links = [
@@ -47,40 +44,40 @@ const Navbar = () => {
     ];
   }
 
-return (
-  <nav className={styles.navbar}>
-    <span className={styles.navbarTitle}>Huella Segura</span>
-    <div className={styles.navbarLinks}>
-      <Tooltip text="Ir al inicio 🏠">
-        <a href="/" className={getLinkClasses('/')}>Inicio</a>
-      </Tooltip>
-      <Tooltip text="Ver mapa interactivo 🗺️">
-        <a href="/mapa" className={getLinkClasses('/mapa')}>Mapa</a>
-      </Tooltip>
+  return (
+    <nav role="navigation" aria-label="Navegación principal" className={styles.navbar}>
+      <span className={styles.navbarTitle}>Huella Segura</span>
 
-      {links.map(link => (
-        <Tooltip key={link.href} text={`Ir a ${link.label}`}>
-          <a href={link.href} className={getLinkClasses(link.href)}>
+      <div className={styles.navbarLinks} aria-hidden={false}>
+        <a
+          href="/"
+          className={getLinkClasses('/')}
+          aria-current={router.pathname === '/' ? 'page' : undefined}
+        >
+          Inicio
+        </a>
+        {links.map(link => (
+          <a
+            key={link.href + link.label}
+            href={link.href}
+            className={getLinkClasses(link.href)}
+            aria-current={router.pathname === link.href ? 'page' : undefined}
+          >
             {link.label}
           </a>
-        </Tooltip>
-      ))}
-    </div>
+        ))}
+      </div>
 
-    <div className={styles.profileSection + ' ' + styles.profileSectionRight}>
-      <Tooltip text="Ver tu perfil 🐾">
-        <img 
+      <div className={styles.profileSection + ' ' + styles.profileSectionRight} role="region" aria-label="Perfil del usuario">
+        <img
           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&w=32&h=32"
-          alt="Perfil"
+          alt="Imagen de perfil"
           className={styles.profileImage}
         />
-      </Tooltip>
-      <Tooltip text="Abrir configuración del perfil ⚙️">
-        <a href="/profile" className={getLinkClasses('/profile')}>Ver perfil</a>
-      </Tooltip>
-    </div>
-  </nav>
-);
+        <a href="/edit-profile" className={getLinkClasses('/edit-profile')}>Editar perfil</a>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;

@@ -1,8 +1,8 @@
 // __tests__/Navbar.test.tsx
 import { render, screen } from '@testing-library/react';
-import Navbar from '../components/Navbar';
+import Navbar from '../Navbar';
 import React from 'react';
-import { userMock } from '../context/userMock';
+import { userMock } from '../../context/userMock';
 import '@testing-library/jest-dom';
 
 // Mock de next/router
@@ -13,7 +13,7 @@ jest.mock('next/router', () => ({
 }));
 
 // Mock de Tooltip para simplificar
-jest.mock('../components/Tooltip', () => ({ text, children }) => (
+jest.mock('../Tooltip', () => ({ text, children }) => (
   <div data-testid="tooltip" title={text}>{children}</div>
 ));
 

@@ -1,8 +1,17 @@
 
 .wrapper {
+  width: 100%;
   max-width: 780px;
   margin: 0 auto;
   padding: 1rem;
+}
+
+/* Optimización para tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .wrapper {
+    max-width: 90%;
+    padding: 2rem;
+  }
 }
 
 .card {
@@ -13,6 +22,14 @@
   padding: 1.25rem;
 }
 
+/* Padding mejorado en tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .card {
+    padding: 2rem 2.5rem;
+    border-radius: 20px;
+  }
+}
+
 .title {
   font-size: 1.5rem; /* 24px */
   font-weight: 700;
@@ -20,9 +37,45 @@
   letter-spacing: .2px;
 }
 
+/* Título más grande en tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper { padding: 0.75rem; margin: 0.5rem; }
+  .title { font-size: 1.25rem; }
+  .card { padding: 1rem; }
+}
+
 .formGrid {
   display: grid;
   gap: 1rem;
+}
+
+/* Grid de 2 columnas en tablets para mejor aprovechamiento del espacio */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .formGrid {
+    gap: 1.5rem;
+  }
+}
+
+/* Contenedor para filas de 2 columnas en tablets */
+.gridRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) and (max-width: 1366px) {
+  .gridRow {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
 }
 
 .group {
@@ -30,9 +83,24 @@
   gap: .4rem;
 }
 
+/* Mejor espaciado en tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .group {
+    gap: 0.5rem;
+  }
+}
+
 .label {
   font-weight: 600;
   color: #111827;
+}
+
+/* Labels más grandes y legibles en tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .label {
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
 }
 
 .input, .select, .textarea {
@@ -43,6 +111,16 @@
   outline: none;
   transition: border-color .15s, box-shadow .15s;
   background: #f9fafb;
+}
+
+/* Inputs más grandes y cómodos en tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .input, .select, .textarea {
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    min-height: 48px;
+  }
 }
 
 .input:focus, .select:focus, .textarea:focus {
@@ -56,11 +134,28 @@
   resize: vertical;
 }
 
+/* Textarea más grande en tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .textarea {
+    min-height: 140px;
+    padding: 1rem;
+  }
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: .75rem;
   margin-top: .5rem;
+}
+
+/* Botón centrado y más grande en tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .actions {
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
 }
 
 .btn {
@@ -69,6 +164,21 @@
   padding: .7rem 1.1rem;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Botón táctil optimizado para tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .btn {
+    padding: 0.875rem 2rem;
+    font-size: 1.0625rem;
+    min-height: 48px;
+    min-width: 180px;
+  }
+  
+  .btn:active {
+    transform: scale(0.97);
+  }
 }
 
 .btnPrimary {
@@ -78,9 +188,18 @@
 
 .btnPrimary:hover {
   background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .helper {
   font-size: .85rem;
   color: #15223d;
+}
+
+/* Helper text más legible en tablets */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .helper {
+    font-size: 0.9375rem;
+  }
 }

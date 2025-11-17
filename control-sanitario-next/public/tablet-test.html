@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Layouts para Tablets - Control Sanitario</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+        }
+
+        .info {
+            background: #e0f2fe;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #2563eb;
+        }
+
+        .info h2 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .info p {
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .breakpoint-indicator {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: #2563eb;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            z-index: 1000;
+        }
+
+        .demo-section {
+            margin-bottom: 3rem;
+        }
+
+        .demo-section h3 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0f2fe;
+        }
+
+        /* Grid de tarjetas */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            transition: all 0.3s;
+            border: 2px solid #e0e7ef;
+        }
+
+        @media (min-width: 768px) and (max-width: 1366px) {
+            .card {
+                padding: 1.75rem;
+            }
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 24px rgba(37,99,235,0.15);
+            transform: translateY(-4px);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 768px) and (max-width: 1366px) {
+            .card-icon {
+                width: 72px;
+                height: 72px;
+                font-size: 2.25rem;
+            }
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 768px) and (max-width: 1366px) {
+            .card-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        .card-description {
+            color: #64748b;
+            font-size: 0.9375rem;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) and (max-width: 1366px) {
+            .card-description {
+                font-size: 1rem;
+            }
+        }
+
+        /* Grid de métricas */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+            .metrics-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1.25rem;
+            }
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) and (max-width: 1366px) {
+            .metric-card {
+                padding: 1.75rem;
+            }
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 768px) and (max-width: 1366px) {
+            .metric-value {
+                font-size: 2.75rem;
+            }
+        }
+
+        .metric-label {
+            font-size: 0.9375rem;
+            opacity: 0.9;
+        }
+
+        @media (min-width: 768px) and (max-width: 1366px) {
+            .metric-label {
+                font-size: 1.0625rem;
+            }
+        }
+
+        /* Botones */
+        .button-demo {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 44px;
+            font-size: 1rem;
+        }
+
+        @media (min-width: 768px) and (max-width: 1366px) {
+            .btn {
+                padding: 0.875rem 1.75rem;
+                font-size: 1.0625rem;
+                min-height: 48px;
+            }
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+
+        .btn-secondary:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Orientación indicator */
+        .orientation {
+            display: none;
+            background: #fbbf24;
+            color: #78350f;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        @media (orientation: portrait) {
+            .orientation {
+                display: block;
+            }
+            .orientation::before {
+                content: '📱 Orientación: Vertical (Portrait)';
+            }
+        }
+
+        @media (orientation: landscape) {
+            .orientation {
+                display: block;
+            }
+            .orientation::before {
+                content: '📺 Orientación: Horizontal (Landscape)';
+            }
+        }
+
+        /* Touch feedback */
+        .touch-feedback:active {
+            transform: scale(0.97);
+            opacity: 0.9;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin-top: 3rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="breakpoint-indicator" id="breakpoint">
+        <span id="breakpoint-text">Cargando...</span>
+    </div>
+
+    <div class="container">
+        <h1>🎨 Prueba de Layouts para Tablets</h1>
+        
+        <div class="orientation"></div>
+
+        <div class="info">
+            <h2>📱 Información de Prueba</h2>
+            <p><strong>Tamaño actual:</strong> <span id="viewport-size"></span></p>
+            <p><strong>Breakpoint:</strong> <span id="current-breakpoint"></span></p>
+            <p><strong>Orientación:</strong> <span id="current-orientation"></span></p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">
+                💡 <strong>Tip:</strong> Rota tu dispositivo o cambia el tamaño de la ventana para ver cómo se adaptan los layouts.
+            </p>
+        </div>
+
+        <!-- Sección de Métricas -->
+        <div class="demo-section">
+            <h3>📊 Métricas (Grid Adaptativo)</h3>
+            <p style="color: #64748b; margin-bottom: 1rem; font-size: 0.9375rem;">
+                1 columna (móvil) → 2 columnas (tablet vertical) → 3 columnas (tablet) → 4 columnas (tablet horizontal)
+            </p>
+            <div class="metrics-grid">
+                <div class="metric-card touch-feedback">
+                    <div class="metric-value">42</div>
+                    <div class="metric-label">Animales Registrados</div>
+                </div>
+                <div class="metric-card touch-feedback">
+                    <div class="metric-value">15</div>
+                    <div class="metric-label">Reportes Enviados</div>
+                </div>
+                <div class="metric-card touch-feedback">
+                    <div class="metric-value">8</div>
+                    <div class="metric-label">Adopciones Completadas</div>
+                </div>
+                <div class="metric-card touch-feedback">
+                    <div class="metric-value">23</div>
+                    <div class="metric-label">Voluntarios Activos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Tarjetas -->
+        <div class="demo-section">
+            <h3>🐾 Tarjetas de Animales (Grid Adaptativo)</h3>
+            <p style="color: #64748b; margin-bottom: 1rem; font-size: 0.9375rem;">
+                1 columna (móvil) → 2 columnas (tablet vertical) → 3 columnas (tablet horizontal/desktop)
+            </p>
+            <div class="card-grid">
+                <div class="card touch-feedback">
+                    <div class="card-icon">🐕</div>
+                    <div class="card-title">Luna</div>
+                    <div class="card-description">
+                        Perrita amigable de 2 años buscando hogar. 
+                        Le encanta jugar y es muy cariñosa con los niños.
+                    </div>
+                </div>
+                <div class="card touch-feedback">
+                    <div class="card-icon">🐈</div>
+                    <div class="card-title">Max</div>
+                    <div class="card-description">
+                        Gato independiente de 3 años. Ideal para apartamentos.
+                        Muy tranquilo y requiere poco mantenimiento.
+                    </div>
+                </div>
+                <div class="card touch-feedback">
+                    <div class="card-icon">🐕‍🦺</div>
+                    <div class="card-title">Bella</div>
+                    <div class="card-description">
+                        Pastor alemán de 4 años. Entrenada y muy leal.
+                        Perfecta como compañera y guardiana.
+                    </div>
+                </div>
+                <div class="card touch-feedback">
+                    <div class="card-icon">🐈‍⬛</div>
+                    <div class="card-title">Rocky</div>
+                    <div class="card-description">
+                        Gato juguetón de 1 año. Muy activo y sociable.
+                        Se lleva bien con otros animales.
+                    </div>
+                </div>
+                <div class="card touch-feedback">
+                    <div class="card-icon">🐩</div>
+                    <div class="card-title">Nina</div>
+                    <div class="card-description">
+                        Caniche de 2 años. Hipoalergénica y adorable.
+                        Ideal para familias con alergias.
+                    </div>
+                </div>
+                <div class="card touch-feedback">
+                    <div class="card-icon">🦮</div>
+                    <div class="card-title">Buddy</div>
+                    <div class="card-description">
+                        Golden Retriever de 5 años. Muy amigable.
+                        Excelente con niños y otros perros.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Botones -->
+        <div class="demo-section">
+            <h3>🔘 Botones Táctiles</h3>
+            <p style="color: #64748b; margin-bottom: 1rem; font-size: 0.9375rem;">
+                Botones optimizados para touch con tamaño mínimo de 44px (móvil) y 48px (tablet)
+            </p>
+            <div class="button-demo">
+                <button class="btn btn-primary touch-feedback">Adoptar Ahora</button>
+                <button class="btn btn-secondary touch-feedback">Ver Detalles</button>
+                <button class="btn btn-primary touch-feedback">Hacer Donación</button>
+                <button class="btn btn-secondary touch-feedback">Reportar Animal</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Control Sanitario - Sistema de Gestión de Animales</strong></p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">
+                Layouts optimizados para tablets (768px - 1366px)
+            </p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">
+                © 2025 TallerIntegra - Todos los derechos reservados
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function updateViewportInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const orientation = width > height ? 'Horizontal (Landscape)' : 'Vertical (Portrait)';
+            
+            let breakpoint = 'Móvil';
+            let breakpointColor = '#ef4444';
+            
+            if (width >= 1536) {
+                breakpoint = 'Desktop Grande (2xl)';
+                breakpointColor = '#8b5cf6';
+            } else if (width >= 1280) {
+                breakpoint = 'Desktop (xl)';
+                breakpointColor = '#a855f7';
+            } else if (width >= 1024) {
+                breakpoint = 'Tablet Grande / Laptop (lg)';
+                breakpointColor = '#22c55e';
+            } else if (width >= 834) {
+                breakpoint = 'Tablet (iPad)';
+                breakpointColor = '#10b981';
+            } else if (width >= 768) {
+                breakpoint = 'Tablet Estándar (md)';
+                breakpointColor = '#14b8a6';
+            } else if (width >= 640) {
+                breakpoint = 'Tablet Pequeña (sm)';
+                breakpointColor = '#f59e0b';
+            } else if (width >= 480) {
+                breakpoint = 'Móvil Grande (xs)';
+                breakpointColor = '#f97316';
+            }
+            
+            document.getElementById('viewport-size').textContent = `${width}px × ${height}px`;
+            document.getElementById('current-breakpoint').textContent = breakpoint;
+            document.getElementById('current-orientation').textContent = orientation;
+            document.getElementById('breakpoint-text').textContent = breakpoint;
+            document.querySelector('.breakpoint-indicator').style.background = breakpointColor;
+        }
+
+        // Actualizar al cargar y al redimensionar
+        updateViewportInfo();
+        window.addEventListener('resize', updateViewportInfo);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(updateViewportInfo, 100);
+        });
+    </script>
+</body>
+</html>

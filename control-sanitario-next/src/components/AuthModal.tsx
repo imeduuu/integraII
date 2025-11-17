@@ -10,6 +10,7 @@ import { sanitizeFormData } from "../utils/sanitize";
 
 import Loader from './ui/Loader';
 import { useNotification } from '../components/NotificationProvider';
+import api from '../services/api';
 
 interface AuthModalProps {
   open: boolean;
@@ -48,18 +49,46 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, mode, setMode }) =
       setMensaje('La contraseña debe tener al menos 6 caracteres.');
       return;
     }
-
     setIsSubmitting(true);
-    Promise.resolve()
-      .then(() => {
-        const successMessage = mode === 'login'
-          ? 'Inicio de sesión exitoso (simulado)'
-          : 'Registro exitoso (simulado)';
-        setMensaje(successMessage);
-        addToast(successMessage, 'success');
-      })
-      .catch(() => addToast('Error en la operación', 'error'))
-      .finally(() => setIsSubmitting(false));
+    (async () => {
+      try {
+        if (mode === 'login') {
+          // Llamada real al endpoint de login
+          const resp = await api.post('/auth/login', { email, password });
+          const data: any = resp.data;
+          if (data && data.success && data.token) {
+            // Guardar token para próximas llamadas (el interceptor lo usa)
+            if (typeof window !== 'undefined') localStorage.setItem('token', data.token);
+            setMensaje('Inicio de sesión exitoso');
+            addToast('Inicio de sesión exitoso', 'success');
+            onClose();
+          } else {
+            setMensaje(data?.message || 'Error en inicio de sesión');
+            addToast(data?.message || 'Error en inicio de sesión', 'error');
+          }
+        } else {
+          // Registro: el endpoint espera `nombre_usuario`, `email`, `password_hash` (nombre de campo existente)
+          const nombre = email.split('@')[0] || 'usuario';
+          const payload = { nombre_usuario: nombre, email, password_hash: password };
+          const resp = await api.post('/auth/register', payload);
+          const data: any = resp.data;
+          if (data && data.success) {
+            setMensaje('Registro exitoso. Ahora puedes iniciar sesión.');
+            addToast('Usuario registrado', 'success');
+            setMode('login');
+          } else {
+            setMensaje(data?.message || 'Error en registro');
+            addToast(data?.message || 'Error en registro', 'error');
+          }
+        }
+      } catch (err: any) {
+        const msg = err?.response?.data?.message || err?.message || 'Error en la operación';
+        setMensaje(msg);
+        addToast(msg, 'error');
+      } finally {
+        setIsSubmitting(false);
+      }
+    })();
   };
 
   React.useEffect(() => {

@@ -7,6 +7,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .widget:hover {
@@ -229,4 +230,5 @@
   .footer {
     padding: 0.875rem 1rem;
   }
+  .widget { margin: 0.5rem; }
 }
