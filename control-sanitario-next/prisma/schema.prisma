@@ -7,6 +7,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model usuario {
+  id_usuario          Int       @id @default(autoincrement())
+  id_rol              Int?
+  id_sexo             Int? // antes: Int
+  nombre_usuario      String    @db.VarChar(50)
+  apellido_paterno    String?   @db.VarChar(30)
+  apellido_materno    String?   @db.VarChar(30)
+  fecha_nacimiento    DateTime?
+  telefono            String?   @db.VarChar(20)
+  email               String    @unique @db.VarChar(100)
+  password_hash       String    @db.VarChar(255)
+  id_organizacion     Int?
+  fecha_creacion      DateTime  @default(now())
+  fecha_ultimo_login  DateTime?
+  activo              Boolean   @default(true)
+  deleted_at          DateTime?
+  id_ciudad           Int? // antes: Int
+  tokenVersion Int @default(0)
+
+  rol                 rol?              @relation(fields: [id_rol], references: [id_rol])
+  sexo                sexo?              @relation(fields: [id_sexo], references: [id_sexo])
+  organizacion        organizacion?     @relation(fields: [id_organizacion], references: [id_organizacion])
+  ciudad              ciudad?            @relation(fields: [id_ciudad], references: [id_ciudad])
+
+  google_accounts     google_accounts[]
+  avistamientos       avistamiento[]
+  alertas             alerta[]
+  dispositivos        dispositivo[]
+  adopciones_rescate  adopcion[]        @relation("rescatista")
+  adopciones_adopta   adopcion[]        @relation("adoptante")
+  solicitudes         solicitud_adopcion[]
+  password_resets     password_reset[]
+  audit_logs          audit_log[]
+  animales_propietario animal[]         @relation("propietario")
+}
+
 model organizacion {
   id_organizacion       Int       @id @default(autoincrement())
   nombre_organizacion   String    @db.VarChar(50)
@@ -16,6 +52,7 @@ model organizacion {
   id_ciudad             Int?
   ciudad                ciudad?   @relation(fields: [id_ciudad], references: [id_ciudad])
   usuarios              usuario[]
+}
 }
 
 model rol {
