@@ -90,7 +90,7 @@ export default async function handler(
     // Hash de la contraseña recibida en texto plano
     const hashedPassword = await bcrypt.hash(rawPassword, 10);
 
-    // Crear el usuario
+    // Crear el usuario (sin asignar id_rol específico, dejar que sea NULL)
     const user = await prisma.usuario.create({
       data: {
         nombre_usuario,
@@ -102,7 +102,7 @@ export default async function handler(
         fecha_nacimiento: fecha_nacimiento ? new Date(fecha_nacimiento) : null,
         telefono: telefono || null,
         id_ciudad: id_ciudad || null,
-        id_rol: 1, // Usuario por defecto
+        // id_rol se deja NULL (no fuerza foreign key)
         activo: true,
         // emailVerificado será manejado en la BD con valor por defecto
       },

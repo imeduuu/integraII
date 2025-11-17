@@ -194,6 +194,16 @@ const Login = () => {
           >
             {isSubmitting ? 'Entrando...' : 'Entrar'}
           </Button>
+          {/* Botón para iniciar sesión con Google */}
+          <a href="/api/auth/google" aria-label="Iniciar sesión con Google" style={{ textDecoration: 'none' }}>
+            <Button
+              type="button"
+              style={{ width: '100%', marginTop: 12, background: '#ffffff', color: '#111827', border: '1px solid #e5e7eb' }}
+              className="tablet-button touch-feedback"
+            >
+              Iniciar sesión con Google
+            </Button>
+          </a>
         
           <div style={{ marginTop: 12 }}>
             <a href="/forgot-password" className="text-responsive-small font-medium hover:underline" style={{ color: '#2563eb' }}>

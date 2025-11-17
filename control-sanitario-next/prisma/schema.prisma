@@ -36,6 +36,7 @@ model usuario {
   tokenVersion        Int       @default(0)
   emailVerificado     Boolean   @default(false)
   tokenVerificacion   String?   @db.VarChar(255)
+  foto_perfil         String?   @db.VarChar(500)  // Ruta o base64 de la foto de perfil
 
   rol                 rol?                @relation(fields: [id_rol], references: [id_rol])
   sexo                sexo?               @relation(fields: [id_sexo], references: [id_sexo])

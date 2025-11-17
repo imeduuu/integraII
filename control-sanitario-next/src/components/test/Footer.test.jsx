@@ -1,23 +1,23 @@
 // __tests__/Footer.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
-import Footer from '../components/Footer';
+import Footer from '../Footer';
 import React from 'react';
-import Modal from '../components/ui/Modal';
-import Button from '../components/ui/Button';
-import Input from '../components/ui/Input';
-import Icon from '../components/ui/Icon';
+import Modal from '../ui/Modal';
+import Button from '../ui/Button';
+import Input from '../ui/Input';
+import Icon from '../ui/Icon';
 
 // Mock de componentes UI
-jest.mock('../components/ui/Modal', () => ({ isOpen, children, onClose }) => (
+jest.mock('../ui/Modal', () => ({ isOpen, children, onClose }) => (
   <div data-testid="modal" style={{ display: isOpen ? 'block' : 'none' }}>
     <button onClick={onClose}>Cerrar</button>
     {children}
   </div>
 ));
 
-jest.mock('../components/ui/Button', () => (props) => <button {...props}>{props.children}</button>);
-jest.mock('../components/ui/Input', () => (props) => <input {...props} />);
-jest.mock('../components/ui/Icon', () => (props) => <span data-testid={props.name}>{props.name}</span>);
+jest.mock('../ui/Button', () => (props) => <button {...props}>{props.children}</button>);
+jest.mock('../ui/Input', () => (props) => <input {...props} />);
+jest.mock('../ui/Icon', () => (props) => <span data-testid={props.name}>{props.name}</span>);
 
 describe('Footer', () => {
   test('renderiza correctamente el footer', () => {

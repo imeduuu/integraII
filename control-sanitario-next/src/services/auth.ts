@@ -6,8 +6,8 @@ import { z } from "zod";
 
 const prisma = new PrismaClient();
 
-const JWT_SECRET = process.env.JWT_SECRET ?? "dev-secret";
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN ?? "1h";
+const JWT_SECRET: jwt.Secret = (process.env.JWT_SECRET ?? "dev-secret") as jwt.Secret;
+const JWT_EXPIRES_IN: string | number = process.env.JWT_EXPIRES_IN ?? "1h";
 const RESET_TOKEN_EXPIRES_MS = Number(process.env.RESET_TOKEN_EXPIRES_MS ?? 1000 * 60 * 60);
 
 const registerSchema = z.object({
@@ -41,7 +41,8 @@ async function comparePassword(p: string, hash: string) {
 }
 
 function signJwt(payload: object, opts?: jwt.SignOptions) {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN, ...(opts ?? {}) });
+  const options = { expiresIn: JWT_EXPIRES_IN, ...(opts ?? {}) } as unknown as jwt.SignOptions;
+  return jwt.sign(payload as any, JWT_SECRET as jwt.Secret, options as jwt.SignOptions);
 }
 
 function verifyJwt(token: string) {
@@ -174,9 +175,8 @@ export async function forgotPassword(input: unknown) {
     return { ok: true };
   }
 
-  const resetToken = jwt.sign({ sub: user.id_usuario, type: "reset" }, JWT_SECRET, {
-    expiresIn: Math.floor(RESET_TOKEN_EXPIRES_MS / 1000) + "s",
-  });
+  const resetOptions = { expiresIn: Math.floor(RESET_TOKEN_EXPIRES_MS / 1000) + "s" } as unknown as jwt.SignOptions;
+  const resetToken = jwt.sign({ sub: user.id_usuario, type: "reset" } as any, JWT_SECRET as jwt.Secret, resetOptions);
 
   const expiresAt = new Date(Date.now() + RESET_TOKEN_EXPIRES_MS);
 

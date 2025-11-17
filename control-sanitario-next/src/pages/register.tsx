@@ -262,6 +262,17 @@ const Register = () => {
             {isSubmitting ? 'Registrando...' : 'Registrarse'}
           </Button>
 
+          {/* Botón para crear cuenta con Google (flujo OAuth) */}
+          <a href="/api/auth/google" aria-label="Crear cuenta con Google" style={{ textDecoration: 'none' }}>
+            <Button
+              type="button"
+              style={{ width: '100%', marginTop: 12, background: '#ffffff', color: '#111827', border: '1px solid #e5e7eb' }}
+              className="tablet-button touch-feedback"
+            >
+              Crear con cuenta de Google
+            </Button>
+          </a>
+
           {/* Respuesta del API */}
           {apiResponse && (
             <div style={apiResponse.success ? successBoxStyle : errorBoxStyle}>
