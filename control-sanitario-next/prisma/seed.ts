@@ -3,9 +3,17 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  // Limpiar datos previos (opcional)
-  // await prisma.usuario.deleteMany();
-  // await prisma.rol.deleteMany();
+  // Sexos
+  const sexoM = await prisma.sexo.upsert({
+    where: { id_sexo: 1 },
+    update: {},
+    create: { sexo: 'Masculino' },
+  });
+  const sexoF = await prisma.sexo.upsert({
+    where: { id_sexo: 2 },
+    update: {},
+    create: { sexo: 'Femenino' },
+  });
 
   // Roles base
   const adminRole = await prisma.rol.upsert({
@@ -27,18 +35,6 @@ async function main() {
     where: { id_rol: 4 },
     update: {},
     create: { nombre_rol: 'VOLUNTARIO' },
-  });
-
-  // Sexos
-  const sexoM = await prisma.sexo.upsert({
-    where: { id_sexo: 1 },
-    update: {},
-    create: { sexo: 'Masculino' },
-  });
-  const sexoF = await prisma.sexo.upsert({
-    where: { id_sexo: 2 },
-    update: {},
-    create: { sexo: 'Femenino' },
   });
 
   // Organización de prueba
@@ -179,6 +175,111 @@ async function main() {
       id_usuario_propietario: user.id_usuario,
     },
   });
+
+  // Más animales de prueba (diversos estados y con fotos + historial médico)
+  const sampleAnimals = [
+    {
+      id: 3,
+      nombre: 'Luna',
+      propietarioId: orgUser.id_usuario,
+      estadoSaludId: estadoSalud.id_estado_salud,
+      razaId: razaLabrador.id_raza,
+      edad: '1 año',
+      zona: 'Norte',
+    },
+    {
+      id: 4,
+      nombre: 'Rocky',
+      propietarioId: volunteer.id_usuario,
+      estadoSaludId: estadoEnfermo.id_estado_salud,
+      razaId: razaLabrador.id_raza,
+      edad: '2 años',
+      zona: 'Centro',
+    },
+    {
+      id: 5,
+      nombre: 'Nina',
+      propietarioId: user.id_usuario,
+      estadoSaludId: estadoSalud.id_estado_salud,
+      razaId: razaLabrador.id_raza,
+      edad: '4 años',
+      zona: 'Sur',
+    },
+    {
+      id: 6,
+      nombre: 'Bolt',
+      propietarioId: admin.id_usuario,
+      estadoSaludId: estadoSalud.id_estado_salud,
+      razaId: razaLabrador.id_raza,
+      edad: '3 años',
+      zona: 'Centro',
+    },
+  ];
+
+  for (const a of sampleAnimals) {
+    const created = await prisma.animal.upsert({
+      where: { id_animal: a.id },
+      update: {},
+      create: {
+        id_animal: a.id,
+        nombre_animal: a.nombre,
+        id_usuario_propietario: a.propietarioId,
+        id_estado_salud: a.estadoSaludId,
+        id_raza: a.razaId,
+        edad_animal: a.edad,
+        zona: a.zona,
+      },
+    });
+
+    // Fotos de ejemplo
+    await prisma.animal_foto.upsert({
+      where: { id_foto: a.id * 10 + 1 },
+      update: {},
+      create: {
+        id_foto: a.id * 10 + 1,
+        id_animal: created.id_animal,
+        url: `/images/${a.nombre.toLowerCase()}-1.jpg`,
+      },
+    });
+    await prisma.animal_foto.upsert({
+      where: { id_foto: a.id * 10 + 2 },
+      update: {},
+      create: {
+        id_foto: a.id * 10 + 2,
+        id_animal: created.id_animal,
+        url: `/images/${a.nombre.toLowerCase()}-2.jpg`,
+      },
+    });
+
+    // Historial médico básico
+    await prisma.historial_medico.upsert({
+      where: { id_historial_medico: a.id * 100 + 1 },
+      update: {},
+      create: {
+        id_historial_medico: a.id * 100 + 1,
+        id_animal: created.id_animal,
+        fecha_evento: new Date(Date.now() - 1000 * 60 * 60 * 24 * 90), // hace ~90 días
+        tipo_evento: 'Vacunación',
+        diagnostico: 'Vacuna antirrábica aplicada',
+        detalles: 'Dosis administrada correctamente. Seguimiento en 1 año.',
+        nombre_veterinario: 'Dr. Salud'
+      },
+    });
+
+    await prisma.historial_medico.upsert({
+      where: { id_historial_medico: a.id * 100 + 2 },
+      update: {},
+      create: {
+        id_historial_medico: a.id * 100 + 2,
+        id_animal: created.id_animal,
+        fecha_evento: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30), // hace ~30 días
+        tipo_evento: 'Consulta',
+        diagnostico: a.nombre === 'Rocky' ? 'Infección leve' : 'Chequeo general',
+        detalles: a.nombre === 'Rocky' ? 'Tratamiento antibiótico por 7 días' : 'Sin hallazgos significativos',
+        nombre_veterinario: 'Clínica Demo'
+      },
+    });
+  }
 
   // Estados de adopción
   await prisma.estado_solicitud.upsert({

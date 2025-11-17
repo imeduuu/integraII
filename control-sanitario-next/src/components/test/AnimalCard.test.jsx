@@ -1,6 +1,6 @@
 // __tests__/AnimalCard.test.tsx
 import { render, screen, fireEvent } from '@testing-library/react';
-import AnimalCard from '../components/AnimalCard';
+import AnimalCard from '../AnimalCard';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import React from 'react';

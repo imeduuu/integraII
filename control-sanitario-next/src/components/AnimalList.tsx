@@ -70,7 +70,11 @@ const listClasses = {
  * Componente que renderiza lista filtrable de animales disponibles
  * Incluye filtros por estado y ubicación con vista en grid responsivo
  */
-export default function AnimalList() {
+interface AnimalListProps {
+  isLoading?: boolean;
+}
+
+export default function AnimalList({ isLoading }: AnimalListProps) {
   const [estado, setEstado] = useState('');
   const [ubicacion, setUbicacion] = useState('');
 
@@ -82,6 +86,20 @@ export default function AnimalList() {
 
   return (
     <div className={listClasses.container}>
+      {isLoading ? (
+        <ul className={listClasses.grid} role="list" aria-label="Lista de animales (cargando)">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <li key={i} role="listitem" style={{ listStyle: 'none' }}>
+              <div className="animate-pulse p-4 bg-white rounded shadow">
+                <div className="h-12 w-12 bg-gray-200 rounded-full mb-3" />
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                <div className="h-3 bg-gray-200 rounded w-1/2" />
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+      <>
       {/* Filtros de búsqueda */}
       <div className={listClasses.filters}>
         <label htmlFor="filter-estado" className="sr-only">Filtrar por estado</label>
@@ -112,11 +130,7 @@ export default function AnimalList() {
       </div>
 
       {/* Grid de animales */}
-      <ul
-        className={listClasses.grid}
-        role="list"
-        aria-label="Lista de animales disponibles"
-      >
+      <ul className={listClasses.grid} role="list" aria-label="Lista de animales disponibles">
         {filtered.map((animal, i) => (
           <li key={i} role="listitem" style={{ listStyle: 'none' }}>
             <AnimalCard
@@ -129,6 +143,8 @@ export default function AnimalList() {
           </li>
         ))}
       </ul>
+      </>
+      )}
     </div>
   );
 }
