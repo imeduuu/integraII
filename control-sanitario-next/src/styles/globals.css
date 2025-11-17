@@ -1,3 +1,8 @@
+/* Merge of HEAD and branch 'cristofher' - consolidated global styles */
+
+/* Fonts and variables */
+/* Import Google Font Inter for modern UI */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 @import './variables.css'; /* Variables de colores y configuración */
 @import './typography-responsive.css'; /* Sistema de tipografía responsiva */
 
@@ -5,41 +10,48 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Mejores por defecto para móviles y accesibilidad */
+/* Base global styles to standardize appearance and accessibility */
 @layer base {
-  /* Reset universal para box-sizing */
-  *, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+	/* Reset universal for box-sizing and remove default margins/padding */
+	*, *::before, *::after {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
 
-  /* Evitar overflow horizontal en html y body */
-  html {
-    -webkit-text-size-adjust: 100%;
-    overflow-x: hidden;
-    width: 100%;
-  }
+	html {
+		-webkit-text-size-adjust: 100%;
+		overflow-x: hidden;
+		width: 100%;
+		height: 100%;
+	}
 
-  /* Tipografía y legibilidad */
-  body {
-    font-family: var(--font-family-sans);
-    color: var(--text-primary);
-    background-color: var(--background-light);
-    line-height: 1.45;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-    width: 100%;
-    min-height: 100vh;
-  }	/* Imágenes y medios responsivos */
+	body, #__next {
+		min-height: 100vh;
+		height: 100%;
+	}
+
+	/* Typography and readability */
+	body {
+		font-family: var(--font-family-sans);
+		font-size: var(--font-size-base, 16px);
+		color: var(--text-primary);
+		background-color: var(--background-light);
+		line-height: 1.45;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		overflow-x: hidden;
+		width: 100%;
+	}
+
+	/* Images and media responsive */
 	img, picture, video {
 		max-width: 100%;
 		height: auto;
 		display: block;
 	}
 
-	/* Inputs y botones más táctiles en móviles */
+	/* Inputs and buttons touch-friendly */
 	input, textarea, button, select {
 		font-family: inherit;
 		font-size: 1rem;
@@ -47,21 +59,16 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 
-	/* Asegurar que modales no excedan la altura de la pantalla */
+	/* Ensure modals don't exceed viewport height */
 	.modal-root, .modal-root * {
 		box-sizing: border-box;
 	}
 
-	/* Soporte para focus visible accesible */
-	:focus {
-		outline: none;
-	}
-	:focus-visible {
-		outline: 3px solid rgba(59,130,246,0.6);
-		outline-offset: 2px;
-	}
+	/* Focus visible accessible support */
+	:focus { outline: none; }
+	:focus-visible { outline: 3px solid rgba(59,130,246,0.6); outline-offset: 2px; }
 
-	/* Helpers útiles */
+	/* Visually hidden utility */
 	.sr-only {
 		position: absolute !important;
 		height: 1px; width: 1px;
@@ -71,17 +78,67 @@
 	}
 }
 
-/* Ajustes para pantallas pequeñas: aumentar legibilidad y evitar solapamientos */
+/* Small screen adjustments */
 @media (max-width: 480px) {
 	body { font-size: 15px; }
 	h1, h2, h3, h4 { line-height: 1.2; }
-	/* Botones táctiles más grandes */
 	button { padding: 0.6rem 0.75rem; }
 }
 
-/* Fin de mejoras globales */
+/* Container utility for page content */
+.app-container {
+	max-width: 1100px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
 
-/* Importar helpers móviles globales (añadido automáticamente) */
+/* Hero section helper */
+.hero { display: flex; align-items: center; justify-content: center; padding: 4rem 1rem; position: relative; }
+
+/* Section spacing */
+.section { padding: 3rem 1rem; }
+
+/* Base link styles */
+a { color: var(--primary-color); text-decoration: none; }
+a:hover { color: var(--primary-color-hover); text-decoration: underline; }
+
+/* Button reset and variants */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: var(--radius-md); padding: 0.5rem 1rem; font-weight: 600; cursor: pointer; transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease; box-shadow: 0 6px 18px rgba(15,23,42,0.06); }
+.btn-primary { background-color: var(--primary-color); color: var(--text-on-primary); }
+.btn-primary:hover { background-color: var(--primary-color-hover); }
+.btn-secondary { background-color: var(--secondary-color); color: var(--text-on-primary); }
+.btn:active { transform: translateY(1px) scale(0.998); }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(15,23,42,0.12); }
+
+/* Card base */
+.card { background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,255,0.95)); border-radius: var(--radius-md); box-shadow: 0 8px 30px rgba(15,23,42,0.08); padding: 1rem; transition: transform 220ms ease, box-shadow 220ms ease; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(15,23,42,0.12); }
+.card--glass { background: rgba(255,255,255,0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.5); }
+
+/* Form elements */
+input, textarea, select { border: 1px solid #e6eef6; padding: 0.6rem 0.75rem; border-radius: var(--radius-sm); background: #fff; }
+input:focus, textarea:focus, select:focus { outline: none; box-shadow: 0 6px 18px rgba(37,99,235,0.12); border-color: rgba(37,99,235,0.9); }
+
+/* Small helpers */
+.muted { color: var(--text-secondary); }
+
+/* Dark mode tweaks */
+@media (prefers-color-scheme: dark) {
+	body { background-color: var(--background-dark); color: var(--text-on-primary); }
+	.card { background: linear-gradient(180deg, rgba(10,15,25,0.7), rgba(8,12,20,0.75)); box-shadow: none; }
+}
+
+/* Animations */
+@keyframes floatUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.animate-float { animation: floatUp 0.6s ease both; }
+
+/* Make the main container responsive and centered on wide screens */
+@media (min-width: 1280px) { .app-container { max-width: 1200px; } }
+
+/* Import helpers for mobile and tablet layouts */
 @import './mobile-helpers.css';
-/* Importar estilos para tablets */
 @import './tablet-layout.css';
+
+/* End consolidated global styles */

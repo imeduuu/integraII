@@ -1,10 +1,12 @@
 // AnimalCard.tsx
 import React from 'react';
+import Image from 'next/image';
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
+import CommentSection from './CommentSection';
 
 interface AnimalCardProps {
-  animalId?: string;
+  animalId?: number | string;
   nombre: string;
   estado_general: string;
   zona: string;
@@ -12,42 +14,44 @@ interface AnimalCardProps {
   images?: string[];
 }
 
-// Reutilizable dentro del componente
-const cardClasses = {
-  container: 'bg-white rounded-xl shadow-md p-6 w-72 flex flex-col items-center',
-  img: 'w-24 h-24 object-cover rounded-full mb-3 border-2 border-green-200',
-  nombre: 'text-xl font-bold mb-2 text-green-700',
-  info: 'text-sm text-gray-600 mb-1 font-semibold',
-  button: 'bg-blue-600 hover:bg-blue-700 mt-2'
-};
-
 const AnimalCard: React.FC<AnimalCardProps> = ({ animalId, nombre, estado_general, zona, age, images }) => {
   const router = useRouter();
   const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
 
+  const goToAnimal = () => {
+    if (animalId) router.push(`/animals/${animalId}`);
+    else router.push('/animals');
+  };
+
   return (
     <article
-      className={cardClasses.container}
+      className="bg-white rounded-xl shadow-md p-4 w-72 flex flex-col items-start"
       role="article"
-      aria-label={`Tarjeta del animal ${nombre}`}
-    >
-      <div onClick={() => animalId ? router.push(`/animals/${animalId}`) : router.push('/animals')} style={{ cursor: 'pointer' }}>
-        <img src={thumbnail} alt={nombre} className={cardClasses.img} />
+      aria-label={`Tarjeta del animal ${nombre}`}>
+      <div className="w-full overflow-hidden rounded-lg mb-3 cursor-pointer" onClick={goToAnimal}>
+        <Image
+          src={thumbnail}
+          alt={nombre}
+          width={400}
+          height={300}
+          className="w-full h-40 object-cover rounded-lg"
+          loading="lazy"
+        />
       </div>
-      <h2 className={cardClasses.nombre}>{nombre}</h2>
-      <p className={cardClasses.info}>Estado: {estado_general}</p>
-      <p className={cardClasses.info}>Ubicación: {zona}</p>
-      {age && <p className={cardClasses.info}>Edad: {age}</p>}
-      <Button
-        className={cardClasses.button}
-        onClick={() => router.push('/adopcion')}
-        aria-label={`Iniciar proceso de adopción para ${nombre}`}
-      >
-        Adoptar
-      </Button>
-      <div>
-        {/* Minimal comments placeholder to satisfy tests that expect a CommentSection */}
-        <div>Comentarios</div>
+
+      <h2 className="text-lg font-bold mb-1 text-green-700">{nombre}</h2>
+      <p className="text-sm text-gray-600 mb-1"><span className="font-semibold">Estado:</span> {estado_general}</p>
+      <p className="text-sm text-gray-600 mb-1"><span className="font-semibold">Ubicación:</span> {zona}</p>
+      {age && <p className="text-sm text-gray-600 mb-2"><span className="font-semibold">Edad:</span> {age}</p>}
+
+      <div className="mt-2 w-full flex gap-2">
+        <Button className="w-1/2" onClick={() => router.push('/adopcion')}>Adoptar</Button>
+        <Button variant="secondary" className="w-1/2" onClick={goToAnimal}>Ver</Button>
+      </div>
+
+      <div className="mt-4 w-full">
+        {/* CommentSection expects a numeric id; guard if missing */}
+        {animalId ? <CommentSection animalId={Number(animalId)} /> : <div className="text-sm text-gray-500">Comentarios</div>}
       </div>
     </article>
   );

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import Button from '../../components/ui/Button';
 import { HiUser, HiMail, HiLocationMarker, HiCalendar, HiSpeakerphone } from "react-icons/hi";
 import styles from "../../styles/user-profile.module.css";
 import { SkeletonList, SkeletonCard } from '../../components/ui/Skeleton';
@@ -159,7 +160,7 @@ const UserProfilePage = () => {
     return (
       <>
         <Navbar />
-        <main className={styles.container}>
+        <main className={`${styles.container} app-container`}>
           <section className={styles.profileHeader}>
             <div className={styles.profileImageContainer}>
               <div className="w-24 h-24 rounded-full bg-gray-200 animate-pulse" />
@@ -187,16 +188,11 @@ const UserProfilePage = () => {
     return (
       <>
         <Navbar />
-        <main className={styles.container}>
+        <main className={`${styles.container} app-container`}>
           <div className={styles.errorContainer}>
             <h1>Usuario no encontrado</h1>
             <p>El perfil que buscas no existe o ha sido eliminado.</p>
-            <button 
-              onClick={() => router.back()}
-              className={styles.backButton}
-            >
-              Volver atrás
-            </button>
+            <Button onClick={() => router.back()} variant="secondary">Volver atrás</Button>
           </div>
         </main>
         <Footer />
@@ -207,7 +203,7 @@ const UserProfilePage = () => {
   return (
     <>
       <Navbar />
-      <main className={styles.container}>
+  <main className={`${styles.container} app-container`}>
         {/* Header del perfil */}
         <section className={styles.profileHeader}>
           <div className={styles.profileImageContainer}>
@@ -292,18 +288,8 @@ const UserProfilePage = () => {
 
         {/* Botón de navegación */}
         <div className={styles.navigationButtons}>
-          <button 
-            onClick={() => router.back()}
-            className={styles.backButton}
-          >
-            Volver atrás
-          </button>
-          <button 
-            onClick={() => router.push('/admin-users')}
-            className={styles.usersListButton}
-          >
-            Ver todos los usuarios
-          </button>
+          <Button variant="secondary" onClick={() => router.back()}>Volver atrás</Button>
+          <Button onClick={() => router.push('/admin-users')}>Ver todos los usuarios</Button>
         </div>
       </main>
       <Footer />
