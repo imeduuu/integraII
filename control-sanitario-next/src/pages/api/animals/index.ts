@@ -23,6 +23,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
       });
 
+      try {
+        const count = await (prisma as any).animal.count();
+        console.log('API /api/animals - count:', count);
+        if (animales && animales.length > 0) {
+          console.log('API /api/animals - sample[0]:', animales[0]);
+        }
+      } catch (logErr) {
+        console.warn('API /api/animals - failed to log count/sample', logErr);
+      }
+
       return res.status(200).json(animales);
     } else {
       res.setHeader('Allow', ['GET']);
