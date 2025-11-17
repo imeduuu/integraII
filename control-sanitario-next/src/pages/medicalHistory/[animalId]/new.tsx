@@ -77,7 +77,7 @@ export default function MedicalHistoryCreatePage() {
   }, [animalId, form, crear]);
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.darkContainer}`}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 20 }}>
         <h1 className={styles.title}>Nuevo historial médico</h1>
         <div style={{ display: 'flex', gap: 8 }}>

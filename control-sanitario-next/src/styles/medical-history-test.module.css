@@ -103,3 +103,33 @@
 .muted {
   color: #6b7280;
 }
+
+/* Estilos para páginas con fondo oscuro: hace que etiquetas y textos sean legibles */
+.darkContainer .label,
+.darkContainer .label span {
+  color: #ffffff;
+}
+.darkContainer .muted {
+  color: #e5e7eb;
+}
+.darkContainer .title {
+  color: #ffffff;
+}
+.darkContainer .input {
+  color: #111827;
+}
+
+/* Asegurar que el contenido de las tarjetas (fondo blanco) tenga texto oscuro */
+.darkContainer .card {
+  background: #ffffff;
+  color: #111827;
+}
+.darkContainer .cardHeader {
+  color: #111827;
+}
+.darkContainer .cardMeta {
+  color: #6b7280;
+}
+.darkContainer .card > div {
+  color: #111827;
+}

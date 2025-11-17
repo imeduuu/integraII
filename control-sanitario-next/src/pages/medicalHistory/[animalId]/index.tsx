@@ -12,7 +12,7 @@ export default function MedicalHistoryViewPage() {
   const { historiales, loading, error } = useMedicalHistory(animalIdNum);
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.darkContainer}`}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
         <h1 className={styles.title}>Historial Médico</h1>
         <div style={{ display: 'flex', gap: 8 }}>
