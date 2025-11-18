@@ -24,6 +24,8 @@ model usuario {
   activo              Boolean   @default(true)
   deleted_at          DateTime?
   id_ciudad           Int? // antes: Int
+  favoritos           favorito[]
+
 
   rol                 rol?              @relation(fields: [id_rol], references: [id_rol])
   sexo                sexo?              @relation(fields: [id_sexo], references: [id_sexo])
@@ -150,6 +152,7 @@ model animal {
   fotos                 animal_foto[]
   historiales_medicos   historial_medico[]
   adopciones            adopcion[]
+  favoritos             favorito[]
 }
 
 model animal_foto {
@@ -295,3 +298,17 @@ model audit_log {
 
   usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
 }
+
+model favorito {
+  id          Int      @id @default(autoincrement())
+  id_usuario  Int
+  id_animal   Int
+
+  usuario     usuario  @relation(fields: [id_usuario], references: [id_usuario])
+  animal      animal   @relation(fields: [id_animal], references: [id_animal])
+
+  @@unique([id_usuario, id_animal])
+  @@map("favorite")
+}
+
+
