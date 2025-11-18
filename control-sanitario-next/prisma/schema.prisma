@@ -32,11 +32,17 @@ model usuario {
   fecha_ultimo_login  DateTime?
   activo              Boolean   @default(true)
   deleted_at          DateTime?
+<<<<<<< HEAD
+  id_ciudad           Int? // antes: Int
+  favoritos           favorito[]
+
+=======
   id_ciudad           Int?
   tokenVersion        Int       @default(0)
   emailVerificado     Boolean   @default(false)
   tokenVerificacion   String?   @db.VarChar(255)
   foto_perfil         String?   @db.VarChar(500)  // Ruta o base64 de la foto de perfil
+>>>>>>> b3106cc84686bd7afedfc923f7208b1f551ef5c1
 
   rol                 rol?                @relation(fields: [id_rol], references: [id_rol])
   sexo                sexo?               @relation(fields: [id_sexo], references: [id_sexo])
@@ -180,8 +186,12 @@ model animal {
   fotos                 animal_foto[]
   historiales_medicos   historial_medico[]
   adopciones            adopcion[]
+<<<<<<< HEAD
+  favoritos             favorito[]
+=======
   solicitudes_adopcion  solicitud_adopcion[] @relation("animal_solicitudes")
   avistamientos         avistamiento[]       @relation("animal_avistamientos")
+>>>>>>> b3106cc84686bd7afedfc923f7208b1f551ef5c1
 }
 
 model animal_foto {
@@ -358,3 +368,17 @@ model audit_log {
 
   usuario usuario @relation(fields: [id_usuario], references: [id_usuario])
 }
+
+model favorito {
+  id          Int      @id @default(autoincrement())
+  id_usuario  Int
+  id_animal   Int
+
+  usuario     usuario  @relation(fields: [id_usuario], references: [id_usuario])
+  animal      animal   @relation(fields: [id_animal], references: [id_animal])
+
+  @@unique([id_usuario, id_animal])
+  @@map("favorite")
+}
+
+
