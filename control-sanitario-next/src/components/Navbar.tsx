@@ -24,12 +24,10 @@ const Navbar = () => {
     links = [
       { href: '/admin-home', label: 'Panel Admin' },
       { href: '/admin-users', label: 'Usuarios' },
-<<<<<<< HEAD
       { href: '/admin-campaigns', label: 'Campañas' },
-      { href: '/health-states', label: 'Estados Salud' }
-=======
-      { href: '/admin-campaigns', label: 'Campañas' }
->>>>>>> origin/maycool
+      { href: '/health-states', label: 'Estados Salud' },
+      { href: '/admin/stats', label: 'Estadísticas' }
+      ,{ href: '/admin/stats-test', label: 'Stats Test' }
     ];
   } else if (userMock.role === 'user') {
     links = [
@@ -39,7 +37,9 @@ const Navbar = () => {
       { href: '/avistamientos', label: 'Avistamientos' },
       { href: '/animals', label: 'Animales' },
       { href: '/donations', label: 'Donaciones' },
-      { href: '/admin-orgs', label: 'Organizaciones' }
+      { href: '/admin-orgs', label: 'Organizaciones' },
+      { href: '/admin/stats', label: 'Estadísticas' },
+      { href: '/admin/stats-test', label: 'Stats Test' }
     ];
   } else if (userMock.role === 'org') {
     links = [

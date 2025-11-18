@@ -6,7 +6,6 @@
 const CACHE_NAME = 'control-sanitario-v1';
 const urlsToCache = [
   '/',
-  '/styles/globals.css',
   '/manifest.json'
 ];
 
@@ -84,8 +83,8 @@ self.addEventListener('push', (event) => {
   let notificationData = {
     title: 'Nueva notificación',
     body: 'Tienes una nueva actualización',
-    icon: '/icon-192x192.png',
-    badge: '/badge-72x72.png',
+    icon: '/Animals/dog1.webp',
+    badge: '/Animals/dog2.webp',
     tag: 'notification',
     requireInteraction: false,
     vibrate: [200, 100, 200],
@@ -118,12 +117,12 @@ self.addEventListener('push', (event) => {
         {
           action: 'view',
           title: 'Ver',
-          icon: '/icons/view.png'
+          icon: '/Animals/dog3.webp'
         },
         {
           action: 'close',
           title: 'Cerrar',
-          icon: '/icons/close.png'
+          icon: '/Animals/dog4.webp'
         }
       ]
     })

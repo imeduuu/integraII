@@ -1,9 +1,5 @@
 // AnimalCard.tsx
-<<<<<<< HEAD
 import React, { useState } from 'react';
-=======
-import React from 'react';
->>>>>>> origin/maycool
 import Button from './ui/Button';
 import { useRouter } from 'next/router';
 
@@ -22,7 +18,6 @@ const cardClasses = {
   img: 'w-24 h-24 object-cover rounded-full mb-3 border-2 border-green-200',
   nombre: 'text-xl font-bold mb-2 text-green-700',
   info: 'text-sm text-gray-600 mb-1 font-semibold',
-<<<<<<< HEAD
   button: 'bg-blue-600 hover:bg-blue-700 mt-2',
   ghost: 'bg-gray-200 text-gray-800 hover:bg-gray-300 mt-2'
 };
@@ -55,16 +50,6 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animalId, nombre, estado_genera
       setLoadingAddState(false);
     }
   };
-
-=======
-  button: 'bg-blue-600 hover:bg-blue-700 mt-2'
-};
-
-const AnimalCard: React.FC<AnimalCardProps> = ({ animalId, nombre, estado_general, zona, age, images }) => {
-  const router = useRouter();
-  const thumbnail = images && images.length > 0 ? images[0] : '/default-animal.png';
-
->>>>>>> origin/maycool
   return (
     <article
       className={cardClasses.container}

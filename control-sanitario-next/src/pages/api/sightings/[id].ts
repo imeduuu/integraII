@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const avistamiento = await prisma.avistamiento.findUnique({
         where: { id_avistamiento: sightingId },
         include: {
-          fotos: true,
+          avistamiento_foto: true,
           usuario: true,
           especie: true,
           estado_salud: true,
