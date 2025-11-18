@@ -2,13 +2,10 @@
 .navbarTitle {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #000000;
+  color: #ffffff; /* Ajustado para mayor contraste con fondo azul */
   letter-spacing: 0.05em;
   margin-right: auto;
   align-self: flex-start;
-}
-.dark .navbarTitle {
-  color: #fff;
 }
 .profileSectionRight {
   position: absolute;
@@ -18,29 +15,15 @@
   align-items: center;
   gap: 0.5rem;
 }
-/* Navbar base */
 .navbar {
-  background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
-  color: #fff;
-  padding: 1.2rem 0;
+  background-color: hsl(212, 92%, 64%); /* Un negro muy oscuro */
+  color: #43a2f0;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #2563eb;
-  box-shadow: 0 2px 12px rgba(37,99,235,0.08);
-  position: relative;
-  z-index: 10;
-  width: 100vw;
-  min-width: 100vw;
-  margin: 0;
-  left: 0;
-  top: 0;
-}
-.dark .navbar {
-  background: linear-gradient(90deg, #111827 60%, #1e293b 100%);
-  color: #fff;
-  border-bottom: 2px solid #334155;
+  border-bottom: 1px solid #43a2f0; /* Separación sutil */
 }
 @media (min-width: 640px) {
   .navbar {
@@ -68,22 +51,18 @@
   z-index: 10;
 }
 
-
 .navLink {
-  color: #000000;
+  color: #ffffff; /* Ajustado para contraste con fondo navbar */
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  text-decoration: none;
-  transition: background-color 0.3s ease-in-out, color 0.3s;
-}
-.dark .navLink {
-  color: #fff;
+  text-decoration: none; /* Quitamos el subrayado por defecto */
+  transition: background-color 0.3s ease-in-out;
 }
 .navLink:hover {
-  background-color: #ffffff; /* Un gris oscuro al pasar el cursor */
+  background-color: #e0f2fe; /* Color de hover más contrastante */
 }
 .navLinkActive {
-  background-color: #43a2f0; /* Un gris oscuro para el enlace activo */
+  background-color: #1e40af; /* Ajustado para contraste suficiente */
   font-weight: bold;
   position: relative;
   overflow: hidden;
@@ -96,7 +75,7 @@
   bottom: 0.25rem;
   width: 70%;
   height: 2px;
-  background-color: #000000;
+  background-color: #ffffff; /* Mejor contraste con fondo activo */
 }
 .profileSection {
   display: flex;
@@ -108,7 +87,7 @@
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #000000;
+  border: 2px solid #ffffff; /* Ajustado para contraste con fondo */
 }
 
 .profileImage {
@@ -117,4 +96,19 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #000000;
+}
+
+
+/* Ajustes para resoluciones menores a 740px */
+@media (max-width: 740px) {
+  .navbarTitle {
+    font-size: 1.25rem;
+  }
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+  .navbarLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }

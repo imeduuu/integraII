@@ -1,25 +1,22 @@
 // src/services/sightings.ts
-import axios from 'axios';
+import api from './api';
 
-// ✅ Usa la ruta relativa del API interno de Next.js
-const API_URL = '/api/sightings';
+const BASE = '/sightings';
 
 // Obtener todos los avistamientos
 export async function getSightings() {
-  const res = await axios.get(API_URL);
+  const res = await api.get(BASE);
   return res.data;
 }
 
 // Obtener un avistamiento por ID
 export async function getSightingById(id: number) {
-  const res = await axios.get(`${API_URL}/${id}`);
+  const res = await api.get(`${BASE}/${id}`);
   return res.data;
 }
 
 // Crear un nuevo avistamiento
 export async function createSighting(data: any) {
-  const res = await axios.post(API_URL, data, {
-    headers: { 'Content-Type': 'application/json' },
-  });
+  const res = await api.post(BASE, data);
   return res.data;
 }

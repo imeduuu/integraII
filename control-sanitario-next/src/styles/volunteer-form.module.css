@@ -2,14 +2,15 @@
   max-width: 400px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #999999; /* Ajuste de contraste */
   border-radius: 8px;
-  background: #f9f9f9;
+  background: #ffffff; /* Ajuste de contraste */
 }
 
 .formContainer h2 {
   text-align: center;
   margin-bottom: 15px;
+  color: #111111; /* Ajuste de contraste */
 }
 
 .form {
@@ -20,32 +21,48 @@
 .form input {
   margin-bottom: 8px;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #666666; /* Ajuste de contraste */
   border-radius: 5px;
+  color: #111111; /* Ajuste de contraste */
+  background: #ffffff; /* Ajuste de contraste */
 }
 
 .form button {
   padding: 10px;
-  background: #0070f3;
-  color: white;
+  background: #2563eb; /* Ajuste de contraste */
+  color: #ffffff; /* Ajuste de contraste */
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .form button:hover {
-  background: #005bb5;
+  background: #1e40af; /* Ajuste de contraste */
 }
 
 .message {
   margin-top: 10px;
   text-align: center;
   font-weight: bold;
-  color: green;
+  color: #065f46; /* Verde oscuro para buen contraste */
 }
 
 .error {
-  color: red;
+  color: #b91c1c; /* Rojo oscuro para buen contraste */
   font-size: 0.9rem;
   margin-bottom: 5px;
+}
+
+/* Ajustes para resoluciones menores a 740px */
+@media (max-width: 740px) {
+  .formContainer h2 {
+    font-size: 1.25rem;
+  }
+  .formContainer {
+    padding: 15px;
+  }
+  .form button {
+    font-size: 0.95rem;
+    padding: 8px 10px;
+  }
 }

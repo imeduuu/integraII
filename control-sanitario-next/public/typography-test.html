@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test de Tipografía Responsiva - Huella Segura</title>
+  <link rel="stylesheet" href="../src/styles/variables.css">
+  <link rel="stylesheet" href="../src/styles/typography-responsive.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 3px solid #667eea;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: #f8f9fa;
+      border-radius: 12px;
+    }
+
+    .section-title {
+      color: #667eea;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #667eea;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+
+    .sample-text {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: white;
+      border-left: 4px solid #667eea;
+    }
+
+    .breakpoint-indicator {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      z-index: 1000;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .color-palette {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .color-box {
+      width: 100px;
+      height: 100px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .test-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 44px;
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: scale(1.05);
+    }
+
+    .btn-secondary {
+      background: #764ba2;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #653c8f;
+      transform: scale(1.05);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #667eea;
+      color: #667eea;
+    }
+
+    .btn-outline:hover {
+      background: #667eea;
+      color: white;
+    }
+
+    @media (max-width: 640px) {
+      .breakpoint-indicator::before {
+        content: '📱 Móvil';
+      }
+    }
+
+    @media (min-width: 641px) and (max-width: 767px) {
+      .breakpoint-indicator::before {
+        content: '📱 Móvil Grande';
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .breakpoint-indicator::before {
+        content: '📲 Tablet';
+      }
+    }
+
+    @media (min-width: 1024px) and (max-width: 1279px) {
+      .breakpoint-indicator::before {
+        content: '💻 Laptop';
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .breakpoint-indicator::before {
+        content: '🖥️ Desktop';
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>🐾 Test de Tipografía Responsiva</h1>
+      <p class="lead">Sistema de Huella Segura - Control Sanitario</p>
+      <p class="text-small">Redimensiona la ventana para ver los cambios</p>
+    </div>
+
+    <!-- Jerarquía de Títulos -->
+    <section class="section">
+      <h2 class="section-title">Jerarquía de Títulos</h2>
+      <div class="sample-text">
+        <h1>H1 - Título Principal (clamp 28px → 48px)</h1>
+        <p class="text-small">font-size: clamp(1.75rem, 4vw, 3rem) | line-height: 1.1</p>
+      </div>
+      <div class="sample-text">
+        <h2>H2 - Subtítulo Importante (clamp 24px → 36px)</h2>
+        <p class="text-small">font-size: clamp(1.5rem, 3vw, 2.25rem) | line-height: 1.2</p>
+      </div>
+      <div class="sample-text">
+        <h3>H3 - Sección (clamp 20px → 30px)</h3>
+        <p class="text-small">font-size: clamp(1.25rem, 2.5vw, 1.875rem) | line-height: 1.2</p>
+      </div>
+      <div class="sample-text">
+        <h4>H4 - Subsección (clamp 18px → 24px)</h4>
+        <p class="text-small">font-size: clamp(1.125rem, 2vw, 1.5rem) | line-height: 1.3</p>
+      </div>
+      <div class="sample-text">
+        <h5>H5 - Encabezado Menor (clamp 16px → 20px)</h5>
+        <p class="text-small">font-size: clamp(1rem, 1.5vw, 1.25rem) | line-height: 1.3</p>
+      </div>
+      <div class="sample-text">
+        <h6>H6 - ENCABEZADO MÍNIMO (clamp 15px → 18px)</h6>
+        <p class="text-small">font-size: clamp(0.9375rem, 1.5vw, 1.125rem) | line-height: 1.4</p>
+      </div>
+    </section>
+
+    <!-- Párrafos y Texto -->
+    <section class="section">
+      <h2 class="section-title">Párrafos y Texto de Cuerpo</h2>
+      <div class="sample-text">
+        <p class="lead">
+          Este es un texto destacado (lead). Se usa para introducciones o contenido importante 
+          que necesita destacar sobre el texto normal. Tamaño: clamp(16px → 20px).
+        </p>
+      </div>
+      <div class="sample-text">
+        <p>
+          Este es un párrafo normal con texto de cuerpo. Es el tamaño estándar para la lectura 
+          de contenido extenso. Debe ser legible y cómodo para los ojos. El interlineado está 
+          optimizado para una lectura agradable. Tamaño: clamp(14px → 17px) con line-height: 1.6.
+        </p>
+        <p>
+          El sistema de tipografía responsiva usa <code>clamp()</code> para crear transiciones 
+          suaves entre diferentes tamaños de pantalla. Esto elimina saltos bruscos y mejora la 
+          experiencia de usuario en dispositivos de tamaño intermedio como tablets.
+        </p>
+      </div>
+      <div class="sample-text">
+        <small>
+          Este es texto pequeño (small). Se usa para notas, disclaimers o información 
+          secundaria. Tamaño: clamp(12px → 14px).
+        </small>
+      </div>
+      <div class="sample-text">
+        <span class="text-xs">
+          Este es texto extra pequeño. Úsalo con moderación y solo cuando sea absolutamente 
+          necesario. Tamaño: clamp(11px → 13px).
+        </span>
+      </div>
+    </section>
+
+    <!-- Pesos de Fuente -->
+    <section class="section">
+      <h2 class="section-title">Pesos de Fuente</h2>
+      <div class="grid">
+        <div class="card">
+          <h4 class="font-light">Light (300)</h4>
+          <p class="font-light">
+            Texto decorativo y secundario. Usar con precaución en tamaños pequeños.
+          </p>
+        </div>
+        <div class="card">
+          <h4 class="font-regular">Regular (400)</h4>
+          <p class="font-regular">
+            Peso estándar para texto de cuerpo y contenido principal.
+          </p>
+        </div>
+        <div class="card">
+          <h4 class="font-medium">Medium (500)</h4>
+          <p class="font-medium">
+            Para énfasis suave, labels y subtítulos menos prominentes.
+          </p>
+        </div>
+        <div class="card">
+          <h4 class="font-semibold">Semibold (600)</h4>
+          <p class="font-semibold">
+            Para subtítulos importantes y encabezados secundarios.
+          </p>
+        </div>
+        <div class="card">
+          <h4 class="font-bold">Bold (700)</h4>
+          <p class="font-bold">
+            Para títulos principales, CTAs y elementos que necesitan destacar.
+          </p>
+        </div>
+        <div class="card">
+          <h4 class="font-weight-extrabold">Extra Bold (800)</h4>
+          <p class="font-weight-extrabold">
+            Para hero text y headlines de máximo impacto visual.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interlineado -->
+    <section class="section">
+      <h2 class="section-title">Interlineado (Line Height)</h2>
+      <div class="sample-text">
+        <p class="leading-tight">
+          <strong>Tight (1.1):</strong> Este texto usa interlineado compacto. 
+          Ideal para títulos grandes donde el espacio es limitado.
+        </p>
+      </div>
+      <div class="sample-text">
+        <p class="leading-snug">
+          <strong>Snug (1.2):</strong> Interlineado ajustado. Perfecto para 
+          títulos medianos y subtítulos que necesitan balance entre compacidad y legibilidad.
+        </p>
+      </div>
+      <div class="sample-text">
+        <p class="leading-normal">
+          <strong>Normal (1.4):</strong> Interlineado estándar. Bueno para elementos 
+          UI como botones y labels donde el espacio es limitado pero se necesita claridad.
+        </p>
+      </div>
+      <div class="sample-text">
+        <p class="leading-relaxed">
+          <strong>Relaxed (1.6):</strong> Interlineado cómodo. Este es el interlineado 
+          recomendado para texto de cuerpo y párrafos extensos. Ofrece la mejor 
+          experiencia de lectura y reduce la fatiga visual.
+        </p>
+      </div>
+      <div class="sample-text">
+        <p class="leading-loose">
+          <strong>Loose (1.8):</strong> Interlineado amplio y espacioso. 
+          Útil para citas, texto destacado o cuando se necesita enfatizar 
+          claridad y respiración en el diseño.
+        </p>
+      </div>
+    </section>
+
+    <!-- Listas -->
+    <section class="section">
+      <h2 class="section-title">Listas</h2>
+      <div class="grid">
+        <div class="card">
+          <h4>Lista Ordenada</h4>
+          <ol>
+            <li>Registro de animales</li>
+            <li>Control sanitario</li>
+            <li>Seguimiento de casos</li>
+            <li>Adopciones</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h4>Lista Desordenada</h4>
+          <ul>
+            <li>Perros rescatados</li>
+            <li>Gatos en adopción</li>
+            <li>Animales en tratamiento</li>
+            <li>Casos resueltos</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Botones -->
+    <section class="section">
+      <h2 class="section-title">Botones y Elementos Interactivos</h2>
+      <div class="test-buttons">
+        <button class="btn btn-primary">Botón Primario</button>
+        <button class="btn btn-secondary">Botón Secundario</button>
+        <button class="btn btn-outline">Botón Outline</button>
+      </div>
+      <p class="text-small" style="margin-top: 1rem;">
+        ⚠️ Todos los botones tienen min-height: 44px para garantizar áreas táctiles accesibles
+      </p>
+    </section>
+
+    <!-- Blockquote -->
+    <section class="section">
+      <h2 class="section-title">Citas (Blockquote)</h2>
+      <blockquote>
+        La compasión por los animales está íntimamente ligada con la bondad de carácter, 
+        y puede ser afirmado con seguridad que quien es cruel con los animales no puede 
+        ser un buen hombre.
+        <cite>— Arthur Schopenhauer</cite>
+      </blockquote>
+    </section>
+
+    <!-- Enlaces -->
+    <section class="section">
+      <h2 class="section-title">Enlaces y Navegación</h2>
+      <p>
+        Este es un párrafo con <a href="#">un enlace normal</a> que usa el color primario 
+        y tiene hover state. Los enlaces están optimizados para <a href="#">accesibilidad</a> 
+        y tienen <a href="#">focus visible</a> para navegación por teclado.
+      </p>
+    </section>
+
+    <!-- Caso de Uso Real -->
+    <section class="section">
+      <h2 class="section-title">Ejemplo: Tarjeta de Animal</h2>
+      <div class="card">
+        <h3 class="font-bold" style="color: #667eea; margin-bottom: 0.5rem;">Max</h3>
+        <p class="text-responsive-body leading-relaxed" style="margin-bottom: 0.5rem;">
+          <span class="font-semibold">Especie:</span> Perro | 
+          <span class="font-semibold">Edad:</span> 3 años
+        </p>
+        <p class="text-responsive-body leading-relaxed" style="margin-bottom: 1rem;">
+          Perro mestizo encontrado en la zona sur de la ciudad. Se encuentra en buen 
+          estado de salud tras recibir atención veterinaria. Busca familia responsable.
+        </p>
+        <p class="text-responsive-small font-medium" style="color: #28a745;">
+          ✓ Estado: Disponible para adopción
+        </p>
+        <div class="test-buttons" style="margin-top: 1rem;">
+          <button class="btn btn-primary">Adoptar</button>
+          <button class="btn btn-outline">Más Info</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding-top: 2rem; border-top: 2px solid #e9ecef; margin-top: 3rem;">
+      <p class="text-small">
+        Sistema de Tipografía Responsiva - Huella Segura © 2025
+      </p>
+      <p class="text-xs" style="margin-top: 0.5rem;">
+        Optimizado para accesibilidad WCAG 2.1 AA
+      </p>
+    </footer>
+  </div>
+
+  <!-- Indicador de Breakpoint -->
+  <div class="breakpoint-indicator"></div>
+
+  <script>
+    // Mostrar ancho actual en el indicador
+    const indicator = document.querySelector('.breakpoint-indicator');
+    
+    function updateIndicator() {
+      const width = window.innerWidth;
+      indicator.textContent = indicator.textContent.split('|')[0] + ` | ${width}px`;
+    }
+    
+    updateIndicator();
+    window.addEventListener('resize', updateIndicator);
+  </script>
+</body>
+</html>

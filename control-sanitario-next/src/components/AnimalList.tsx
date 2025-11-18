@@ -3,8 +3,6 @@
  */
 import React, { useState } from 'react';
 import AnimalCard from './AnimalCard';
-import { SkeletonList } from './ui/Skeleton';
-import { motion } from 'framer-motion';
 
 // Datos mock de animales disponibles
 const animals = [
@@ -60,11 +58,23 @@ const animals = [
   },
 ];
 
+// Clases reutilizables para listas
+const listClasses = {
+  container: 'p-4',
+  filters: 'flex gap-4 mb-6 flex-wrap',
+  select: 'border rounded px-2 py-1',
+  grid: 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center'
+};
+
 /**
  * Componente que renderiza lista filtrable de animales disponibles
  * Incluye filtros por estado y ubicación con vista en grid responsivo
  */
-export default function AnimalList({ isLoading }: { isLoading?: boolean }) {
+interface AnimalListProps {
+  isLoading?: boolean;
+}
+
+export default function AnimalList({ isLoading }: AnimalListProps) {
   const [estado, setEstado] = useState('');
   const [ubicacion, setUbicacion] = useState('');
 
@@ -75,11 +85,27 @@ export default function AnimalList({ isLoading }: { isLoading?: boolean }) {
   );
 
   return (
-    <div className="p-4">
+    <div className={listClasses.container}>
+      {isLoading ? (
+        <ul className={listClasses.grid} role="list" aria-label="Lista de animales (cargando)">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <li key={i} role="listitem" style={{ listStyle: 'none' }}>
+              <div className="animate-pulse p-4 bg-white rounded shadow">
+                <div className="h-12 w-12 bg-gray-200 rounded-full mb-3" />
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                <div className="h-3 bg-gray-200 rounded w-1/2" />
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+      <>
       {/* Filtros de búsqueda */}
-      <div className="flex gap-4 mb-6 flex-wrap">
+      <div className={listClasses.filters}>
+        <label htmlFor="filter-estado" className="sr-only">Filtrar por estado</label>
         <select
-          className="border rounded px-2 py-1"
+          id="filter-estado"
+          className={listClasses.select}
           value={estado}
           onChange={e => setEstado(e.target.value)}
         >
@@ -88,8 +114,11 @@ export default function AnimalList({ isLoading }: { isLoading?: boolean }) {
           <option value="Adoptado">Adoptado</option>
           <option value="En tratamiento">En tratamiento</option>
         </select>
+
+        <label htmlFor="filter-ubicacion" className="sr-only">Filtrar por ubicación</label>
         <select
-          className="border rounded px-2 py-1"
+          id="filter-ubicacion"
+          className={listClasses.select}
           value={ubicacion}
           onChange={e => setUbicacion(e.target.value)}
         >
@@ -99,28 +128,22 @@ export default function AnimalList({ isLoading }: { isLoading?: boolean }) {
           <option value="Centro">Centro</option>
         </select>
       </div>
-      {isLoading ? (
-        <SkeletonList count={6} />
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
-          {filtered.map((animal, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.28, delay: i * 0.04 }}
-            >
-              <AnimalCard
-                animalId={`${i + 1}`}
-                nombre={animal.nombre}
-                estado_general={animal.estado}
-                zona={animal.ubicacion}
-                age={animal.edad}
-                images={animal.imagenes}
-              />
-            </motion.div>
-          ))}
-        </div>
+
+      {/* Grid de animales */}
+      <ul className={listClasses.grid} role="list" aria-label="Lista de animales disponibles">
+        {filtered.map((animal, i) => (
+          <li key={i} role="listitem" style={{ listStyle: 'none' }}>
+            <AnimalCard
+              nombre={animal.nombre}
+              estado_general={animal.estado}
+              zona={animal.ubicacion}
+              age={animal.edad}
+              images={animal.imagenes}
+            />
+          </li>
+        ))}
+      </ul>
+      </>
       )}
     </div>
   );

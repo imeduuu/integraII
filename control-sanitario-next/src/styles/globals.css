@@ -1,7 +1,87 @@
-@import './variables.css'; /* Añadido al principio */
+@import './variables.css'; /* Variables de colores y configuración */
+@import './typography-responsive.css'; /* Sistema de tipografía responsiva */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ... resto de los estilos globales ... */
+/* Mejores por defecto para móviles y accesibilidad */
+@layer base {
+  /* Reset universal para box-sizing */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Evitar overflow horizontal en html y body */
+  html {
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Tipografía y legibilidad */
+  body {
+    font-family: var(--font-family-sans);
+    color: var(--text-primary);
+    background-color: var(--background-light);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    width: 100%;
+    min-height: 100vh;
+  }	/* Imágenes y medios responsivos */
+	img, picture, video {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* Inputs y botones más táctiles en móviles */
+	input, textarea, button, select {
+		font-family: inherit;
+		font-size: 1rem;
+		line-height: 1.4;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	/* Asegurar que modales no excedan la altura de la pantalla */
+	.modal-root, .modal-root * {
+		box-sizing: border-box;
+	}
+
+	/* Soporte para focus visible accesible */
+	:focus {
+		outline: none;
+	}
+	:focus-visible {
+		outline: 3px solid rgba(59,130,246,0.6);
+		outline-offset: 2px;
+	}
+
+	/* Helpers útiles */
+	.sr-only {
+		position: absolute !important;
+		height: 1px; width: 1px;
+		overflow: hidden;
+		clip: rect(1px, 1px, 1px, 1px);
+		white-space: nowrap;
+	}
+}
+
+/* Ajustes para pantallas pequeñas: aumentar legibilidad y evitar solapamientos */
+@media (max-width: 480px) {
+	body { font-size: 15px; }
+	h1, h2, h3, h4 { line-height: 1.2; }
+	/* Botones táctiles más grandes */
+	button { padding: 0.6rem 0.75rem; }
+}
+
+/* Fin de mejoras globales */
+
+/* Importar helpers móviles globales (añadido automáticamente) */
+@import './mobile-helpers.css';
+/* Importar estilos para tablets */
+@import './tablet-layout.css';
